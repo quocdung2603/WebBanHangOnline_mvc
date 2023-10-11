@@ -66,7 +66,7 @@
             </div>*@
             <table class="table table-hover ">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
                         <th>Hình ảnh</th>
@@ -94,7 +94,7 @@
                             var strCheckHot = item.IsHot ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             var strCheckFeature = item.IsFeature ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             var strCheckSale = item.IsSale ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
-                    <tr id="trow_@item.Id">
+                    <tr id="trow_@item.Id" class="text-center">
                         <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
                         <td>@i</td>
                         <td><img class="imgproduct" data-id="@item.Id" src="@item.ProductImage.FirstOrDefault(x=> x.IsDefault).Image" width="50" /></td>
