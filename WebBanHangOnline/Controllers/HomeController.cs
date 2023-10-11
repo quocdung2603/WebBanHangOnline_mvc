@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanHangOnline.Models;
+using WebBanHangOnline.Models.EF;
 
 namespace WebBanHangOnline.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             return View();
@@ -26,6 +28,26 @@ namespace WebBanHangOnline.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+    
+        public ActionResult Partial_Subcribe()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Subcribe(Subscribe req)
+        {
+            if(ModelState.IsValid)
+            {
+                db.Subscribes.Add(new Subscribe { 
+                    Email = req.Email,
+                    CreatedDate = DateTime.Now
+                });
+                db.SaveChanges();
+                return Json(new { success = true});
+            }    
+            return View("Partial_Subcribe",req);
         }
     }
 }

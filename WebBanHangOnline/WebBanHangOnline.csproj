@@ -259,6 +259,10 @@
     <Compile Include="Migrations\202310091535524_UpdateEmail.Designer.cs">
       <DependentUpon>202310091535524_UpdateEmail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310110443452_UpdateSubcribe.cs" />
+    <Compile Include="Migrations\202310110443452_UpdateSubcribe.Designer.cs">
+      <DependentUpon>202310110443452_UpdateSubcribe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3487,6 +3491,7 @@
     <Content Include="Views\ShoppingCart\Partial_CheckOut.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOutSuccess.cshtml" />
     <Content Include="Views\News\Partial_News_Home.cshtml" />
+    <Content Include="Views\Home\Partial_Subcribe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3549,6 +3554,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310091535524_UpdateEmail.resx">
       <DependentUpon>202310091535524_UpdateEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110443452_UpdateSubcribe.resx">
+      <DependentUpon>202310110443452_UpdateSubcribe.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
