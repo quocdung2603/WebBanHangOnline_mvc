@@ -108,8 +108,8 @@ namespace WebBanHangOnline.Controllers
                     contentAdmin = contentAdmin.Replace("{{TongTien}}", WebBanHangOnline.Common.Common.FormatNumber(TongTien, 0));
                     WebBanHangOnline.Common.Common.SendMail("COLO Master", "Đơn Hàng Mới #" + order.Code, contentAdmin.ToString(), ConfigurationManager.AppSettings["EmailAdmin"]);
                     cart.ClearCart();
-                    /*code = new { success = true, code = 1 };*/
-                    return RedirectToAction("CheckOutSuccess");
+                    code = new { success = true, code = 1 };
+                    //return RedirectToAction("CheckOutSuccess");
                 }
             }
             return Json(code);

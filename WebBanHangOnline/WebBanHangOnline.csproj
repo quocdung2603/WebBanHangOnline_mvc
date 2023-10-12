@@ -194,6 +194,7 @@
     <Compile Include="Areas\Admin\Controllers\SettingSystemController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -267,6 +268,10 @@
     <Compile Include="Migrations\202310111119555_UpdateEFProducts.cs" />
     <Compile Include="Migrations\202310111119555_UpdateEFProducts.Designer.cs">
       <DependentUpon>202310111119555_UpdateEFProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310111558559_EditCategory111023.cs" />
+    <Compile Include="Migrations\202310111558559_EditCategory111023.Designer.cs">
+      <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -3649,6 +3654,7 @@
     <Content Include="Views\Home\Partial_Subcribe.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3717,6 +3723,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310111119555_UpdateEFProducts.resx">
       <DependentUpon>202310111119555_UpdateEFProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310111558559_EditCategory111023.resx">
+      <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

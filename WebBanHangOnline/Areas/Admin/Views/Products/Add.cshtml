@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Danh Mục</label>
-                                            @Html.DropDownListFor(x => x.ProductCategoryId, ViewBag.ProductCategory as SelectList,"-Chọn Danh Mục Sản Phẩm-", new { @class = "form-control", @placeholder = "Mô Tả Sản Phẩm" })
+                                            @Html.DropDownListFor(x => x.ProductCategoryId, ViewBag.ProductCategory as SelectList, "-Chọn Danh Mục Sản Phẩm-", new { @class = "form-control", @placeholder = "Mô Tả Sản Phẩm" })
                                             @Html.ValidationMessageFor(x => x.ProductCategoryId, null, new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group">
@@ -94,13 +94,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Chi Tiết Sản Phẩm</label>
-                                            @Html.TextAreaFor(x => x.Detail, new { @class = "form-control", @id= "txtDetail"})
+                                            @Html.TextAreaFor(x => x.Detail, new { @class = "form-control", @id = "txtDetail" })
                                             @Html.ValidationMessageFor(x => x.Detail, null, new { @class = "text-danger" })
                                         </div>
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Số Lượng</label>
+                                                    <label for="exampleInputQuantity">Số Lượng</label>
                                                     @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @Value = "1" })
                                                     @Html.ValidationMessageFor(x => x.Quantity, null, new { @class = "text-danger" })
                                                 </div>
@@ -108,7 +108,7 @@
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Giá Gốc</label>
-                                                    <input type="text" name="demoOriginalPrice" value="@Model.OriginalPrice" id="demoOriginalPrice" class="form-control autonumeric" @*data-a-sign="€ "*@ data-a-dec="," data-a-sep=".">
+                                                    <input type="text" name="demoOriginalPrice" value="0" id="demoOriginalPrice" class="form-control autonumeric" @*data-a-sign="€ "*@ data-a-dec="," data-a-sep=".">
                                                     @Html.HiddenFor(x => x.OriginalPrice, new { @class = "", @placeholder = "Giá Gốc" })
                                                     @Html.ValidationMessageFor(x => x.OriginalPrice, null, new { @class = "text-danger" })
                                                 </div>

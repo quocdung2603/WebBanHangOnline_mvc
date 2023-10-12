@@ -94,35 +94,41 @@
                             var strCheckHot = item.IsHot ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             var strCheckFeature = item.IsFeature ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             var strCheckSale = item.IsSale ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
-                    <tr id="trow_@item.Id" class="text-center">
-                        <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
-                        <td>@i</td>
-                        <td><img class="imgproduct" data-id="@item.Id" src="@item.ProductImage.FirstOrDefault(x=> x.IsDefault).Image" width="50" /></td>
-                        <td>@item.Title</td>
-                        <td>@item.ProductCategory.Title</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Price</td>
-                        <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
-                        <td class="text-center">
-                            <a href='#' data-id="@item.Id" class="btnHome">@Html.Raw(strCheckHome)</a>
-                        </td>
-                        <td class="text-center">
-                            <a href='#' data-id="@item.Id" class="btnHot">@Html.Raw(strCheckHot)</a>
-                        </td>
-                        <td class="text-center">
-                            <a href='#' data-id="@item.Id" class="btnFeature">@Html.Raw(strCheckFeature)</a>
-                        </td>
-                        <td class="text-center">
-                            <a href='#' data-id="@item.Id" class="btnSale">@Html.Raw(strCheckSale)</a>
-                        </td>
-                        <td class="text-center">
-                            <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
-                        </td>
-                        <td>
-                            <a href="/admin/products/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                            <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                        </td>
-                    </tr>
+                            var strImage = "";
+                            var img = item.ProductImage.FirstOrDefault(x => x.IsDefault);
+                            if (img != null)
+                            {
+                                strImage = img.Image;
+                            }
+                            <tr id="trow_@item.Id" class="text-center">
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
+                                <td>@i</td>
+                                <td><img class="imgproduct" data-id="@item.Id" src="@strImage" width="50" /></td>
+                                <td>@item.Title</td>
+                                <td>@item.ProductCategory.Title</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price</td>
+                                <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnHome">@Html.Raw(strCheckHome)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnHot">@Html.Raw(strCheckHot)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnFeature">@Html.Raw(strCheckFeature)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnSale">@Html.Raw(strCheckSale)</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                                </td>
+                                <td>
+                                    <a href="/admin/products/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                </td>
+                            </tr>
                             i++;
                         }
                     }
