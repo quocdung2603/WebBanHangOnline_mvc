@@ -22,7 +22,7 @@ namespace WebBanHangOnline.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +34,9 @@ namespace WebBanHangOnline.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -52,6 +52,33 @@ namespace WebBanHangOnline.Controllers
             }
         }
 
+        // Profile 
+        //
+        public async Task<ActionResult> Profile()
+        {
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            var item = new CreateAccountViewModel();
+            item.Email = user.Email;
+            item.UserName = user.UserName;
+            item.FullName = user.FullName;
+            item.Phone = user.Phone;
+            return View(item);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PostProfile(CreateAccountViewModel req)
+        {
+            var user = await UserManager.FindByEmailAsync(req.Email);
+            user.FullName = req.FullName;
+            user.Phone = req.Phone;
+            var rs = await UserManager.UpdateAsync(user);
+            if(rs.Succeeded)
+            {
+                return RedirectToAction("Profile");
+            }
+            return View(req);
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]

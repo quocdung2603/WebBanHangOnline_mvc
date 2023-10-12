@@ -3539,6 +3539,7 @@
     <Content Include="Content\assets\plugins\moment\locales.min.js.map" />
     <Content Include="Content\assets\plugins\moment\moment-with-locales.min.js.map" />
     <Content Include="Content\assets\plugins\moment\moment.min.js.map" />
+    <Content Include="Areas\Admin\Views\Account\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3553,6 +3554,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsShopping.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\images\avatar5.png" />
     <Content Include="Uploads\images\Hinh3x4.jpg" />
     <Content Include="Uploads\images\wp1904056-developer-wallpapers.jpg" />
     <Content Include="Uploads\_thumbs\Images\Hinh3x4.jpg" />
@@ -3655,6 +3657,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
