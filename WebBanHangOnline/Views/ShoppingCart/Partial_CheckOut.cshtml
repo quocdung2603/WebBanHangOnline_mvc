@@ -23,6 +23,7 @@
 
     </script>
     @Html.AntiForgeryToken()
+    @*@Html.HiddenFor(x=>x.CustomerId , new { @value=User.Identity.})*@
     <h3>Thông Tin Khách Hàng</h3>
     if (!Request.IsAuthenticated)
     {

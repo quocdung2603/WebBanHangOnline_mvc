@@ -274,6 +274,18 @@
     <Compile Include="Migrations\202310111558559_EditCategory111023.Designer.cs">
       <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310130427219_UpdateOrderEF131023.cs" />
+    <Compile Include="Migrations\202310130427219_UpdateOrderEF131023.Designer.cs">
+      <DependentUpon>202310130427219_UpdateOrderEF131023.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310130554476_CreateTableReview.cs" />
+    <Compile Include="Migrations\202310130554476_CreateTableReview.Designer.cs">
+      <DependentUpon>202310130554476_CreateTableReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.cs" />
+    <Compile Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.Designer.cs">
+      <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -291,6 +303,7 @@
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategory.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
+    <Compile Include="Models\EF\ReviewProduct.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -3659,12 +3672,14 @@
     <Content Include="Views\News\Detail.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Review\LichSuDonHang.cshtml" />
+    <Content Include="Views\Review\_Review.cshtml" />
+    <Content Include="Views\Review\_Load_Review.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Content\ckfinder\userfiles\" />
-    <Folder Include="Views\Review\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
@@ -3731,6 +3746,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310111558559_EditCategory111023.resx">
       <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310130427219_UpdateOrderEF131023.resx">
+      <DependentUpon>202310130427219_UpdateOrderEF131023.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310130554476_CreateTableReview.resx">
+      <DependentUpon>202310130554476_CreateTableReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.resx">
+      <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

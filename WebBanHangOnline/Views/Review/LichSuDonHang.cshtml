@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebBanHangOnline.Models.EF.Order>
+
+@if (Model != null)
+{
+    var i = 1;
+    <h3>Lịch Sử Mua Hàng</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã DH</th>
+                <th>Ngày Mua</th>
+                <th>Tổng Hóa Đơn</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Code</td>
+                    <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                    <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount,0)đ</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}

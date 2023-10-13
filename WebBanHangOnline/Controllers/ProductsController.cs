@@ -30,7 +30,9 @@ namespace WebBanHangOnline.Controllers
                 item.ViewCount = item.ViewCount + 1;
                 db.Entry(item).Property(x => x.ViewCount).IsModified = true;
                 db.SaveChanges();
-            }        
+            }
+            var countReview = db.ReviewProducts.Where(x => x.ProductId == id).Count();
+            ViewBag.CountReview = countReview;
             return View(item);
         }
         public ActionResult ProductCategory(string alias, int id)
@@ -58,5 +60,6 @@ namespace WebBanHangOnline.Controllers
             var items = db.Products.Where(x => x.IsSale && x.IsActive).Take(12).ToList();
             return PartialView(items);
         }
+
     }
 }

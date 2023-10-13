@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebBanHangOnline.Models;
 using WebBanHangOnline.Models.EF;
+using Microsoft.AspNet.Identity;
 
 namespace WebBanHangOnline.Controllers
 {
@@ -84,6 +85,7 @@ namespace WebBanHangOnline.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOut(OrderViewModel req)
         {
@@ -109,6 +111,10 @@ namespace WebBanHangOnline.Controllers
                     order.CreatedDate = DateTime.Now;
                     order.ModifierDate = DateTime.Now;
                     order.CreatedBy = req.Phone;
+                    if(User.Identity.IsAuthenticated)
+                    {
+                        order.CustomerId = User.Identity.GetUserId();
+                    }
                     Random rd = new Random();
                     order.Code = "DH" + rd.Next(0,9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                     db.Orders.Add(order);
@@ -158,7 +164,7 @@ namespace WebBanHangOnline.Controllers
             }
             return Json(code);
         }
-
+        [AllowAnonymous]
         public ActionResult Partial_CheckOut()
         {
             var user = UserManager.FindByNameAsync(User.Identity.Name).Result;
@@ -201,6 +207,7 @@ namespace WebBanHangOnline.Controllers
             return Json(new { Count = 0 }, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult AddToCart(int id, int quantity)
         {
@@ -242,6 +249,7 @@ namespace WebBanHangOnline.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Delete(int id)
         {
             var code = new { success = false, msg = "", code = -1, Count = 0 };
@@ -259,6 +267,7 @@ namespace WebBanHangOnline.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult DeleteAll()
         {
             ShoppingCart cart = (ShoppingCart)Session["Cart"];
@@ -271,6 +280,7 @@ namespace WebBanHangOnline.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Update(int id, int quantity)
         {
             ShoppingCart cart = (ShoppingCart)Session["Cart"];
