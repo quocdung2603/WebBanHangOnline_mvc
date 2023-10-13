@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "VnpayReturn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<h2>VnpayReturn</h2>
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<div class="container product_section_container">
+    <div class="row">
+        <div class="col product_section clearfix">
+
+            <!-- Breadcrumbs -->
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li class="active"><a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i>Thanh Toán</a></li>
+                </ul>
+            </div>
+
+            <!-- Sidebar -->
+            <!-- Main Content -->
+
+            <div class="row">
+                <div class="col-md-12" id="load_data">
+                    @if (ViewBag.ThanhToanThanhCong != null)
+                    {
+                        <h2>Bạn thanh toán thành công đơn hàng trị giá @ViewBag.ThanhToanThanhCong!</h2>
+                    }
+                    <p>@ViewBag.InnerText</p>
+                    <p>Colo Shop chân thành cảm ơn sự ủng hộ của bạn. Hi vọng bạn sẽ có một trải nghiệm tuyệt vời khi mua hàng tại Colo Shop</p>
+                    <p>Chúng tôi vừa gửi cho bạn một email về việc mua sắm vừa rồi</p>
+                    <p>Hãy trở lại <a href="/">Trang Chủ</a> để tiếp tục mua sắm nhé</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
