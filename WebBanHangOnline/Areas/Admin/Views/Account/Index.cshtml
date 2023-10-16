@@ -30,14 +30,14 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
+            <table class="table table-hover table-bordered">
+                <thead style="background-color:aquamarine;">
+                    <tr class="text-center">
                         <th>#</th>
                         <th>Tài Khoản</th>
                         <th>Họ Tên</th>
                         <th>Email</th>
-                        <th></th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                         var i = 1;
                         foreach (var item in Model)
                         {
-                            <tr id="trow_@item.Id">
+                            <tr id="trow_@item.Id" class="text-center">
                                 <td>@i</td>
                                 <td>@item.UserName</td>
                                 <td>@item.FullName</td>

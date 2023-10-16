@@ -29,12 +29,39 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">@ViewBag.Title</h3>
-
-
         </div>
+
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
+            <div class="row">
+                <div class="col-7">
+                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
+                    {
+                        <div class="input-group input-group-sm">
+                            @Html.TextBox("Searchtext")
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div class="col-5">
+                        @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
+                        {
+                            <ul style="list-style-type:none; display:flex;">
+                                <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
+                                <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
+                                <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
+                                <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
+                                <li style="padding-left:10px;">
+                                    <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
+                                </li>
+                            </ul>
+                            
+                        }
+                </div>
+            </div>
+            <table class="table table-hover table-bordered" style="margin-top:10px;">
+                <thead style="background-color:aquamarine;">
                     <tr class="text-center">
                         <th>#</th>
                         <th>Mã Đơn Hàng</th>
@@ -59,23 +86,30 @@
                                 <td>@item.CustomerName</td>
                                 <td>@item.Phone</td>
                                 <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount, 0)đ</td>
-                                <td>@(item.TypePayment == 1 ? "COD" : "BANKING")</td>
+                                @if (item.TypePayment == 1)
+                                {
+                                    <td><span class="btn btn-sm" style="background-color:#c05104; height:25px; justify-content:center; align-items:center; display:flex; color:white;">COD</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="btn btn-sm" style="background-color:#e5c80a; height: 25px; justify-content: center; align-items: center; display: flex; color: white;">BANKING</span></td>
+                                }
                                 <td>
                                     @if (item.Status == "1")
                                     {
-                                        <span>Chưa Thanh Toán</span>
+                                        <span class="btn btn-sm" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;">Chưa Thanh Toán</span>
                                     }
                                     @if (item.Status == "2")
                                     {
-                                        <span>Đã Thanh Toán</span>
+                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;">Đã Thanh Toán</span>
                                     }
                                     @if (item.Status == "3")
                                     {
-                                        <span>Hoàn Thành</span>
+                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;">Hoàn Thành</span>
                                     }
                                     @if (item.Status == "4")
                                     {
-                                        <span>Hủy</span>
+                                        <span class="btn btn-sm" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;">Hủy</span>
                                     }
 
                                 </td>
