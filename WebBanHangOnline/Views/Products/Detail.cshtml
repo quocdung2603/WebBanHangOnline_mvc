@@ -66,6 +66,20 @@
                     <p>@Model.Description</p>
                     <p><b>@Model.ViewCount</b> lượt xem</p>
                 </div>
+                <div class="row">
+                    @if (Model.IsHot == true)
+                    {
+                        <a class="btn btn-sm" style="background-color: #fe4c50; color: white; width: 50px; height: 25px; justify-content: center; align-items: center;display:flex; ">Hot</a>
+                    }
+                    @if (Model.IsSale == true)
+                    {
+                        <a class="btn btn-sm" style="background-color: #51a042; color: white; width: 50px; height: 25px; justify-content: center; align-items: center; display: flex; margin-left:5px;">Sale</a>
+                    }
+                    @if (Model.IsFeature == true)
+                    {
+                        <a class="btn btn-sm" style="background-color: #0066ff; color: white; width: 55px; height: 25px; justify-content: center; align-items: center; display: flex; margin-left: 5px;">Feature</a>
+                    }
+                </div>
                 @if (Model.PriceSale > 0)
                 {
                     <div class="original_price">@WebBanHangOnline.Common.Common.FormatNumber(Model.Price, 0)</div>
