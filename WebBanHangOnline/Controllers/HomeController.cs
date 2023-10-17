@@ -13,9 +13,9 @@ namespace WebBanHangOnline.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            ViewBag.Title = "Colo Shop";
-            ViewBag.SeoDescription = "Colo Shop là shop bán hàng uy tín, chất lượng, giá cả hợp lý.";
-            ViewBag.SeoKeyWord = "colo shop";
+            ViewBag.Title = "ABC Store";
+            ViewBag.SeoDescription = "ABC Store là shop bán hàng uy tín, chất lượng, giá cả hợp lý.";
+            ViewBag.SeoKeyWord = "ABC Store";
             return View();
         }
 
