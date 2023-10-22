@@ -45,7 +45,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 model.CreatedDate = DateTime.Now;
-                model.CategoryId = 2;
+                model.CategoryId = 4;
                 model.ModifierDate = DateTime.Now;
                 model.Alias = WebBanHangOnline.Models.Commons.Filter.FilterChar(model.Title);
                 db.News.Add(model);
@@ -69,6 +69,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 model.ModifierDate = DateTime.Now;
                 model.Alias = WebBanHangOnline.Models.Commons.Filter.FilterChar(model.Title);
+                model.CategoryId = 4;
                 db.News.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();

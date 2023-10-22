@@ -101,7 +101,7 @@
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <label for="exampleInputQuantity">Số Lượng</label>
-                                                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @Value = "1" })
+                                                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @Value = "0", @readonly = "readonly" })
                                                     @Html.ValidationMessageFor(x => x.Quantity, null, new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -184,7 +184,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tbHtml">
-                                                       
                                                     </tbody>
                                                 </table>
                                                 <input type="hidden" id="tCurrentId" value="0" />
@@ -192,7 +191,7 @@
                                         </div>
                                     </div>
                                     <!-- /.tab-pane -->
-
+                                   
                                     <div class="tab-pane" id="settings">
                                         <form class="form-horizontal">
                                             <div class="form-group row">

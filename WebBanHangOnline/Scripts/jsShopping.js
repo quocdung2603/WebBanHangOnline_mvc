@@ -5,6 +5,7 @@
         var id = $(this).data('id');
         var quantity = 1;
         var tQuantity = $('#quantity_value').text();
+        var SizeName = $('#value_size_product').text();
         if (tQuantity != '') {
             quantity = parseInt(tQuantity);
         }
@@ -12,7 +13,7 @@
         $.ajax({
             url: '/shoppingcart/addtocart',
             type: 'POST',
-            data: { id: id, quantity: quantity },
+            data: { id: id, quantity: quantity, SizeName : SizeName},
             success: function (rs) {
                 if (rs.success) {
                     $('#checkout_items').html(rs.Count);

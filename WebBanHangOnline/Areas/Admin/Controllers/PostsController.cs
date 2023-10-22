@@ -68,6 +68,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 model.ModifierDate = DateTime.Now;
                 model.Alias = WebBanHangOnline.Models.Commons.Filter.FilterChar(model.Title);
+                model.CategoryId = 2;
                 db.Posts.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();

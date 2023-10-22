@@ -72,7 +72,7 @@
 
 <script>
     function BrowseServer(field) {
-        debugger
+        
         var finder = new CKFinder();
         finder.selectActionFunction = function (fileUrl) {
             AddImage(@ViewBag.productId, fileUrl);
@@ -80,7 +80,7 @@
         finder.popup();
     }
     function AddImage(id, url) {
-        debugger
+        
         $.ajax({
             url: '/admin/productimage/AddImage',
             type: 'POST',

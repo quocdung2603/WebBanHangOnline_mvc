@@ -1,0 +1,183 @@
+﻿@model IEnumerable<WebBanHangOnline.Models.EF.ProductSize>
+@{
+    ViewBag.Title = "Kích Cỡ Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutEmpty.cshtml";
+}
+<style>
+    .glImage {
+        list-style: none;
+        margin-top: 0;
+        padding: 0;
+        display: flex;
+    }
+
+        .glImage li {
+            display: inline-block;
+            position: relative;
+        }
+
+    .box-btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Kích Cỡ Sản Phẩm</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-danger" data-card-widget="collapse" title="Collapse">
+                    Xóa Hết
+                </button>
+                <a href="#" class="btn btn-primary addsize">Thêm Mới</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Size</th>
+                        <th>Số Lượng</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var s = 0;
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.Id">
+                                <td>@i</td>
+                                <td>@item.SizeName</td>
+                                <td>@item.Quantity</td>
+                                <td>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-warning btnEdit">Sửa</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                </td>
+                            </tr>
+                            i++;
+                            s += item.Quantity;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">Không có bản ghi nào!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+<div id="dialog">
+    <iframe id="myIframe" style="border:0; width:100%; height:100%;"></iframe>
+</div>
+<div id="dialog1">
+    <iframe id="myIframe1" style="border:0; width:100%; height:100%;"></iframe>
+</div>
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+    function AddSize() {
+        $.ajax({
+            url: '/admin/productsize/add',
+            type: 'POST',
+            data: {},
+            success: function (rs) {
+                if (rs.success) {
+                    $('#dialog').dialog('close');
+                }
+            }
+        });
+    }
+    function EditSize() {
+        var id = $(this).data("id");
+        $.ajax({
+            url: '/admin/productsize/edit',
+            type: 'POST',
+            data: {id:id},
+            success: function (rs) {
+                if (rs.success) {
+                    $('#dialog1').dialog('close');
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: "fade",
+            hide: "fade",
+            modal: true,
+            height: '400',
+            width: '500',
+            resizable: true,
+            title: '',
+            close: function () {
+                window.location.reload();
+            }
+        });
+        $('body').on("click", ".addsize", function () {
+            //var proid = $(this).attr("data-id");
+            //$("#dialog #myIframe").attr("src", "/admin/ProductSize/Add?id=" + proid);
+            $("#dialog #myIframe").attr("src", "/admin/ProductSize/Add");
+            $('#dialog').dialog('open');
+            //AddSize();
+            return false;
+        });
+
+        $("#dialog1").dialog({
+            autoOpen: false,
+            show: "fade",
+            hide: "fade",
+            modal: true,
+            height: '400',
+            width: '500',
+            resizable: true,
+            title: '',
+            close: function () {
+                window.location.reload();
+            }
+        });
+        $('body').on("click", ".btnEdit", function () {
+            var proid = $(this).attr("data-id");
+            $("#dialog1 #myIframe1").attr("src", "/admin/ProductSize/Edit?id=" + proid);
+            //$("#dialog1 #myIframe1").attr("src", "/admin/ProductSize/Add");
+            $('#dialog1').dialog('open');
+            return false;
+        });
+
+        $('body').on('click', '.btnDelete', function () {
+            var id = $(this).data('id');
+            var conf = confirm('Bạn có muốn xóa ảnh này không?');
+            if (conf === true) {
+                $.ajax({
+                    url: '/admin/productsize/delete',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            $('#trow_' + id).remove();
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

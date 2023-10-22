@@ -218,7 +218,7 @@ namespace WebBanHangOnline.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult AddToCart(int id, int quantity)
+        public ActionResult AddToCart(int id, int quantity, string SizeName)
         {
             var code = new { success = false, msg = "", code = -1, Count = 0 };
             var db = new ApplicationDbContext();
@@ -237,7 +237,7 @@ namespace WebBanHangOnline.Controllers
                     CategoryName = checkProduct.ProductCategory.Title,
                     Alias = checkProduct.Alias,
                     Quantity = quantity,
-
+                    ProductSize = SizeName,
                 };
                 if (checkProduct.ProductImage.FirstOrDefault(x => x.IsDefault) != null)
                 {
@@ -249,7 +249,7 @@ namespace WebBanHangOnline.Controllers
                     item.Price = (decimal)checkProduct.PriceSale;
                 }
                 item.TotalPrice = item.Quantity * item.Price;
-                cart.AddToCart(item, quantity);
+                cart.AddToCart(item, quantity,SizeName);
                 Session["Cart"] = cart;
                 code = new { success = true, msg = "Thêm sản phẩm vào giỏ hàng thành công!", code = 1, Count = cart.Items.Count };
             }

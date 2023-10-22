@@ -66,6 +66,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 }    
                 model.CreatedDate = DateTime.Now;
                 model.ModifierDate = DateTime.Now;
+                model.CategoryId = 3;
                 if (string.IsNullOrEmpty(model.SeoTitle))
                 {
                     model.SeoTitle = model.Title;
@@ -97,6 +98,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 model.ModifierDate = DateTime.Now;
                 model.Alias = WebBanHangOnline.Models.Commons.Filter.FilterChar(model.Title);
+                model.CategoryId = 3;
                 db.Products.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();

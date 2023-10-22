@@ -58,11 +58,12 @@
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(x => x.Id)
                         @Html.HiddenFor(x => x.CreatedDate)
+                        var quantityProduct = 0;
                         <div class="card">
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông Tin Chung</a></li>
-                                    @*<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Hình Ảnh</a></li>*@
+                                    @*<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Size & Color</a></li>*@
                                     <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">SEO</a></li>
                                 </ul>
                             </div><!-- /.card-header -->
@@ -103,7 +104,14 @@
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <label for="exampleInputQuantity">Số Lượng</label>
-                                                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @Value = "1" })
+                                                    @if(Model.ProductSizes.Count > 0)
+                                                    {
+                                                        foreach(var item in Model.ProductSizes)
+                                                        {
+                                                            quantityProduct += item.Quantity;
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @Value = quantityProduct, @readonly="readonly" })
                                                     @Html.ValidationMessageFor(x => x.Quantity, null, new { @class = "text-danger" })
                                                 </div>
                                             </div>

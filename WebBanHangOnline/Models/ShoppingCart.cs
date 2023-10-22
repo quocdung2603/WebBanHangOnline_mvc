@@ -13,11 +13,12 @@ namespace WebBanHangOnline.Models
             this.Items = new List<ShoppingCartItem>();
         }
 
-        public void AddToCart(ShoppingCartItem item, int Quantity)
+        public void AddToCart(ShoppingCartItem item, int Quantity, string SizeName)
         {
             var checkExits = Items.FirstOrDefault(x => x.ProductId == item.ProductId);
-            if(checkExits != null)
+            if (checkExits != null)
             {
+                checkExits.ProductSize = SizeName;
                 checkExits.Quantity += Quantity;
                 checkExits.TotalPrice = checkExits.Price * checkExits.Quantity;
             }
@@ -68,6 +69,7 @@ namespace WebBanHangOnline.Models
         public string Alias { get; set; }
         public string CategoryName { get; set; }
         public string ProductImg { get; set; }
+        public string ProductSize { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public decimal TotalPrice { get; set; }

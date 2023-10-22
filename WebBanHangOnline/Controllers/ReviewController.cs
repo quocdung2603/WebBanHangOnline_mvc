@@ -71,6 +71,17 @@ namespace WebBanHangOnline.Controllers
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var user = userManager.FindByName(User.Identity.Name);
                 var items = db.Orders.Where(x => x.CustomerId == user.Id).ToList();
+                var it = db.Orders.Where(x => x.CustomerId == user.Id);
+                decimal s = 0;
+                int cnt = 0;
+                if(it.Count() > 0)
+                {
+                    s += it.Sum(x => x.TotalAmount);
+                    cnt += it.Count();
+                }    
+                
+                TempData["totalAmount"] = s;
+                TempData["TotalCount"] = cnt;
                 return PartialView(items);
             }
             return PartialView();

@@ -22,5 +22,8 @@ namespace WebBanHangOnline.Models.EF
         public string Website { get; set; }
         public string Message { get; set; }
         public bool IsRead { get; set; }
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

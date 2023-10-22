@@ -190,6 +190,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductImageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductSizeController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingSystemController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
@@ -286,6 +287,22 @@
     <Compile Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.Designer.cs">
       <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310171232300_AddProductSize.cs" />
+    <Compile Include="Migrations\202310171232300_AddProductSize.Designer.cs">
+      <DependentUpon>202310171232300_AddProductSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310171407354_ChangForeignKeyProductSize.cs" />
+    <Compile Include="Migrations\202310171407354_ChangForeignKeyProductSize.Designer.cs">
+      <DependentUpon>202310171407354_ChangForeignKeyProductSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310191413579_ABCDE.cs" />
+    <Compile Include="Migrations\202310191413579_ABCDE.Designer.cs">
+      <DependentUpon>202310191413579_ABCDE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310191510527_UpdateCategoryId_Contact.cs" />
+    <Compile Include="Migrations\202310191510527_UpdateCategoryId_Contact.Designer.cs">
+      <DependentUpon>202310191510527_UpdateCategoryId_Contact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -303,6 +320,7 @@
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategory.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
+    <Compile Include="Models\EF\ProductSize.cs" />
     <Compile Include="Models\EF\ReviewProduct.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
@@ -3555,6 +3573,9 @@
     <Content Include="Content\assets\plugins\moment\moment-with-locales.min.js.map" />
     <Content Include="Content\assets\plugins\moment\moment.min.js.map" />
     <Content Include="Areas\Admin\Views\Account\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductSize\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductSize\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductSize\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3805,6 +3826,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.resx">
       <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310171232300_AddProductSize.resx">
+      <DependentUpon>202310171232300_AddProductSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310171407354_ChangForeignKeyProductSize.resx">
+      <DependentUpon>202310171407354_ChangForeignKeyProductSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310191413579_ABCDE.resx">
+      <DependentUpon>202310191413579_ABCDE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310191510527_UpdateCategoryId_Contact.resx">
+      <DependentUpon>202310191510527_UpdateCategoryId_Contact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

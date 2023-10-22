@@ -16,6 +16,7 @@ namespace WebBanHangOnline.Models.EF
             this.ProductImage = new HashSet<ProductImage>();
             this.OrderDetails = new HashSet<OrderDetail>();
             this.ReviewProducts = new HashSet<ReviewProduct>();
+            this.ProductSizes = new HashSet<ProductSize>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -32,6 +33,7 @@ namespace WebBanHangOnline.Models.EF
         public string Detail { get; set; }
         [StringLength(250)]
         public string Image { get; set; }
+        public string Size { get; set; }  
         public decimal OriginalPrice { get; set; }
         public decimal Price { get; set; }
         public decimal? PriceSale { get; set; }
@@ -42,6 +44,8 @@ namespace WebBanHangOnline.Models.EF
         public bool IsFeature { get; set; }
         public bool IsHot { get; set; }
         public bool IsActive { get; set; }
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
         public int ProductCategoryId { get; set; }
         [StringLength(250)]
         public string SeoTitle { get; set; }
@@ -50,8 +54,10 @@ namespace WebBanHangOnline.Models.EF
         [StringLength(250)]
         public string SeoKeywords { get; set; }
 
+        public virtual Category Category { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ICollection<ProductImage> ProductImage { get; set; }
+        public virtual ICollection<ProductSize> ProductSizes { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<ReviewProduct> ReviewProducts { get; set; }
     }

@@ -72,6 +72,7 @@
                         <th>Hình ảnh</th>
                         <th>Tên Sản Phẩm</th>
                         <th>Danh Mục</th>
+                        <th>Size</th>
                         <th>Số Lượng</th>
                         <th>Giá</th>
                         <th>Ngày Tạo</th>
@@ -96,6 +97,8 @@
                             var strCheckSale = item.IsSale ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             var strImage = "";
                             var img = item.ProductImage.FirstOrDefault(x => x.IsDefault);
+                            var totalPs = item.ProductSizes.Sum(x => x.Quantity);
+                            item.Quantity = totalPs;
                             if (img != null)
                             {
                                 strImage = img.Image;
@@ -106,6 +109,7 @@
                                 <td><img class="imgproduct" data-id="@item.Id" src="@strImage" width="50" /></td>
                                 <td>@item.Title</td>
                                 <td>@item.ProductCategory.Title</td>
+                                <td><a href="#" data-id="@item.Id" class="btn btn-sm btn-success sizeproduct">Size</a></td>
                                 <td>@item.Quantity</td>
                                 <td>@item.Price</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
@@ -124,6 +128,7 @@
                                 <td class="text-center">
                                     <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
                                 </td>
+
                                 <td>
                                     <a href="/admin/products/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
@@ -162,7 +167,9 @@
 <div id="dialog">
     <iframe id="myIframe" style="border:0; width:100%; height:100%;"></iframe>
 </div>
-
+<div id="dialog1">
+    <iframe id="myIframe1" style="border:0; width:100%; height:100%;"></iframe>
+</div>
 @section scripts{
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
@@ -186,6 +193,27 @@
                 $('#dialog').dialog('open');
                 return false;
             });
+
+            $("#dialog1").dialog({
+                autoOpen: false,
+                show: "fade",
+                hide: "fade",
+                modal: true,
+                height: '600',
+                width: '700',
+                resizable: true,
+                title: 'Quản Lý Kích Thước Sản Phẩm',
+                close: function () {
+                    window.location.reload();
+                }
+            });
+            $('body').on("click", ".sizeproduct", function () {
+                var proid = $(this).attr("data-id");
+                $("#dialog1 #myIframe1").attr("src", "/admin/productsize/Index?id=" + proid);
+                $('#dialog1').dialog('open');
+                return false;
+            });
+
             $('body').on('click', '#BtnDeleteAll', function (e) {
                 e.preventDefault();
                 var str ="";
