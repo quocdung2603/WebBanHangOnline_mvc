@@ -75,16 +75,16 @@
                                             @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Tên Sản Phẩm" })
                                             @Html.ValidationMessageFor(x => x.Title, null, new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group">
+                                       @* <div class="form-group">
                                             <label for="exampleInputEmail1">Alias</label>
                                             @Html.TextBoxFor(x => x.Alias, new { @class = "form-control", @placeholder = "Alias" })
                                             @Html.ValidationMessageFor(x => x.Alias, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group">
+                                        </div>*@
+                                        @*<div class="form-group">
                                             <label for="exampleInputEmail1">SKU</label>
                                             @Html.TextBoxFor(x => x.ProductCode, new { @class = "form-control", @placeholder = "Mã Sản Phẩm" })
                                             @Html.ValidationMessageFor(x => x.ProductCode, null, new { @class = "text-danger" })
-                                        </div>
+                                        </div>*@
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Danh Mục</label>
                                             @Html.DropDownListFor(x => x.ProductCategoryId, ViewBag.ProductCategory as SelectList, "-Chọn Danh Mục Sản Phẩm-", new { @class = "form-control", @placeholder = "Mô Tả Sản Phẩm" })

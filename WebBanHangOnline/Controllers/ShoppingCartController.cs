@@ -118,7 +118,7 @@ namespace WebBanHangOnline.Controllers
                         order.CustomerId = User.Identity.GetUserId();
                     }
                     Random rd = new Random();
-                    order.Code = "DH" + rd.Next(0,9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+                    order.Code = "DH" + rd.Next(0,9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                     db.Orders.Add(order);
                     db.SaveChanges();
                     //send mail cho khach hang 

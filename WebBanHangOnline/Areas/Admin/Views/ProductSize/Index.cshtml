@@ -38,10 +38,11 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
+            <table class="table table-bordered table-hover">
+                <thead style="background-color:aquamarine;">
+                    <tr class="text-center">
                         <th>STT</th>
+                        <th>Color</th>
                         <th>Size</th>
                         <th>Số Lượng</th>
                         <th>Thao Tác</th>
@@ -54,8 +55,9 @@
                         var i = 1;
                         foreach (var item in Model)
                         {
-                            <tr id="trow_@item.Id">
+                            <tr id="trow_@item.Id" class="text-center">
                                 <td>@i</td>
+                                <td>@item.ColorName</td>
                                 <td>@item.SizeName</td>
                                 <td>@item.Quantity</td>
                                 <td>

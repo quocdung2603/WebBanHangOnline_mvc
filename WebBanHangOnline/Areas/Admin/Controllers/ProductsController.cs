@@ -63,7 +63,9 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                         } 
                             
                     }    
-                }    
+                }
+                Random rd = new Random();
+                model.ProductCode = "SP" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 model.CreatedDate = DateTime.Now;
                 model.ModifierDate = DateTime.Now;
                 model.CategoryId = 3;

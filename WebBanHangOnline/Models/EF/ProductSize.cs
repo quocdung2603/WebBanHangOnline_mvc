@@ -15,6 +15,7 @@ namespace WebBanHangOnline.Models.EF
         public int Id { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
+        public string ColorName { get; set; }   
         public string SizeName { get; set; }
         public int Quantity { get; set; }
 

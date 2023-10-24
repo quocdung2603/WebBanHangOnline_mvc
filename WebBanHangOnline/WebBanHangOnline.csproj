@@ -207,101 +207,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202309280151324_CreatedDatabase.cs" />
-    <Compile Include="Migrations\202309280151324_CreatedDatabase.Designer.cs">
-      <DependentUpon>202309280151324_CreatedDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202310240741584_DataNew.cs" />
+    <Compile Include="Migrations\202310240741584_DataNew.Designer.cs">
+      <DependentUpon>202310240741584_DataNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202309280347565_UpdateCategory.cs" />
-    <Compile Include="Migrations\202309280347565_UpdateCategory.Designer.cs">
-      <DependentUpon>202309280347565_UpdateCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202309280408485_UpdateData.cs" />
-    <Compile Include="Migrations\202309280408485_UpdateData.Designer.cs">
-      <DependentUpon>202309280408485_UpdateData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202309281055090_UpdateActive.cs" />
-    <Compile Include="Migrations\202309281055090_UpdateActive.Designer.cs">
-      <DependentUpon>202309281055090_UpdateActive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202309300241483_ChangeModels.cs" />
-    <Compile Include="Migrations\202309300241483_ChangeModels.Designer.cs">
-      <DependentUpon>202309300241483_ChangeModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310011415075_ChangeDataModel2.cs" />
-    <Compile Include="Migrations\202310011415075_ChangeDataModel2.Designer.cs">
-      <DependentUpon>202310011415075_ChangeDataModel2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310011427198_UpdateProductCategory.cs" />
-    <Compile Include="Migrations\202310011427198_UpdateProductCategory.Designer.cs">
-      <DependentUpon>202310011427198_UpdateProductCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310011447251_ChangProductCategory_Alias.cs" />
-    <Compile Include="Migrations\202310011447251_ChangProductCategory_Alias.Designer.cs">
-      <DependentUpon>202310011447251_ChangProductCategory_Alias.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310021605467_ChangModelDB.cs" />
-    <Compile Include="Migrations\202310021605467_ChangModelDB.Designer.cs">
-      <DependentUpon>202310021605467_ChangModelDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310021617131_updateisnullforPriceSale.cs" />
-    <Compile Include="Migrations\202310021617131_updateisnullforPriceSale.Designer.cs">
-      <DependentUpon>202310021617131_updateisnullforPriceSale.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310061442579_UpdatePayment.cs" />
-    <Compile Include="Migrations\202310061442579_UpdatePayment.Designer.cs">
-      <DependentUpon>202310061442579_UpdatePayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310070404041_CreateTableStatistic.cs" />
-    <Compile Include="Migrations\202310070404041_CreateTableStatistic.Designer.cs">
-      <DependentUpon>202310070404041_CreateTableStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310091419277_ABC.cs" />
-    <Compile Include="Migrations\202310091419277_ABC.Designer.cs">
-      <DependentUpon>202310091419277_ABC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310091535524_UpdateEmail.cs" />
-    <Compile Include="Migrations\202310091535524_UpdateEmail.Designer.cs">
-      <DependentUpon>202310091535524_UpdateEmail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310110443452_UpdateSubcribe.cs" />
-    <Compile Include="Migrations\202310110443452_UpdateSubcribe.Designer.cs">
-      <DependentUpon>202310110443452_UpdateSubcribe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310111119555_UpdateEFProducts.cs" />
-    <Compile Include="Migrations\202310111119555_UpdateEFProducts.Designer.cs">
-      <DependentUpon>202310111119555_UpdateEFProducts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310111558559_EditCategory111023.cs" />
-    <Compile Include="Migrations\202310111558559_EditCategory111023.Designer.cs">
-      <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310130427219_UpdateOrderEF131023.cs" />
-    <Compile Include="Migrations\202310130427219_UpdateOrderEF131023.Designer.cs">
-      <DependentUpon>202310130427219_UpdateOrderEF131023.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310130554476_CreateTableReview.cs" />
-    <Compile Include="Migrations\202310130554476_CreateTableReview.Designer.cs">
-      <DependentUpon>202310130554476_CreateTableReview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.cs" />
-    <Compile Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.Designer.cs">
-      <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310171232300_AddProductSize.cs" />
-    <Compile Include="Migrations\202310171232300_AddProductSize.Designer.cs">
-      <DependentUpon>202310171232300_AddProductSize.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310171407354_ChangForeignKeyProductSize.cs" />
-    <Compile Include="Migrations\202310171407354_ChangForeignKeyProductSize.Designer.cs">
-      <DependentUpon>202310171407354_ChangForeignKeyProductSize.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310191413579_ABCDE.cs" />
-    <Compile Include="Migrations\202310191413579_ABCDE.Designer.cs">
-      <DependentUpon>202310191413579_ABCDE.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310191510527_UpdateCategoryId_Contact.cs" />
-    <Compile Include="Migrations\202310191510527_UpdateCategoryId_Contact.Designer.cs">
-      <DependentUpon>202310191510527_UpdateCategoryId_Contact.cs</DependentUpon>
+    <Compile Include="Migrations\202310241405236_AddColorName.cs" />
+    <Compile Include="Migrations\202310241405236_AddColorName.Designer.cs">
+      <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -3767,77 +3679,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202309280151324_CreatedDatabase.resx">
-      <DependentUpon>202309280151324_CreatedDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310240741584_DataNew.resx">
+      <DependentUpon>202310240741584_DataNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202309280347565_UpdateCategory.resx">
-      <DependentUpon>202309280347565_UpdateCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202309280408485_UpdateData.resx">
-      <DependentUpon>202309280408485_UpdateData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202309281055090_UpdateActive.resx">
-      <DependentUpon>202309281055090_UpdateActive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202309300241483_ChangeModels.resx">
-      <DependentUpon>202309300241483_ChangeModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310011415075_ChangeDataModel2.resx">
-      <DependentUpon>202310011415075_ChangeDataModel2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310011427198_UpdateProductCategory.resx">
-      <DependentUpon>202310011427198_UpdateProductCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310011447251_ChangProductCategory_Alias.resx">
-      <DependentUpon>202310011447251_ChangProductCategory_Alias.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310021605467_ChangModelDB.resx">
-      <DependentUpon>202310021605467_ChangModelDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310021617131_updateisnullforPriceSale.resx">
-      <DependentUpon>202310021617131_updateisnullforPriceSale.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310061442579_UpdatePayment.resx">
-      <DependentUpon>202310061442579_UpdatePayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310070404041_CreateTableStatistic.resx">
-      <DependentUpon>202310070404041_CreateTableStatistic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310091419277_ABC.resx">
-      <DependentUpon>202310091419277_ABC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310091535524_UpdateEmail.resx">
-      <DependentUpon>202310091535524_UpdateEmail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310110443452_UpdateSubcribe.resx">
-      <DependentUpon>202310110443452_UpdateSubcribe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310111119555_UpdateEFProducts.resx">
-      <DependentUpon>202310111119555_UpdateEFProducts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310111558559_EditCategory111023.resx">
-      <DependentUpon>202310111558559_EditCategory111023.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310130427219_UpdateOrderEF131023.resx">
-      <DependentUpon>202310130427219_UpdateOrderEF131023.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310130554476_CreateTableReview.resx">
-      <DependentUpon>202310130554476_CreateTableReview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310130559517_Add_ForeignKey_tb_Review.resx">
-      <DependentUpon>202310130559517_Add_ForeignKey_tb_Review.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310171232300_AddProductSize.resx">
-      <DependentUpon>202310171232300_AddProductSize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310171407354_ChangForeignKeyProductSize.resx">
-      <DependentUpon>202310171407354_ChangForeignKeyProductSize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310191413579_ABCDE.resx">
-      <DependentUpon>202310191413579_ABCDE.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310191510527_UpdateCategoryId_Contact.resx">
-      <DependentUpon>202310191510527_UpdateCategoryId_Contact.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310241405236_AddColorName.resx">
+      <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

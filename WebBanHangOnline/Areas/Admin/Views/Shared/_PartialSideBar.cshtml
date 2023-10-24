@@ -30,7 +30,7 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
@@ -129,6 +129,29 @@
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
+                        Nhập / Xuất
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/admin/importproduct/_index" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Nhập Hàng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/exportproduct" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Xuất Hàng</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
                         Thống Kê Kinh Doanh
                         <i class="right fas fa-angle-left"></i>
                     </p>
@@ -151,17 +174,13 @@
             <li class="nav-item">
                 <a href="/admin/settingsystem" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Cấu Hình Hệ Thống
-                    </p>
+                    <p>Cấu Hình Hệ Thống</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="javascript:document.getElementById('logOffForm').submit()" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Đăng Xuất
-                    </p>
+                    <p>Đăng Xuất</p>
                 </a>
             </li>
         </ul>
@@ -173,7 +192,7 @@
 @if (Request.IsAuthenticated)
 {
     <div style="display:none">
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {@id="logOffForm"}))
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @id = "logOffForm" }))
         {
             @Html.AntiForgeryToken()
         }
