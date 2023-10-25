@@ -184,6 +184,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ImportProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostsController.cs" />
@@ -215,6 +216,22 @@
     <Compile Include="Migrations\202310241405236_AddColorName.Designer.cs">
       <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310241533489_CreateImportProduct.cs" />
+    <Compile Include="Migrations\202310241533489_CreateImportProduct.Designer.cs">
+      <DependentUpon>202310241533489_CreateImportProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310250526472_UpdateImportP.cs" />
+    <Compile Include="Migrations\202310250526472_UpdateImportP.Designer.cs">
+      <DependentUpon>202310250526472_UpdateImportP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310250857283_AddImportProductDetail.cs" />
+    <Compile Include="Migrations\202310250857283_AddImportProductDetail.Designer.cs">
+      <DependentUpon>202310250857283_AddImportProductDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310251409442_AddTitle.cs" />
+    <Compile Include="Migrations\202310251409442_AddTitle.Designer.cs">
+      <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -225,6 +242,8 @@
     <Compile Include="Models\EF\Adv.cs" />
     <Compile Include="Models\EF\Category.cs" />
     <Compile Include="Models\EF\Contact.cs" />
+    <Compile Include="Models\EF\ImportProduct.cs" />
+    <Compile Include="Models\EF\ImportProductDetail.cs" />
     <Compile Include="Models\EF\News.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
@@ -501,6 +520,7 @@
     <Content Include="Content\assets\styles\categories_styles.css" />
     <Content Include="Content\assets\styles\contact_responsive.css" />
     <Content Include="Content\assets\styles\contact_styles.css" />
+    <Content Include="Content\assets\styles\CreateExam.css" />
     <Content Include="Content\assets\styles\main_styles.css" />
     <Content Include="Content\assets\styles\responsive.css" />
     <Content Include="Content\assets\styles\single_responsive.css" />
@@ -3488,6 +3508,8 @@
     <Content Include="Areas\Admin\Views\ProductSize\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ProductSize\Add.cshtml" />
     <Content Include="Areas\Admin\Views\ProductSize\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportProduct\Add.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3684,6 +3706,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310241405236_AddColorName.resx">
       <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310241533489_CreateImportProduct.resx">
+      <DependentUpon>202310241533489_CreateImportProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310250526472_UpdateImportP.resx">
+      <DependentUpon>202310250526472_UpdateImportP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310250857283_AddImportProductDetail.resx">
+      <DependentUpon>202310250857283_AddImportProductDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310251409442_AddTitle.resx">
+      <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

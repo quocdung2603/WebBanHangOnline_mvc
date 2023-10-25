@@ -17,6 +17,7 @@ namespace WebBanHangOnline.Models.EF
             this.OrderDetails = new HashSet<OrderDetail>();
             this.ReviewProducts = new HashSet<ReviewProduct>();
             this.ProductSizes = new HashSet<ProductSize>();
+            this.ImportProductDetails = new HashSet<ImportProductDetail>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -60,5 +61,7 @@ namespace WebBanHangOnline.Models.EF
         public virtual ICollection<ProductSize> ProductSizes { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<ReviewProduct> ReviewProducts { get; set; }
+        public virtual ICollection<ImportProductDetail> ImportProductDetails { get; set; }
+   
     }
 }
