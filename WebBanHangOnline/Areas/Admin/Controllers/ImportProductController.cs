@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,13 +9,27 @@ using WebBanHangOnline.Models.EF;
 
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ImportProductController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/ImportProduct
-        public ActionResult Index()
+        public ActionResult Index(int? page, string Searchtext)
         {
-            var items = db.ImportProducts;
+            var pageSize = 10;
+            if(page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<ImportProduct> items = db.ImportProducts.OrderByDescending(x=> x.CreatedDate);
+            if (!string.IsNullOrEmpty(Searchtext))
+            {
+                items = items.Where(x => x.Title.Contains(Searchtext));
+            }
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
         }
 
@@ -28,12 +43,16 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         {
             var title = f["TenDotNhapHang"];
             var note = f["GhiChu"];
-
             ImportProduct ip = new ImportProduct();
             ip.Title = title;
             ip.Note = note;
             ip.CreatedDate = DateTime.Now;
             ip.ModifierDate = DateTime.Now;
+            if(Request.IsAuthenticated)
+            {
+                ip.CreatedBy = User.Identity.Name;
+                ip.ModifierBy = User.Identity.Name;
+            }    
             db.ImportProducts.Add(ip);
             db.SaveChanges();
 
@@ -60,7 +79,6 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     {
                         tmp.Quantity += item.Quantity;
                     }    
-                       
                 }
                 else
                 {
@@ -78,14 +96,23 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     p.Alias = WebBanHangOnline.Models.Commons.Filter.FilterChar(p.Title);
                     p.SeoTitle = p.Title;
                     db.Products.Add(p);
+
+                    //them size + mau
                     ProductSize tmp = new ProductSize();
                     tmp.ProductId = item.ProductId;
                     tmp.ColorName = item.Color;
                     tmp.SizeName = item.Size;
                     tmp.Quantity = item.Quantity;
                     db.ProductSizes.Add(tmp);
+
+                    //them hinh mac dinh cua san pham
+                    ProductImage pi = new ProductImage();
+                    pi.ProductId = p.Id;
+                    pi.Image = "/Uploads/images/IMG/R.png";
+                    pi.IsDefault = true;
+                    db.ProductImages.Add(pi);
                 }
-             
+                //them chi tiet phieu nhap
                 ImportProductDetail ipd = new ImportProductDetail();
                 ipd.ImportProductId = ip.Id;
                 ipd.ProductId = item.ProductId;
@@ -96,8 +123,6 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 ipd.Size = item.Size;
                 ipd.Quantity = item.Quantity;
                 db.ImportProductDetails.Add(ipd);
-                
-                
             }
             db.SaveChanges();
             return View();
