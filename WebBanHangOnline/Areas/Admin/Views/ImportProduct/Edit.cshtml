@@ -1,0 +1,156 @@
+﻿@model WebBanHangOnline.Models.EF.ImportProduct
+@{
+    ViewBag.Title = "Thêm Phiếu Nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
+<div class="page-wrapper">
+    <div class="container-fluid">
+        @*Xây dựng nội dung ở đây*@
+
+        <div class="ContainerCreateExam">
+            <form action="/admin/ImportProduct/add" method="post">
+                <div class="form-horizontal">
+                    <h4>Phiếu Nhập Hàng</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Tên Đợt Nhập Hàng</label>
+                        <div class="col-md-10">
+                            <input type="text" name="TenDotNhapHang" class="NameKyThi" value="@Model.Title" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Ghi Chú</label>
+                        <div class="col-md-10">
+                            <textarea type="text" name="GhiChu" class="NameKyThi" value="@Model.Note"></textarea>
+                        </div>
+                    </div>
+
+                    @*Thông tin phiếu nhập*@
+                    @foreach (var item in Model.ImportProductDetails)
+                    {
+                        <div id="Exams">
+                            <div id="Exam">
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Mã Sản Phẩm: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].ProductId" value="@item.ProductId"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Tên Sản Phẩm: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].Title" value="@item.Title" />
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Giá Nhập: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.OriginalPrice"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Giá Bán: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].Price" value="@item.Price" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Màu sắc: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].Color" value="@item.Color" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Kích Thước: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].Size" value="@item.Size"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="contenQ">
+                                        <label class="control-label col-md-12">Số Lượng: </label>
+                                    </div>
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input class="form-control" name="LProduct[@i].Quantity" value="@item.Quantity" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    }
+
+                    <div style="margin-top: 10px">
+                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    </div>
+                </div>
+            </form>
+            @*<button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>*@
+        </div>
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        var i = 0;
+        const currentTime = document.querySelector("h1"),
+            content = document.querySelector(".content"),
+            selectMenu = document.querySelectorAll("select"),
+            setAlarmBtn = document.querySelector("button");
+        for (let i = 24; i > 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
+            selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        for (let i = 59; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
+            selectMenu[3].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+        function ThemCauHoi() {
+
+            i += 1; // Tăng giá trị i lên 1
+
+            console.log("i sau khi tăng lên 1: " + i);
+
+            var examsForm = document.getElementById('Exams');
+            var examClone = document.getElementById('Exam').cloneNode(true);
+            var inputFields = examClone.getElementsByTagName('input');
+
+            // Cập nhật name của trường input để chứa giá trị mới của i
+            for (var j = 0; j < inputFields.length; j++) {
+                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
+                inputFields[j].value = '';
+            }
+            // Thêm bản sao vào Exams
+            examsForm.appendChild(examClone);
+        }
+    </script>
+}
+

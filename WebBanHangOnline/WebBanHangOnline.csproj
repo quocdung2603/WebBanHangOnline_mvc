@@ -3510,6 +3510,8 @@
     <Content Include="Areas\Admin\Views\ProductSize\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ImportProduct\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ImportProduct\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportProduct\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportProduct\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

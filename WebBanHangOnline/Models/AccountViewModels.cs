@@ -68,6 +68,7 @@ namespace WebBanHangOnline.Models
         public string FullName { get; set; }
         public string Phone { get; set; }
         public List<string> Roles { get; set; }
+        //public bool IsActive { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

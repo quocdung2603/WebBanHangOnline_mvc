@@ -127,5 +127,64 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             db.SaveChanges();
             return View();
         }
+
+        public ActionResult Detail(int id)
+        {
+            var items = db.ImportProducts.FirstOrDefault(x=>x.Id == id);
+            return View(items);
+        }
+        
+        public ActionResult Edit(int id)
+        {
+            var items = db.ImportProducts.FirstOrDefault(x => x.Id == id);
+            return View(items);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(FormCollection f, List<ImportProductDetail> LProduct)
+        {
+            var title = f["TenDotNhapHang"];
+            var note = f["GhiChu"];
+            ImportProduct ip = new ImportProduct();
+            ip.Title = title;
+            ip.Note = note;
+            ip.ModifierDate = DateTime.Now;
+            if (Request.IsAuthenticated)
+            {
+                ip.ModifierBy = User.Identity.Name;
+            }
+            //db.ImportProducts.Add(ip);
+            db.SaveChanges();
+
+            foreach (var item in LProduct)
+            {
+                Product p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                if (p != null)
+                {
+                    p.OriginalPrice = item.OriginalPrice;
+                    p.Price = item.Price;
+                    p.Quantity += item.Quantity;
+                    p.ModifierDate = DateTime.Now;
+                    ProductSize tmp = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.SizeName == item.Size && x.ColorName == item.Color);
+                    tmp.ProductId = item.ProductId;
+                    tmp.ColorName = item.Color;
+                    tmp.SizeName = item.Size;
+                    tmp.Quantity = item.Quantity;
+                }
+                //them chi tiet phieu nhap
+                ImportProductDetail ipd = new ImportProductDetail();
+                ipd.ImportProductId = ip.Id;
+                ipd.ProductId = item.ProductId;
+                ipd.Title = item.Title;
+                ipd.OriginalPrice = item.OriginalPrice;
+                ipd.Price = item.Price;
+                ipd.Color = item.Color;
+                ipd.Size = item.Size;
+                ipd.Quantity = item.Quantity;
+                db.ImportProductDetails.Add(ipd);
+            }
+            db.SaveChanges();
+            return View();
+        }
     }
 }

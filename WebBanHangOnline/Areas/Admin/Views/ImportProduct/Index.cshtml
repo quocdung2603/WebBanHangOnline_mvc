@@ -86,6 +86,7 @@
                                 <td>@item.CreatedBy</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td>
+                                    <a href="@Url.Action("detail","importproduct",new { id = item.Id})" class="btn btn-sm btn-success">Xem</a>
                                     <a href="/admin/news/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
                                 </td>
