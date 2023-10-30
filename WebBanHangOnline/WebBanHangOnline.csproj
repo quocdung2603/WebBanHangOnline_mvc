@@ -232,6 +232,10 @@
     <Compile Include="Migrations\202310251409442_AddTitle.Designer.cs">
       <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310300557110_UpdateIsActiveAccount.cs" />
+    <Compile Include="Migrations\202310300557110_UpdateIsActiveAccount.Designer.cs">
+      <DependentUpon>202310300557110_UpdateIsActiveAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3720,6 +3724,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310251409442_AddTitle.resx">
       <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310300557110_UpdateIsActiveAccount.resx">
+      <DependentUpon>202310300557110_UpdateIsActiveAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

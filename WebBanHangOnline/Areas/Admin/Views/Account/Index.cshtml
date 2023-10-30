@@ -37,6 +37,8 @@
                         <th>Tài Khoản</th>
                         <th>Họ Tên</th>
                         <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Hoạt động</th>
                         <th>Hành Động</th>
                     </tr>
                 </thead>
@@ -46,16 +48,21 @@
                         var i = 1;
                         foreach (var item in Model)
                         {
-                            <tr id="trow_@item.Id" class="text-center">
-                                <td>@i</td>
-                                <td>@item.UserName</td>
-                                <td>@item.FullName</td>
-                                <td>@item.Email</td>
-                                <td>
-                                    <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                                    <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                                </td>
-                            </tr>
+                            var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
+                        <tr id="trow_@item.Id" class="text-center">
+                            <td>@i</td>
+                            <td>@item.UserName</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td class="text-center">
+                                <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                            </td>
+                            <td>
+                                <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                            </td>
+                        </tr>
                             i++;
                         }
 
@@ -92,6 +99,32 @@
                             }
                         }
                     });
+                }
+            });
+
+
+            $('body').on('click', '.btnActive', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var id = btn.data("id");
+                var conf = confirm("Bạn chắc muốn thực hiện thao tác này không?");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/admin/Account/IsActive',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                if (rs.isActive) {
+                                    btn.html("<i class='fa fa-check text-success'></i>")
+                                }
+                                else {
+                                    btn.html("<i class='fas fa-times text-danger'></i>")
+                                }
+                            }
+                        }
+                    });
+                    location.reload();
                 }
             });
         });

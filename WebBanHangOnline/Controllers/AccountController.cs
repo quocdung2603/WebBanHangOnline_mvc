@@ -102,7 +102,13 @@ namespace WebBanHangOnline.Controllers
             {
                 return View(model);
             }
-
+            string erro = "Đăng nhập thất bại.";
+            var user = UserManager.FindByName(model.UserName);
+            if (!user.IsActive)
+            {
+                ViewBag.tbKhoa = "Tài khoản của bạn đã bị khóa."; 
+                return View(model);
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -116,7 +122,7 @@ namespace WebBanHangOnline.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", erro);
                     return View(model);
             }
         }

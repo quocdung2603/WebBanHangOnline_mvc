@@ -77,7 +77,6 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 return View(model);
             }
-
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -91,7 +90,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Đăng nhập thất bại. ");
                     return View(model);
             }
         }
@@ -130,8 +129,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     Email = model.Email,
                     FullName = model.FullName,
                     Phone = model.Phone,
-                    //IsActive
-                    
+                    IsActive = true,
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -281,6 +279,31 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
+        }
+
+        public async Task<ActionResult> IsActive(string id)
+        {
+            var item = UserManager.FindById(id);
+            if (item != null)
+            {
+                if (item.IsActive == true)
+                {
+                    item.IsActive = false;
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "Thông Báo Khóa Tài Khoản", "Tài khoản của bạn đã bị khóa do vi phạm một số chính sách cộng đồng của ABC Store. Để biết thêm thông tin chi tiết vui lòng phản hồi cho chúng tôi hoặc liên hệ 0901291640 để được giải quyết sớm nhất.", item.Email);
+                }
+                else
+                {
+                    item.IsActive = true;
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "Thông Báo Mở Khóa Tài Khoản", "Tài khoản của bạn đã được mở khóa trở lại. Chúc bạn có một trải nghiệm tuyệt vời tại ABC Store", item.Email);
+                }
+                /*db.Entry(item).State = System.Data.Entity.EntityState.Modified;*/
+                var result = await UserManager.UpdateAsync(item);
+                if(result.Succeeded)
+                {
+                    return Json(new { success = true, isActive = item.IsActive });
+                }
+            }
+            return Json(new { success = false });
         }
     }
 }

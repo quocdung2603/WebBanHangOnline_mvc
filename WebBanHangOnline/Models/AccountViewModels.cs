@@ -70,7 +70,7 @@ namespace WebBanHangOnline.Models
         public List<string> Roles { get; set; }
 
         //acc no block
-        //public bool IsActive { get; set; }
+        public bool IsActive { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
