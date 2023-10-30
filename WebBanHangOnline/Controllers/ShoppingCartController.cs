@@ -146,7 +146,7 @@ namespace WebBanHangOnline.Controllers
                     contentCustomer = contentCustomer.Replace("{{DiaChiNhanHang}}", order.Address);
                     contentCustomer = contentCustomer.Replace("{{ThanhTien}}", WebBanHangOnline.Common.Common.FormatNumber(thanhtien,0));
                     contentCustomer = contentCustomer.Replace("{{TongTien}}", WebBanHangOnline.Common.Common.FormatNumber(TongTien, 0));
-                    WebBanHangOnline.Common.Common.SendMail("COLO Master","Đơn Hàng #" + order.Code,contentCustomer.ToString(),req.Email);
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store","Đơn Hàng #" + order.Code,contentCustomer.ToString(),req.Email);
 
                     string contentAdmin = System.IO.File.ReadAllText(Server.MapPath("~/Content/templates/send1.html"));
                     contentAdmin = contentAdmin.Replace("{{MaDon}}", order.Code);
@@ -158,7 +158,7 @@ namespace WebBanHangOnline.Controllers
                     contentAdmin = contentAdmin.Replace("{{DiaChiNhanHang}}", order.Address);
                     contentAdmin = contentAdmin.Replace("{{ThanhTien}}", WebBanHangOnline.Common.Common.FormatNumber(thanhtien, 0));
                     contentAdmin = contentAdmin.Replace("{{TongTien}}", WebBanHangOnline.Common.Common.FormatNumber(TongTien, 0));
-                    WebBanHangOnline.Common.Common.SendMail("COLO Master", "Đơn Hàng Mới #" + order.Code, contentAdmin.ToString(), ConfigurationManager.AppSettings["EmailAdmin"]);
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "Đơn Hàng Mới #" + order.Code, contentAdmin.ToString(), ConfigurationManager.AppSettings["EmailAdmin"]);
                     cart.ClearCart();
                     code = new { success = true, code = req.TypePayment, Url = "" };
                     if (req.TypePayment == 2)
@@ -342,7 +342,7 @@ namespace WebBanHangOnline.Controllers
                             db.SaveChanges();
                         }    
                         //Thanh toan thanh cong
-                        ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
+                        ViewBag.InnerText = "Giao dịch được thực hiện thành công.";
                         //log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId, vnpayTranId);
                     }
                     else
@@ -356,7 +356,7 @@ namespace WebBanHangOnline.Controllers
                     displayVnpayTranNo.InnerText = "Mã giao dịch tại VNPAY:" + vnpayTranId.ToString();
                     displayAmount.InnerText = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
                     displayBankCode.InnerText = "Ngân hàng thanh toán:" + bankCode;*/
-                    ViewBag.ThanhToanThanhCong = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
+                    ViewBag.ThanhToanThanhCong = " Số tiền thanh toán (VND):" + vnp_Amount.ToString();
                 }
             }    
             return View();

@@ -30,53 +30,57 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-            with font-awesome or any other icon font library -->
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Danh Mục
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/admin/Category" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Danh Mục Mặc Định</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/productcategory" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Danh Mục Sản Phẩm</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Quyền & Tài Khoản
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/admin/role" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Quyền</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/account" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Tài Khoản</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+    with font-awesome or any other icon font library -->
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Danh Mục
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/Category" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Mục Mặc Định</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/productcategory" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Mục Sản Phẩm</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Quyền & Tài Khoản
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/role" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Quyền</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/account" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài Khoản</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -141,11 +145,11 @@
                         </a>
                     </li>
                     @*<li class="nav-item">
-                        <a href="/admin/exportproduct" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Xuất Hàng</p>
-                        </a>
-                    </li>*@
+                    <a href="/admin/exportproduct" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Xuất Hàng</p>
+                    </a>
+                </li>*@
                 </ul>
             </li>
             <li class="nav-item">
@@ -171,12 +175,15 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="/admin/settingsystem" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Cấu Hình Hệ Thống</p>
-                </a>
-            </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a href="/admin/settingsystem" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Cấu Hình Hệ Thống</p>
+                    </a>
+                </li>
+            }
             <li class="nav-item">
                 <a href="javascript:document.getElementById('logOffForm').submit()" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>

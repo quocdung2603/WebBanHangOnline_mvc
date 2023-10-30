@@ -245,7 +245,7 @@ namespace WebBanHangOnline.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                WebBanHangOnline.Common.Common.SendMail("Colo Shop","Quên Mật Khẩu","Click vào <a href='"+callbackUrl+"'>đây</a> để đặt lại mật khẩu",model.Email);
+                WebBanHangOnline.Common.Common.SendMail("ABC Store","Quên Mật Khẩu","Để đặt lại mật khẩu, quý khách vui lòng click vào <a href='"+callbackUrl+"'>ĐẶT LẠI MẬT KHẨU</a> và làm theo hướng dẫn. Xin chân thành cảm ơn",model.Email);
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }

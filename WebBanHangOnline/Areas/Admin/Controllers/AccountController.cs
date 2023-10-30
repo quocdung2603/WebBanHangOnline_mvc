@@ -130,7 +130,8 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     Email = model.Email,
                     FullName = model.FullName,
                     Phone = model.Phone,
-                    //IsActive = model.IsActive,
+                    //IsActive
+                    
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

@@ -107,6 +107,10 @@
                                             </a>
                                             <ul class="account_selection">
                                                 <li><a href="/account/profile">Profile</a></li>
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                                                {
+                                                    <li><a href="/admin/home">Manage</a></li>
+                                                }
                                                 <li><a href="javascript:document.getElementById('logOffForm').submit()">Log Out</a></li>
                                             </ul>
                                         }
