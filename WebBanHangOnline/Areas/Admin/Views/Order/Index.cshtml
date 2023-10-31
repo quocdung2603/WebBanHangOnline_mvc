@@ -65,12 +65,11 @@
                     <tr class="text-center">
                         <th>#</th>
                         <th>Mã Đơn Hàng</th>
-                        <th>Tên Khách Hàng</th>
-                        <th>Số điện thoại</th>
                         <th>Tổng Tiền</th>
                         <th>Phương thức TT</th>
                         <th>Trạng Thái TT</th>
                         <th>Ngày Tạo</th>
+                        <th>Tình trạng</th>
                         <th>Thao Tác</th>
                     </tr>
                 </thead>
@@ -83,8 +82,6 @@
                             <tr class="text-center">
                                 <td>@i</td>
                                 <td>@item.Code</td>
-                                <td>@item.CustomerName</td>
-                                <td>@item.Phone</td>
                                 <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount, 0)đ</td>
                                 @if (item.TypePayment == 1)
                                 {
@@ -114,6 +111,9 @@
 
                                 </td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+
+                                </td>
                                 <td style="width:200px;">
                                     <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success">Xem Chi Tiết</a>
                                     <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>

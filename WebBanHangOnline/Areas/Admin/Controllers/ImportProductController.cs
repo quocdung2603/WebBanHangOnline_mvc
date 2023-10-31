@@ -61,9 +61,18 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 Product p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
                 if (p != null)
                 {
-                    p.OriginalPrice = item.OriginalPrice;
-                    p.Price = item.Price;
-                    p.Quantity += item.Quantity;
+                    if(item.OriginalPrice!=null)
+                    {
+                        p.OriginalPrice = item.OriginalPrice;
+                    }    
+                    if(item.Price != null)
+                    {
+                        p.Price = item.Price;
+                    }
+                    if(item.Quantity != null)
+                    {
+                        p.Quantity += item.Quantity;
+                    }
                     p.ModifierDate = DateTime.Now;
                     ProductSize tmp = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.SizeName == item.Size && x.ColorName == item.Color);
                     if (tmp == null)
@@ -141,11 +150,13 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(FormCollection f, List<ImportProductDetail> LProduct)
+        public ActionResult Edit(FormCollection f, List<ImportProductDetail> LProduct, List<ProductSize> ProductSizeNow, int ipId)
         {
+            // ip.Id = 0 la sai
+            ImportProduct ip = db.ImportProducts.FirstOrDefault(x => x.Id == ipId);
             var title = f["TenDotNhapHang"];
             var note = f["GhiChu"];
-            ImportProduct ip = new ImportProduct();
+          
             ip.Title = title;
             ip.Note = note;
             ip.ModifierDate = DateTime.Now;
@@ -153,26 +164,11 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             {
                 ip.ModifierBy = User.Identity.Name;
             }
-            //db.ImportProducts.Add(ip);
             db.SaveChanges();
-
+            int i = 0;
             foreach (var item in LProduct)
             {
-                Product p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
-                if (p != null)
-                {
-                    p.OriginalPrice = item.OriginalPrice;
-                    p.Price = item.Price;
-                    p.Quantity += item.Quantity;
-                    p.ModifierDate = DateTime.Now;
-                    ProductSize tmp = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.SizeName == item.Size && x.ColorName == item.Color);
-                    tmp.ProductId = item.ProductId;
-                    tmp.ColorName = item.Color;
-                    tmp.SizeName = item.Size;
-                    tmp.Quantity = item.Quantity;
-                }
-                //them chi tiet phieu nhap
-                ImportProductDetail ipd = new ImportProductDetail();
+                ImportProductDetail ipd = db.ImportProductDetails.FirstOrDefault(x => x.Id == item.Id);
                 ipd.ImportProductId = ip.Id;
                 ipd.ProductId = item.ProductId;
                 ipd.Title = item.Title;
@@ -181,10 +177,52 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 ipd.Color = item.Color;
                 ipd.Size = item.Size;
                 ipd.Quantity = item.Quantity;
-                db.ImportProductDetails.Add(ipd);
+
+                Product p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                if (p != null)
+                {
+                    p.OriginalPrice = item.OriginalPrice;
+                    p.Price = item.Price;
+                    if (ProductSizeNow[i].Quantity != item.Quantity)
+                    {
+                        p.Quantity -= ProductSizeNow[i].Quantity;
+                        p.Quantity += item.Quantity;
+                    }
+                    p.ModifierDate = DateTime.Now;
+                    var Ids = ProductSizeNow[i].ProductId;
+                    var Szn = ProductSizeNow[i].SizeName;
+                    var Qtn = ProductSizeNow[i].Quantity;
+                    var Cln = ProductSizeNow[i].ColorName;
+                    ProductSize sz = db.ProductSizes.FirstOrDefault(x => x.ProductId == Ids && x.SizeName==Szn && x.ColorName==Cln );
+                    ProductSize tmp = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.SizeName == item.Size && x.ColorName == item.Color);
+                    if (sz != tmp)
+                    {
+                        if (tmp == null)
+                        {
+                            tmp = new ProductSize();
+                            tmp.ProductId = item.ProductId;
+                            tmp.ColorName = item.Color;
+                            tmp.SizeName = item.Size;
+                            tmp.Quantity = item.Quantity;
+                            sz.Quantity -= Qtn;
+                            db.ProductSizes.Add(tmp);
+                        }
+                        else
+                        {
+                            sz.Quantity -= Qtn;
+                            tmp.Quantity += item.Quantity;
+                        }
+                    }
+                    else
+                    {
+                        tmp.Quantity -= ProductSizeNow[i].Quantity;
+                        tmp.Quantity += item.Quantity;
+                    }
+                    i++;
+                }
             }
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

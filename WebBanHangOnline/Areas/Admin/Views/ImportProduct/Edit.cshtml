@@ -1,17 +1,31 @@
 ﻿@model WebBanHangOnline.Models.EF.ImportProduct
+@using WebBanHangOnline.Models.EF
 @{
     ViewBag.Title = "Thêm Phiếu Nhập";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var i = 0;
+  
+    List<ProductSize> ProductSizeNow = new List<ProductSize>();
+    foreach (var item in Model.ImportProductDetails)
+    {
+        
+        ProductSizeNow.Add(new ProductSize
+        {
+            ProductId = item.ProductId,
+            SizeName = item.Size,
+            ColorName = item.Color,
+            Quantity = item.Quantity,
+        });
+    }
 }
-
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
-
+        
         <div class="ContainerCreateExam">
-            <form action="/admin/ImportProduct/add" method="post">
+            <h1>@Model.Id</h1>
+            <form action="/admin/ImportProduct/edit" method="post">
                 <div class="form-horizontal">
                     <h4>Phiếu Nhập Hàng</h4>
                     <hr />
@@ -28,18 +42,41 @@
                             <textarea type="text" name="GhiChu" class="NameKyThi" value="@Model.Note"></textarea>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="hidden" name="ipId" value="@Model.Id" />
+                        </div>
+                    </div>
+
+                    @*mau hien tai*@
 
                     @*Thông tin phiếu nhập*@
+
                     @foreach (var item in Model.ImportProductDetails)
                     {
                         <div id="Exams">
                             <div id="Exam">
+                                @*import product detail id*@
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input type="hidden" name="LProduct[@i].Id" value="@item.Id" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <div class="col-md-10" style="background-color: white;">
+                                        <input type="hidden" name="ProductSizeNow[@i].ProductId" value="@ProductSizeNow[i].ProductId" />
+                                        <input type="hidden" name="ProductSizeNow[@i].ColorName" value="@ProductSizeNow[i].ColorName" />
+                                        <input type="hidden" name="ProductSizeNow[@i].SizeName" value="@ProductSizeNow[i].SizeName" />
+                                        <input type="hidden" name="ProductSizeNow[@i].Quantity" value="@ProductSizeNow[i].Quantity" />
+                                    </div>
+                                </div>
                                 <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                                     <div class="contenQ">
                                         <label class="control-label col-md-12">Mã Sản Phẩm: </label>
                                     </div>
                                     <div class="col-md-10" style="background-color: white;">
-                                        <input class="form-control" name="LProduct[@i].ProductId" value="@item.ProductId"/>
+                                        <input class="form-control" name="LProduct[@i].ProductId" value="@item.ProductId" readonly/>
                                     </div>
                                 </div>
                                 <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
@@ -55,7 +92,7 @@
                                         <label class="control-label col-md-12">Giá Nhập: </label>
                                     </div>
                                     <div class="col-md-10" style="background-color: white;">
-                                        <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.OriginalPrice"/>
+                                        <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.OriginalPrice" />
                                     </div>
                                 </div>
 
@@ -82,7 +119,7 @@
                                         <label class="control-label col-md-12">Kích Thước: </label>
                                     </div>
                                     <div class="col-md-10" style="background-color: white;">
-                                        <input class="form-control" name="LProduct[@i].Size" value="@item.Size"/>
+                                        <input class="form-control" name="LProduct[@i].Size" value="@item.Size" />
                                     </div>
                                 </div>
 
@@ -97,6 +134,7 @@
                             </div>
                         </div>
                         <br />
+                        i++;
                     }
 
                     <div style="margin-top: 10px">
@@ -115,42 +153,7 @@
 </div>
 @section scripts{
     <script>
-        var i = 0;
-        const currentTime = document.querySelector("h1"),
-            content = document.querySelector(".content"),
-            selectMenu = document.querySelectorAll("select"),
-            setAlarmBtn = document.querySelector("button");
-        for (let i = 24; i > 0; i--) {
-            i = i < 10 ? `0${i}` : i;
-            let option = `<option value="${i}">${i}</option>`;
-            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
-            selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
-        }
-
-        for (let i = 59; i >= 0; i--) {
-            i = i < 10 ? `0${i}` : i;
-            let option = `<option value="${i}">${i}</option>`;
-            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
-            selectMenu[3].firstElementChild.insertAdjacentHTML("afterend", option);
-        }
-        function ThemCauHoi() {
-
-            i += 1; // Tăng giá trị i lên 1
-
-            console.log("i sau khi tăng lên 1: " + i);
-
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            var inputFields = examClone.getElementsByTagName('input');
-
-            // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
-                inputFields[j].value = '';
-            }
-            // Thêm bản sao vào Exams
-            examsForm.appendChild(examClone);
-        }
+       
     </script>
 }
 
