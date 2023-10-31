@@ -101,7 +101,8 @@ namespace WebBanHangOnline.Controllers
                     order.Phone = req.Phone;
                     order.Address = req.Address;
                     order.Email = req.Email;
-                    order.Status = "1"; // 1- chưa thanh toán | 2 - đã thanh toán | 3 - hhoàn thành | 4 - hủy
+                    order.Status = "1"; // 1- chưa thanh toán | 2 - đã thanh toán | 3 - hoàn thành | 4 - hủy
+                    order.OrderStatus = 0; //cho xac nhan 0 - da xac nhan 1 - dang giao 2 - da giao 3 - da huy -1 - tra hang 4
                     cart.Items.ForEach(x => order.OrderDetails.Add(new OrderDetail { 
                         ProductId = x.ProductId,
                         Quantity = x.Quantity,
@@ -337,6 +338,7 @@ namespace WebBanHangOnline.Controllers
                         if(itemOrder !=null)
                         {
                             itemOrder.Status = "2"; // đã thanh toán
+                            itemOrder.OrderStatus = 0;
                             db.Orders.Attach(itemOrder); 
                             db.Entry(itemOrder).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();

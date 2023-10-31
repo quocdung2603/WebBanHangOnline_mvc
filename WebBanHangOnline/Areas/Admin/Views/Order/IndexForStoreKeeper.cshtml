@@ -45,19 +45,19 @@
                     }
                 </div>
                 <div class="col-6">
-                        @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
-                        {
-                            <ul style="list-style-type:none; display:flex;">
-                                <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
-                                <li style="padding-left:10px;">
-                                    <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
-                                </li>
-                            </ul>
-                            
-                        }
+                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
+                    {
+                        <ul style="list-style-type:none; display:flex;">
+                            <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
+                            <li style="padding-left:10px;">
+                                <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
+                            </li>
+                        </ul>
+
+                    }
                 </div>
             </div>
             <table class="table table-hover table-bordered" style="margin-top:10px;">
@@ -114,27 +114,27 @@
                                 <td>
                                     @if (item.OrderStatus == 0)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Chờ Xác Nhận</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Chờ Xác Nhận</span>
                                     }
                                     @if (item.OrderStatus == 1)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Xác Nhận</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Xác Nhận</span>
                                     }
                                     @if (item.OrderStatus == 2)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đang Giao</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đang Giao</span>
                                     }
                                     @if (item.OrderStatus == 3)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Giao</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Giao</span>
                                     }
                                     @if (item.OrderStatus == -1)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Hủy</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Hủy</span>
                                     }
                                     @if (item.OrderStatus == 4)
                                     {
-                                        <span class="btn btn-sm" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Trả Hàng</span>
+                                        <span class="btn btn-sm btnChange" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Trả Hàng</span>
                                     }
                                 </td>
                                 <td style="width:200px;">
@@ -182,7 +182,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="txtOrderId" value="0"/>
+                <input type="hidden" id="txtOrderId" value="0" />
                 <div class="form-group">
                     <label>Trạng Thái</label>
                     <select class="form-control" id="ddTrangThai">
@@ -239,5 +239,5 @@
             });
         });
     </script>
-    
-    }
+
+}

@@ -86,5 +86,23 @@ namespace WebBanHangOnline.Controllers
             }
             return PartialView();
         }
+
+        public ActionResult TinhTrangDonHang()
+        {
+            return PartialView();
+        }
+        
+        public ActionResult TinhTrang(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+                var item = db.Orders.Where(x => x.OrderStatus == id && x.CustomerId==user.Id);
+                return PartialView(item);
+            }
+            return PartialView();
+        }
     }
 }

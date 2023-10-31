@@ -31,7 +31,10 @@ namespace WebBanHangOnline.Models.EF
         public int TypePayment { get; set; }
         public string CustomerId { get; set; }
         public string Status { get; set; }
-
+        public int OrderStatus { get; set; }
+        public string IdEConform { get; set; }
+        public string IdEExport { get; set; }
+        public string IdEDelivery { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

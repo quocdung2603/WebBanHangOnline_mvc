@@ -91,7 +91,15 @@
                     <h2 class="text-center">Danh Sách Sản Phẩm</h2>
                 </div>
                 <div class="col-12">
-                   @Html.Action("Partial_SanPham", "Order", new {id=Model.Id})
+                    @Html.Action("Partial_SanPham", "Order", new { id = Model.Id })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center">Tình trạng đơn hàng</h2>
+                </div>
+                <div class="col-12">
+                    @Html.Action("Partial_TinhTrangDonHang", "Order", new { id = Model.Id })
                 </div>
             </div>
         </div>

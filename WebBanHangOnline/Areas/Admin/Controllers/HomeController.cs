@@ -7,7 +7,7 @@ using System.Web.Security;
 
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Admin,Employee,StoreKeeper,Shipper")]
     //[Authorize]
     public class HomeController : Controller
     {
