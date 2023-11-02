@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   @* ViewBag.cnt = ViewBag.Cnt;
-    ViewBag.TotalBuysss = ViewBag.TtBuy;*@
+    @* ViewBag.cnt = ViewBag.Cnt;
+        ViewBag.TotalBuysss = ViewBag.TtBuy;*@
 
 }
 
@@ -28,7 +28,7 @@
                 </ul>
 
             </div>
-            <hr/>
+            <hr />
         </div>
         <div class="col-md-12">
             <section class="content">
@@ -83,12 +83,12 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="active tab-pane" id="activity">
-                                            @Html.Action("LichSuDonHang", "Review") 
+                                            @Html.Action("LichSuDonHang", "Review")
                                             <!-- /.post -->
                                         </div>
                                         <!-- /.tab-pane -->
                                         <div class="tab-pane" id="ttdh">
-                                            @Html.Action("TinhTrangDonHang","Review")
+                                            @Html.Action("TinhTrangDonHang", "Review")
                                         </div>
                                         <!-- /.tab-pane -->
 
@@ -136,4 +136,21 @@
         </div>
     </div>
 </div>
-
+@section scripts{
+    <script>
+        var Huy = document.getElementById('btnHuy');
+        Huy.addEventListener('click', function () {
+            var id = $(this).data('id');
+             $.ajax({
+                url: '/Review/CancelOrder',
+                type: 'POST',
+                data: { id: id },
+                success: function (rs) {
+                    if (rs.success) {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    </script>
+}

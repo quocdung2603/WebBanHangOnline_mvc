@@ -121,6 +121,15 @@ namespace WebBanHangOnline.Controllers
                     Random rd = new Random();
                     order.Code = "DH" + rd.Next(0,9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                     db.Orders.Add(order);
+                    //Thêm DetailOrderStatus
+                    DetailOrderStatus dos = new DetailOrderStatus();
+                    dos.OrderId = order.Id;
+                    dos.CofirmDate = DateTime.Now;
+                    dos.ExportDate = DateTime.Now;
+                    dos.DeliveryDate = DateTime.Now;
+                    dos.CancelDate = DateTime.Now;
+                    dos.ReturnDate = DateTime.Now;
+                    db.DetailOrderStatuses.Add(dos);
                     db.SaveChanges();
                     //send mail cho khach hang 
                     var strSanPham = "";

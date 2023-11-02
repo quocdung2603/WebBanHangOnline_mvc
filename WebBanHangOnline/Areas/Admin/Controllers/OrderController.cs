@@ -181,26 +181,88 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
 
         public ActionResult Partial_TinhTrangDonHang(int id)
         {
-            var items = db.Orders.Find(id);
-            var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            var user = userManager.FindById(items.IdEConform);
-            if (user != null)
+            if (User.Identity.IsAuthenticated)
             {
-                ViewBag.IdeConform = user.FullName;
-            }
-            else
-            {
-                ViewBag.IdeConform = "";
-            }    
-            user = userManager.FindById(items.IdEExport);
-            if (user != null)
-            {
-                ViewBag.IdeEExport = user.FullName;
-            }
-            else
-            {
-                ViewBag.IdeEExport = "";
+                var o = db.Orders.Find(id);
+                var items = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == o.Id);
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var tmp = "";
+                //confirm
+                if(items.IdUConfirm != null)
+                {
+                    tmp = items.IdUConfirm;
+                }
+                var user = userManager.FindById(tmp);
+                if(user!=null)
+                {
+                    ViewBag.IdUConfirm = user.FullName; ViewBag.ConfirmDate = items.CofirmDate.ToString("dd/MM/yyyy hh:mm:ss");
+                }
+                else
+                {
+                    ViewBag.IdUConfirm = ""; ViewBag.ConfirmDate = "";
+                }
+                //export
+                tmp = "";
+                if(items.IdUExport!=null)
+                {
+                    tmp = items.IdUExport;
+                }
+                user = userManager.FindById(tmp);
+                if (user != null)
+                {
+                    ViewBag.IdUExport = user.FullName; ViewBag.ExportDate = items.ExportDate.ToString("dd/MM/yyyy hh:mm:ss");
+                }
+                else
+                {
+                    ViewBag.IdUExport = ""; ViewBag.ExportDate = "";
+                }
+                //delivery
+                tmp = "";
+                if(items.IdUDelivery!=null)
+                {
+                    tmp = items.IdUDelivery;
+                }
+                user = userManager.FindById(tmp);
+                if (user != null)
+                {
+                    ViewBag.IdUDelivery = user.FullName; ViewBag.DeliveryDate = items.DeliveryDate.ToString("dd/MM/yyyy hh:mm:ss");
+                }
+                else
+                {
+                    ViewBag.IdUDelivery = ""; ViewBag.DeliveryDate = "";
+                }
+                //cancel
+                tmp = "";
+                if (items.IdUCancel != null)
+                {
+                    tmp = items.IdUCancel;
+                }
+                user = userManager.FindById(tmp);
+                if (user != null)
+                {
+                    ViewBag.IdUCancel = user.FullName; ViewBag.CancelDate = items.CancelDate.ToString("dd/MM/yyyy hh:mm:ss");
+                }
+                else
+                {
+                    ViewBag.IdUCancel = ""; ViewBag.CancelDate = "";
+                }
+                //return
+                tmp = "";
+                if (items.IdUReturn != null)
+                {
+                    tmp = items.IdUReturn;
+                }
+                user = userManager.FindById(tmp);
+                if (user != null)
+                {
+                    ViewBag.IdUReturn = user.FullName; ViewBag.ReturnDate = items.ReturnDate.ToString("dd/MM/yyyy hh:mm:ss");
+                }
+                else
+                {
+                    ViewBag.IdUReturn = ""; ViewBag.ReturnDate = "";
+                }
+                return PartialView();
             }
             return PartialView();
         }
@@ -232,22 +294,39 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 var item = db.Orders.Find(id);
                 if (item != null)
                 {
+                    if (item.OrderStatus == 0) //xác nhận đơn hàng
+                    {
+                        var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                        dos.IdUConfirm = user.Id;
+                        dos.CofirmDate = DateTime.Now;
+                        db.SaveChanges();
+                        item.OrderStatus += 1;
+                    }
+                    else if (item.OrderStatus == 1) //lấy hàng ra từ kho, cập nhật lại số lượng sản phẩm trong đơn hàng
+                    {
+                        var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                        dos.IdUExport = user.Id;
+                        dos.ExportDate = DateTime.Now;
+                        //tru lai so luong hang hoa
+                        List<OrderDetail> od = db.OrderDetails.Where(x => x.OrderId == item.Id).ToList();
+                        foreach(var i in od)
+                        {
+                            Product p = db.Products.FirstOrDefault(x => x.Id == i.ProductId);
+                            p.Quantity -= i.Quantity;
+                            db.SaveChanges();
+                        }    
+                        db.SaveChanges();
+                        item.OrderStatus += 1;
+                    }
+                    else if (item.OrderStatus == 2)
+                    {
+                        var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                        dos.IdUDelivery = user.Id;
+                        dos.DeliveryDate = DateTime.Now;
+                        db.SaveChanges();
+                        item.OrderStatus += 1;
+                    }
                     db.Orders.Attach(item);
-                    if (item.OrderStatus == 0)
-                    {
-                        item.IdEConform = user.Id;
-                        item.OrderStatus += 1;
-                    }
-                    else if (item.OrderStatus == 1)
-                    {
-                        item.IdEExport = user.Id;
-                        item.OrderStatus += 1;
-                    }
-                    else if(item.OrderStatus == 2)
-                    {
-                        item.IdEDelivery = user.Id;
-                        item.OrderStatus += 1;
-                    }
                     db.Entry(item).Property(x => x.OrderStatus).IsModified = true;
                     db.SaveChanges();
                     return Json(new { success = true });
@@ -255,5 +334,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             }
             return Json(new { success = false });
         }
+
+
     }
 }

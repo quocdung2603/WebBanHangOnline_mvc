@@ -21,7 +21,18 @@
                     <td>@item.Code</td>
                     <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                     <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount, 0)đ</td>
-                    <td></td>
+                    @if (item.OrderStatus == 0)
+                    {
+                        <td>
+                            <button id="btnHuy" class="btn btn-sm btn-danger btnChange" data-id="@item.Id">Hủy đơn hàng</button>
+                        </td>
+                    }
+                    else if (item.OrderStatus == 0)
+                    {
+                        <td>
+                            <button id="btnTraHang" class="btn btn-sm btn-danger btnChange" data-id="@item.Id">Trả Hàng</button>
+                        </td>
+                    }
                 </tr>
                 i++;
                 s += item.TotalAmount;
@@ -31,4 +42,3 @@
     ViewBag.Cnt = i;
     ViewBag.TtBuy = s;
 }
-

@@ -13,6 +13,7 @@ namespace WebBanHangOnline.Models.EF
         public Order()
         {
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.DetailOrderStatuses = new HashSet<DetailOrderStatus>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -32,9 +33,7 @@ namespace WebBanHangOnline.Models.EF
         public string CustomerId { get; set; }
         public string Status { get; set; }
         public int OrderStatus { get; set; }
-        public string IdEConform { get; set; }
-        public string IdEExport { get; set; }
-        public string IdEDelivery { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<DetailOrderStatus> DetailOrderStatuses { get; set; }
     }
 }

@@ -2,16 +2,36 @@
 <table class="table table-bordered">
     <thead>
         <tr class="text-center">
-            <th>Xác Nhận Đơn Hàng</th>
-            <th>Đóng Gói Đơn Hàng</th>
-            <th>Đã Giao Hàng</th>
+            <th>#</th>
+            <th>Nhân Viên Phụ Trách</th>
+            <th>Thời Gian Thực Hiện</th>
         </tr>
     </thead>
     <tbody>
         <tr class="text-center">
-            <td>@ViewBag.IdeConform</td>
-            <td>@ViewBag.IdeEExport</td>
-            <td></td>
+            <td>Xác Nhận Đơn Hàng</td>
+            <td>@ViewBag.IdUConfirm</td>
+            <td>@ViewBag.ConfirmDate</td>
+        </tr>
+        <tr class="text-center">
+            <td>Đóng Gói Đơn Hàng</td>
+            <td>@ViewBag.IdUExport</td>
+            <td>@ViewBag.ExportDate</td>
+        </tr>
+        <tr class="text-center">
+            <td>Giao Đơn Hàng</td>
+            <td>@ViewBag.IdUDelivery</td>
+            <td>@ViewBag.DeliveryDate</td>
+        </tr>
+        <tr class="text-center">
+            <td>Đơn Hàng Hủy</td>
+            <td>@ViewBag.IdUCancel</td>
+            <td>@ViewBag.CancelDate</td>
+        </tr>
+        <tr class="text-center">
+            <td>Đơn Hàng Trả Lại</td>
+            <td>@ViewBag.IdUReturn</td>
+            <td>@ViewBag.ReturnDate</td>
         </tr>
     </tbody>
 </table>

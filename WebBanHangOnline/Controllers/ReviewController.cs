@@ -104,5 +104,34 @@ namespace WebBanHangOnline.Controllers
             }
             return PartialView();
         }
+
+        [HttpPost]
+        public ActionResult CancelOrder(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                var item = db.Orders.Find(id);
+                if (item != null)
+                {
+                    if (item.OrderStatus == 0)
+                    {
+                        var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                        dos.IdUCancel = user.Id;
+                        dos.CancelDate = DateTime.Now;
+                        db.SaveChanges();
+                        item.OrderStatus = -1;
+                    }
+                    db.Orders.Attach(item);
+                    db.Entry(item).Property(x => x.OrderStatus).IsModified = true;
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false });
+        }
     }
 }

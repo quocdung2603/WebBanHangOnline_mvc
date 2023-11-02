@@ -1,9 +1,4 @@
 ﻿@model IEnumerable<WebBanHangOnline.Models.EF.Order>
-
-<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
-<link rel="stylesheet" href="~/Content/assets/dist/css/adminlte.min.css">
-<link href="~/Content/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
 <div class="col-md-12">
     <div class="card">
         <div class="card-header p-2">
@@ -20,7 +15,7 @@
         <div class="card-body">
             <div class="tab-content">
                 <div class="active tab-pane" id="ChoXacNhan">
-                    @Html.Action("TinhTrang","Review", new {id = 0})
+                    @Html.Action("TinhTrang", "Review", new { id = 0 })
                     <!-- /.post -->
                 </div>
                 <!-- /.tab-pane -->
