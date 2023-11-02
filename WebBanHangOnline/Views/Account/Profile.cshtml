@@ -153,4 +153,21 @@
             });
         });
     </script>
+    <script>
+        var TraHang = document.getElementById('btnTraHang');
+        TraHang.addEventListener('click', function () {
+            alert('haha');
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/Review/ReturnOrder',
+                type: 'POST',
+                data: { id: id },
+                success: function (rs) {
+                    if (rs.success) {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    </script>
 }

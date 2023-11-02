@@ -22,8 +22,10 @@ namespace WebBanHangOnline.Models.EF
         public DateTime DeliveryDate { get; set; }
         public string IdUCancel { get; set; }   
         public DateTime CancelDate { get; set; }
+        public string CancelReason { get; set; }
         public string IdUReturn { get; set; }
         public DateTime ReturnDate { get; set; }
+        public string ReturnReason { get; set; }    
         public virtual Order Order { get; set; }
     }
 }

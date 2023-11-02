@@ -252,6 +252,10 @@
     <Compile Include="Migrations\202311011336311_AddDetailOrderStatus.Designer.cs">
       <DependentUpon>202311011336311_AddDetailOrderStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311020704229_AddCancelReason.cs" />
+    <Compile Include="Migrations\202311020704229_AddCancelReason.Designer.cs">
+      <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3762,6 +3766,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311011336311_AddDetailOrderStatus.resx">
       <DependentUpon>202311011336311_AddDetailOrderStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311020704229_AddCancelReason.resx">
+      <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
