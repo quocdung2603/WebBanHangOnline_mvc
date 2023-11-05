@@ -1,7 +1,6 @@
-﻿@using Microsoft.AspNet.Identity.EntityFramework
-@model IEnumerable<IdentityRole>
+﻿@model IEnumerable<WebBanHangOnline.Models.EF.Voucher>
 @{
-    ViewBag.Title = "Danh Sách Quyền";
+    ViewBag.Title = "Danh Sách Mã Khuyến Mãi";
 }
 @section naviheader {
     <!-- Left navbar links -->
@@ -17,7 +16,22 @@
         </li>
     </ul>
 }
-
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Tin Tức</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 <!-- Main content -->
 <section class="content">
 
@@ -27,7 +41,7 @@
             <h3 class="card-title">@ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/role/create" class="btn btn-success">Thêm Mới</a>
+                <a href="/admin/voucher/add" class="btn btn-success">Thêm Mới</a>
             </div>
         </div>
         <div class="card-body">
@@ -35,8 +49,10 @@
                 <thead style="background-color:aquamarine;">
                     <tr class="text-center">
                         <th>STT</th>
-                        <th>Tên Quyền</th>
-                        <th>Hành Động</th>
+                        <th>Tên Voucher</th>
+                        <th>Loại</th>
+                        <th>Số Lượng</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,9 +63,21 @@
                         {
                             <tr id="trow_@item.Id" class="text-center">
                                 <td>@i</td>
-                                <td>@item.Name</td>
+                                <td>@item.Title</td>
                                 <td>
-                                    <a href="/admin/role/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                    @if (item.Type == 1)
+                                    {
+                                        <span class="btn btn-sm btn-success">BILL</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-sm btn-primary">SHIP</span>
+                                    }
+                                </td>
+                                <td>@item.Quantity</td>
+                                <td>
+                                    <a href="/admin/voucher/detail/@item.Id" class="btn btn-sm btn-success">Xem</a>
+                                    <a href="/admin/voucher/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
                                 </td>
                             </tr>
@@ -57,6 +85,13 @@
                         }
 
                     }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">Không có bản ghi nào</td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
@@ -79,7 +114,7 @@
                 var conf = confirm('Bạn có muốn xóa đối tượng không?');
                 if (conf === true) {
                     $.ajax({
-                        url: '/admin/role/delete',
+                        url: '/admin/voucher/delete',
                         type: 'POST',
                         data: { id: id },
                         success: function (rs) {
@@ -92,6 +127,4 @@
             });
         });
     </script>
-
-
 }

@@ -195,6 +195,7 @@
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingSystemController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VoucherController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -256,6 +257,22 @@
     <Compile Include="Migrations\202311020704229_AddCancelReason.Designer.cs">
       <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311030603365_AddVoucher.cs" />
+    <Compile Include="Migrations\202311030603365_AddVoucher.Designer.cs">
+      <DependentUpon>202311030603365_AddVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311030636149_ChangeVoucher.cs" />
+    <Compile Include="Migrations\202311030636149_ChangeVoucher.Designer.cs">
+      <DependentUpon>202311030636149_ChangeVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311030925082_ChangeKDLVoucher.cs" />
+    <Compile Include="Migrations\202311030925082_ChangeKDLVoucher.Designer.cs">
+      <DependentUpon>202311030925082_ChangeKDLVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.cs" />
+    <Compile Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.Designer.cs">
+      <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -280,6 +297,7 @@
     <Compile Include="Models\EF\ReviewProduct.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
+    <Compile Include="Models\EF\Voucher.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
@@ -3541,6 +3559,10 @@
     <Content Include="Areas\Admin\Views\Order\IndexForStoreKeeper.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Partial_TinhTrangDonHang.cshtml" />
     <Content Include="Areas\Admin\Views\Order\IndexForShipper.cshtml" />
+    <Content Include="Areas\Admin\Views\Voucher\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Voucher\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Voucher\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Voucher\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3557,6 +3579,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Uploads\images\avatar5.png" />
     <Content Include="Uploads\images\Hinh3x4.jpg" />
+    <Content Include="Uploads\images\IMG\OIP.png" />
     <Content Include="Uploads\images\IMG\R.png" />
     <Content Include="Uploads\images\IMG\screenshot_1697442338.png" />
     <Content Include="Uploads\images\OIP.jpg" />
@@ -3713,6 +3736,7 @@
     <Content Include="Views\ShoppingCart\VnpayReturn.cshtml" />
     <Content Include="Views\Review\TinhTrangDonHang.cshtml" />
     <Content Include="Views\Review\TinhTrang.cshtml" />
+    <Content Include="Views\Article\Partial_Voucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3769,6 +3793,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311020704229_AddCancelReason.resx">
       <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311030603365_AddVoucher.resx">
+      <DependentUpon>202311030603365_AddVoucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311030636149_ChangeVoucher.resx">
+      <DependentUpon>202311030636149_ChangeVoucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311030925082_ChangeKDLVoucher.resx">
+      <DependentUpon>202311030925082_ChangeKDLVoucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.resx">
+      <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

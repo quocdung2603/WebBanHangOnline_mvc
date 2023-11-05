@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebBanHangOnline.Models.EF.Voucher>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        if (item.Type == 1)
+        {
+            <div class="row" style="display: flex; justify-content: center; align-items: center; padding: 10px 0 10px 0; margin: 20px 0 20px 0; border: 1px solid #fde0db; background-color: #fde0db; border-radius:10px;">
+                <div class="col-md-8" style="padding: 10px 10px 10px 110px; color: #ff6347;">
+                    <div style="font-size:25px; font-weight:bold; margin-bottom:10px;">@item.Title</div>
+                    <div style="font-size:20px;">Giảm tối đa @WebBanHangOnline.Common.Common.FormatNumber(item.Value) vnđ</div>
+                    <div style="font-size:20px;">Hạn sử dụng: Từ ngày @string.Format("{0:dd-MM-yyyy}", item.StartDate) đến @string.Format("{0:dd-MM-yyyy}", item.EndDate)</div>
+                    <div style="font-size:20px;">Số lượng còn lại: @item.Quantity</div>
+                </div>
+                <div class="col-md-4" style="text-align:center; padding:10px 0 10px 0;">
+                    <a href="#" class="btn btn-sm" style="background-color: #ff6347;color: white; ">NHẬN VOUCHER</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row" style="display: flex; justify-content: center; align-items: center; padding: 10px 0 10px 0; margin: 20px 0 20px 0; border: 1px solid #ccfff8; background-color: #ccfff8; border-radius: 10px; ">
+                <div class="col-md-8" style="padding: 10px 10px 10px 110px; color: #00bfa7;">
+                    <div style="font-size: 25px; font-weight: bold; margin-bottom: 10px;">@item.Title</div>
+                    <div style="font-size:20px;">Giảm tối đa @WebBanHangOnline.Common.Common.FormatNumber(item.Value) đ</div>
+                    <div style="font-size:20px;">Hạn sử dụng: Từ ngày @string.Format("{0:dd-MM-yyyy}", item.StartDate) đến @string.Format("{0:dd-MM-yyyy}", item.EndDate)</div>
+                    <div style="font-size:20px;">Số lượng còn lại: @item.Quantity</div>
+                </div>
+                <div class="col-md-4" style="text-align:center; padding:10px 0 10px 0;">
+                    <a href="#" class="btn btn-sm" style="background-color: #00bfa7; color: white; ">NHẬN VOUCHER</a>
+                </div>
+            </div>
+        }
+    }
+}

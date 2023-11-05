@@ -16,5 +16,12 @@ namespace WebBanHangOnline.Controllers
             var item = db.Posts.FirstOrDefault(x=>x.Alias == alias);
             return View(item);
         }
+
+        public ActionResult Partial_Voucher(int type)
+        {
+            var tn = DateTime.Now;
+            var item = db.Vouchers.Where(x => x.Type == type && x.StartDate <= tn && tn <= x.EndDate && x.Quantity > 0);
+            return PartialView(item);
+        }
     }
 }

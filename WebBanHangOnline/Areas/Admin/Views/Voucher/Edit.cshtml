@@ -1,0 +1,179 @@
+﻿@model WebBanHangOnline.Models.EF.Voucher
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    @* var x = Model.HSD;
+        Console.WriteLine(x); *@
+}
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/news" class="nav-link">Tin Tức</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Thêm Mới</a>
+        </li>
+    </ul>
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm Mới Tin Tức</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Tin Tức</a></li>
+                    <li class="breadcrumb-item active">Thêm Mới</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông Tin Thêm Mới Mã Giảm Giá</h3>
+
+
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("Edit", "Voucher", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.CreatedDate)
+                    @Html.HiddenFor(x => x.CreatedBy)
+                    <!-- your steps content here -->
+                    <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tiêu Đề</label>
+                        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @value = Model.Title })
+                    </div>
+                    <div class="form-group">
+                        <label>Loại Voucher</label>
+                        @Html.DropDownListFor(x => x.Type, ViewBag.vch as SelectList, "- Chọn Loại -", new { @class = "form-control", @value = Model.Type })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Giá Trị</label>
+                        @Html.TextBoxFor(x => x.Value, new { @class = "form-control", @value = Model.Value })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Phần Trăm Giá Trị</label>
+                        @Html.TextBoxFor(x => x.PercentValue, new { @class = "form-control", @value = Model.PercentValue })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Số Lượng</label>
+                        @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @value = Model.Quantity })
+                    </div>
+                    @*<div class="form-group">
+                        <label for="exampleInputPassword1">Hạn Sử Dụng</label>
+                        <input type="date" id="HSD" name="HSD" class="form-control" value="@String.Format("{0:yyyy-MM-dd}", Model.HSD)" />
+                    </div>*@
+                    @*thời gian bắt đầu*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Bắt Đầu</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="StartDate" name="StartDate" class="form-control" value="@String.Format("{0:yyyy-MM-dd}", Model.StartDate)">
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SHour" class="form-control">
+                                    <option value="SHour" selected disabled hidden>@Convert.ToInt32(Model.StartDate.Hour)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SMinute" class="form-control">
+                                    <option value="SMinute" selected disabled hidden>@Convert.ToInt32(Model.StartDate.Minute)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @*Thời gian kết thúc*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Kết Thúc</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="EndDate" name="EndDate" class="form-control" value="@String.Format("{0:yyyy-MM-dd}", Model.EndDate)">
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EHour" class="form-control">
+                                      
+                                    <option value="EHour" selected disabled hidden>@Convert.ToInt32(Model.EndDate.Hour)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EMinute" class="form-control">
+                                    <option value="EMinute" selected disabled hidden>@Convert.ToInt32(Model.EndDate.Minute)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a href="/admin/voucher" class="btn btn-danger">Quay lại</a>
+                        <button type="submit" class="btn btn-primary">Lưu Lại</button>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+@section scripts{
+    <script>
+        const currentTime = document.querySelector("h1"),
+            content = document.querySelector(".content"),
+            selectMenu = document.querySelectorAll("select"),
+            setAlarmBtn = document.querySelector("button");
+
+        //bat dau
+        for (let i = 23; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        for (let i = 59; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        //ket thuc
+        for (let i = 23; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[3].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        for (let i = 59; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[4].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+    </script>
+}
+
+

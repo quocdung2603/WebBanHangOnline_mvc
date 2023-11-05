@@ -1,8 +1,21 @@
 ﻿@model WebBanHangOnline.Models.EF.ImportProduct
+@using WebBanHangOnline.Models.EF
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "Thêm Phiếu Nhập";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var i = 0;
+    List<Product> p = ViewBag.p;
+    var ListSp = p.Select(item => new
+    {
+        item.Title,
+        item.Id,
+        item.Quantity,
+        item.OriginalPrice,
+        item.Price,
+    }).ToList();
+
+    var LP = Newtonsoft.Json.JsonConvert.SerializeObject(ListSp);
 }
 
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
@@ -30,70 +43,79 @@
                     </div>
 
                     @*Thông tin phiếu nhập*@
-                    <div id="Exams">
-                        <div id="Exam">
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Mã Sản Phẩm: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].ProductId" />
-                                </div>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Tên Sản Phẩm: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].Title" />
-                                </div>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Giá Nhập: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].OriginalPrice" />
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Giá Bán: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].Price" />
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Màu sắc: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].Color" />
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Kích Thước: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].Size" />
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                <div class="contenQ">
-                                    <label class="control-label col-md-12">Số Lượng: </label>
-                                </div>
-                                <div class="col-md-10" style="background-color: white;">
-                                    <input class="form-control" name="LProduct[@i].Quantity" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead style="background-color:aquamarine">
+                            <tr class="text-center">
+                                <th>Mã Sản Phẩm</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Giá Nhập</th>
+                                <th>Giá Bán</th>
+                                <th>Màu Sắc</th>
+                                <th>Kích Thước</th>
+                                <th>Số Lượng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="Exams">
+                            <tr class="text-center" id="Exam">
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].ProductId" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title" >
+                                            <datalist id="Titles">
+                                                <option value="">
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].OriginalPrice" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Price" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Color" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Size" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Quantity" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <div style="margin-top: 10px">
                         <button type="submit" class="btn btn-primary">Tạo Phiếu Nhập</button>
                     </div>
@@ -110,24 +132,24 @@
 </div>
 @section scripts{
     <script>
-        var i = 0;
+        var Lquestion = @Html.Raw(LP);
+        console.log(Lquestion);
         const currentTime = document.querySelector("h1"),
             content = document.querySelector(".content"),
-            selectMenu = document.querySelectorAll("select"),
+            selectMenu = document.querySelectorAll("datalist"),
             setAlarmBtn = document.querySelector("button");
-        for (let i = 24; i > 0; i--) {
-            i = i < 10 ? `0${i}` : i;
-            let option = `<option value="${i}">${i}</option>`;
+
+        //bat dau
+        for (let i = 0; i < Lquestion.length; i++) {
+            let option = `<option value="${Lquestion[i].Title}">`;
             selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
-            selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
         }
 
-        for (let i = 59; i >= 0; i--) {
-            i = i < 10 ? `0${i}` : i;
-            let option = `<option value="${i}">${i}</option>`;
-            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
-            selectMenu[3].firstElementChild.insertAdjacentHTML("afterend", option);
-        }
+       
+    </script>
+    <script>
+        var i = 0;
+        var id = 0;
         function ThemCauHoi() {
 
             i += 1; // Tăng giá trị i lên 1
@@ -142,6 +164,23 @@
             for (var j = 0; j < inputFields.length; j++) {
                 inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
                 inputFields[j].value = '';
+            }
+            // Thêm bản sao vào Exams
+            examsForm.appendChild(examClone);
+        }
+
+        function ThemKichThuoc() {
+            i += 1; // Tăng giá trị i lên 1
+
+            console.log("i sau khi tăng lên 1: " + i);
+
+            var examsForm = document.getElementById('Exams');
+            var examClone = document.getElementById('Exam').cloneNode(true);
+            var inputFields = examClone.getElementsByTagName('input');
+
+            // Cập nhật name của trường input để chứa giá trị mới của i
+            for (var j = 0; j < inputFields.length; j++) {
+                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
             }
             // Thêm bản sao vào Exams
             examsForm.appendChild(examClone);

@@ -31,6 +31,7 @@ namespace WebBanHangOnline.Models.Commons
 
         public static string FilterChar(string str)
         {
+            if (str == null) str = "";
             str = str.Trim();
             for (int i = 1; i < VietNamChar.Length; i++)
             {
@@ -69,6 +70,7 @@ namespace WebBanHangOnline.Models.Commons
 
         public static string ChuyenCoDauThanhKhongDau(string str)
         {
+            if (str == null) str = "";
             str = str.Trim();
             for (int i = 1; i < VietNamChar.Length; i++)
             {
