@@ -77,6 +77,7 @@
                                     <ul class="nav nav-pills">
                                         <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Lịch Sử Mua Hàng</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#ttdh" data-toggle="tab">Đơn Hàng</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#vvc" data-toggle="tab">Ví Voucher</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Cập Nhật</a></li>
                                     </ul>
                                 </div><!-- /.card-header -->
@@ -88,9 +89,72 @@
                                         </div>
                                         <!-- /.tab-pane -->
                                         <div class="tab-pane" id="ttdh">
-                                            @Html.Action("TinhTrangDonHang", "Review")
+                                            @*@Html.Action("TinhTrangDonHang", "Review")*@
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header p-2">
+                                                        <ul class="nav nav-pills">
+                                                            @*cho xac nhan, cho giao, dang giao, da giao, da huy, tra hang*@
+                                                            <li class="nav-item"><a class="nav-link active" href="#ChoXacNhan" data-toggle="tab">Chờ Xác Nhận</a></li>
+                                                            <li class="nav-item"><a class="nav-link" href="#DaXacNhan" data-toggle="tab">Đã Xác Nhận</a></li>
+                                                            <li class="nav-item"><a class="nav-link" href="#DangGiao" data-toggle="tab">Đang Giao</a></li>
+                                                            <li class="nav-item"><a class="nav-link" href="#DaGiao" data-toggle="tab">Đã Giao</a></li>
+                                                            <li class="nav-item"><a class="nav-link" href="#DaHuy" data-toggle="tab">Đã Hủy</a></li>
+                                                            <li class="nav-item"><a class="nav-link" href="#TraHang" data-toggle="tab">Trả Hàng</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="active tab-pane" id="ChoXacNhan">
+                                                                @Html.Action("TinhTrang", "Review", new { id = 0 })
+                                                            </div>
+                                                            <div class="tab-pane" id="ĐaXacNhan">
+                                                                @Html.Action("TinhTrang", "Review", new { id = 1 })
+                                                            </div>
+                                                            <div class="tab-pane" id="DangGiao">
+                                                                @Html.Action("TinhTrang", "Review", new { id = 2 })
+                                                            </div>
+                                                            <div class="tab-pane" id="DaGiao">
+                                                                @Html.Action("TinhTrang", "Review", new { id = 3 })
+                                                            </div>
+                                                            <div class="tab-pane" id="DaHuy">
+                                                                @Html.Action("TinhTrang", "Review", new { id = -1 })
+                                                            </div>
+                                                            <div class="tab-pane" id="TraHang">
+                                                                @Html.Action("TinhTrang", "Review", new { id = 4 })
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.tab-content -->
+                                                    </div><!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
                                         </div>
                                         <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="vvc">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header p-2">
+                                                        <ul class="nav nav-pills">
+                                                            @*cho xac nhan, cho giao, dang giao, da giao, da huy, tra hang*@
+                                                            <li class="nav-item col-md-6"><a class="nav-link active text-center" href="#MaGiamGia" data-toggle="tab">Mã Giảm Giá</a></li>
+                                                            <li class="nav-item col-md-6"><a class="nav-link text-center" href="#MaVanChuyen" data-toggle="tab">Mã Vận Chuyển</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="active tab-pane" id="MaGiamGia">
+                                                                @Html.Action("Partial_User_Voucher", "Voucher", new { type = 1 })
+                                                            </div>
+                                                            <div class="tab-pane" id="MaVanChuyen">
+                                                                 @Html.Action("Partial_User_Voucher", "Voucher", new { type = 2 })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="tab-pane" id="settings">
                                             @using (Html.BeginForm("PostProfile", "Account"))
@@ -141,33 +205,38 @@
         var Huy = document.getElementById('btnHuy');
         Huy.addEventListener('click', function () {
             var id = $(this).data('id');
-             $.ajax({
-                url: '/Review/CancelOrder',
-                type: 'POST',
-                data: { id: id },
-                success: function (rs) {
-                    if (rs.success) {
-                        location.reload();
+            var conf = confirm("Bạn có chắc muốn hủy đơn hàng không?");
+            if (conf === true) {
+                $.ajax({
+                    url: '/Review/CancelOrder',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            location.reload();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     </script>
     <script>
         var TraHang = document.getElementById('btnTraHang');
         TraHang.addEventListener('click', function () {
-            alert('haha');
             var id = $(this).data('id');
-            $.ajax({
-                url: '/Review/ReturnOrder',
-                type: 'POST',
-                data: { id: id },
-                success: function (rs) {
-                    if (rs.success) {
-                        location.reload();
+            var conf = confirm("Bạn có chắc muốn trả hàng không?");
+            if (conf === true) {
+                $.ajax({
+                    url: '/Review/ReturnOrder',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            location.reload();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     </script>
 }

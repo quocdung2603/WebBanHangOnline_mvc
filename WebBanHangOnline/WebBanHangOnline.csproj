@@ -206,6 +206,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +274,18 @@
     <Compile Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.Designer.cs">
       <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311050919125_AddUserVoucher.cs" />
+    <Compile Include="Migrations\202311050919125_AddUserVoucher.Designer.cs">
+      <DependentUpon>202311050919125_AddUserVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311050925272_ChangeUserVoucher.cs" />
+    <Compile Include="Migrations\202311050925272_ChangeUserVoucher.Designer.cs">
+      <DependentUpon>202311050925272_ChangeUserVoucher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051126244_AddTypeUV.cs" />
+    <Compile Include="Migrations\202311051126244_AddTypeUV.Designer.cs">
+      <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -297,6 +310,7 @@
     <Compile Include="Models\EF\ReviewProduct.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
+    <Compile Include="Models\EF\UserVoucher.cs" />
     <Compile Include="Models\EF\Voucher.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -3734,9 +3748,11 @@
     <Content Include="Views\Review\_Review.cshtml" />
     <Content Include="Views\Review\_Load_Review.cshtml" />
     <Content Include="Views\ShoppingCart\VnpayReturn.cshtml" />
-    <Content Include="Views\Review\TinhTrangDonHang.cshtml" />
     <Content Include="Views\Review\TinhTrang.cshtml" />
-    <Content Include="Views\Article\Partial_Voucher.cshtml" />
+    <Content Include="Views\Voucher\Partial_Voucher.cshtml" />
+    <Content Include="Views\Voucher\Partial_User_Voucher.cshtml" />
+    <Content Include="Views\Voucher\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3805,6 +3821,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.resx">
       <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311050919125_AddUserVoucher.resx">
+      <DependentUpon>202311050919125_AddUserVoucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311050925272_ChangeUserVoucher.resx">
+      <DependentUpon>202311050925272_ChangeUserVoucher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051126244_AddTypeUV.resx">
+      <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

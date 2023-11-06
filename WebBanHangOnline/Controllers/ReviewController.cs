@@ -70,7 +70,7 @@ namespace WebBanHangOnline.Controllers
                 var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var user = userManager.FindByName(User.Identity.Name);
-                var items = db.Orders.Where(x => x.CustomerId == user.Id).ToList();
+                var items = db.Orders.Where(x => x.CustomerId == user.Id && x.OrderStatus == 3).ToList();
                 var it = db.Orders.Where(x => x.CustomerId == user.Id);
                 decimal s = 0;
                 int cnt = 0;
@@ -86,12 +86,6 @@ namespace WebBanHangOnline.Controllers
             }
             return PartialView();
         }
-
-        public ActionResult TinhTrangDonHang()
-        {
-            return PartialView();
-        }
-        
         public ActionResult TinhTrang(int id)
         {
             if (User.Identity.IsAuthenticated)

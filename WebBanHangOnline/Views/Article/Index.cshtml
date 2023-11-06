@@ -52,7 +52,7 @@
             </div>
         </div>
         <hr />
-        if (Model.Alias == "khuyen-mai")
+        if (Model.Alias == "khuyen-mai" && User.Identity.IsAuthenticated)
         {
             <div class="row">
                 <h1>Voucher</h1>
@@ -68,13 +68,12 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
-                                @Html.Action("Partial_Voucher", "Article", new { type = 1 })
+                                @Html.Action("Partial_Voucher", "Voucher", new { type = 1 })
                             </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="ttdh">
-                                @Html.Action("Partial_Voucher", "Article", new { type = 2 })
+                                @Html.Action("Partial_Voucher", "Voucher", new { type = 2 })
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -82,5 +81,29 @@
         }
     }
 </div>
-
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnGainVoucher', function () {
+                var id = $(this).data('id');
+                //console.log(id);
+                $.ajax({
+                    url: '/Voucher/UpdateQuantityVoucher',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            alert("Voucher vừa được thêm vào ví Voucher của bạn.");
+                            location.reload();
+                        }
+                        else {
+                            alert("Voucher đã tồn tại trong ví Voucher của bạn.");
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
 

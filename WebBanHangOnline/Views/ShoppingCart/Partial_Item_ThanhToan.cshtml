@@ -5,20 +5,37 @@
     <h3>Giỏ Hàng <span style="float:right;"><small>@Model.Count()</small></span></h3>
     var i = 0;
     var TongGioHang = decimal.Zero;
+    decimal TienShip = 30000;
     <div style="border:1px solid #808080">
         <table class="table">
             @foreach (var item in Model)
             {
                 TongGioHang += item.TotalPrice;
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@WebBanHangOnline.Common.Common.FormatNumber(item.Price, 0)</td>
-                <td style="width:40px">x @item.Quantity</td>
-            </tr>
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@WebBanHangOnline.Common.Common.FormatNumber(item.Price, 0)</td>
+                    <td style="width:40px">x @item.Quantity</td>
+                </tr>
+            }
+            @if(Session["TongGioHang"] != null)
+            {
+                TongGioHang = (decimal)Session["TongGioHang"];
+            }
+            @if(Session["TienShip"] != null)
+            {
+                TienShip = (decimal)Session["TienShip"];
             }
             <tr>
-                <td style="color:red; font-size:14px; font-weight:bold">Tổng Hóa Đơn:</td>
+                <td style="color:red; font-size:14px; font-weight:bold">Tổng Giỏ Hàng:</td>
                 <td style="font-size: 14px; font-weight:bold">@WebBanHangOnline.Common.Common.FormatNumber(TongGioHang, 0)</td>
+            </tr>
+            <tr>
+                <td style="color:red; font-size:14px; font-weight:bold">Phí Vận Chuyển:</td>
+                <td style="font-size: 14px; font-weight:bold">@WebBanHangOnline.Common.Common.FormatNumber(TienShip, 0)</td>
+            </tr>
+            <tr>
+                <td style="color:red; font-size:14px; font-weight:bold">Tổng Hóa Đơn:</td>
+                <td style="font-size: 14px; font-weight:bold">@WebBanHangOnline.Common.Common.FormatNumber(TongGioHang + TienShip, 0)</td>
             </tr>
         </table>
     </div>

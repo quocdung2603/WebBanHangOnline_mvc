@@ -10,6 +10,10 @@ namespace WebBanHangOnline.Models.EF
     [Table("tb_Voucher")]
     public class Voucher : CommonAbstract
     {
+        public Voucher()
+        {
+            this.UserVouchers = new HashSet<UserVoucher>();
+        }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } 
@@ -20,5 +24,6 @@ namespace WebBanHangOnline.Models.EF
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Quantity { get; set; }   
+        public virtual IEnumerable<UserVoucher> UserVouchers { get; set; }
     }
 }

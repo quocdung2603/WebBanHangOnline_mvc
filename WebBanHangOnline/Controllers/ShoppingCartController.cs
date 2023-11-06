@@ -208,6 +208,7 @@ namespace WebBanHangOnline.Controllers
         public ActionResult Partial_Item_Cart()
         {
             ShoppingCart cart = (ShoppingCart)Session["Cart"];
+            Session["TongHoaDon"] = decimal.Zero;
             if (cart != null && cart.Items.Any())
             {
                 return PartialView(cart.Items);

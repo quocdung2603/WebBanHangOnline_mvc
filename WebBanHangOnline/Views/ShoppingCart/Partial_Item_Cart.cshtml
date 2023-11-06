@@ -15,9 +15,11 @@
     {
         var i = 0;
         var TongGioHang = decimal.Zero;
+        decimal TienShip = 30000;
         foreach (var item in Model)
         {
             TongGioHang += item.TotalPrice;
+            Session["TongHoaDon"] = TongGioHang;
             <tr class="text-center" id="trow_@item.ProductId">
                 <td>@(i+1)</td>
                 <td><img src="@item.ProductImg" width="60" /></td>
@@ -34,9 +36,22 @@
             </tr>
             i++;
         }
+        if(Session["TongGioHang"] != null)
+        {
+            TongGioHang = (decimal)Session["TongGioHang"];
+        }
+        if(Session["TienShip"] != null)
+        {
+            TienShip = (decimal)Session["TienShip"];
+        }
         <tr>
             <th colspan="6" class="text-right" style="color:red; font-size:18px;">Tổng Giỏ Hàng: </th>
             <th class="text-center" style="font-size:18px">@WebBanHangOnline.Common.Common.FormatNumber(TongGioHang, 0)</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th colspan="6" class="text-right" style="color:red; font-size:18px;">Phí Vận Chuyển: </th>
+            <th class="text-center" style="font-size:18px">@WebBanHangOnline.Common.Common.FormatNumber(TienShip, 0)</th>
             <th></th>
         </tr>
     }
