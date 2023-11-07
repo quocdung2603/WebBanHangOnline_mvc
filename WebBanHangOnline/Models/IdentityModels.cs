@@ -46,6 +46,8 @@ namespace WebBanHangOnline.Models
         public DbSet<ImportProduct> ImportProducts { get; set; }
         public DbSet<ImportProductDetail> ImportProductDetails { get; set; }
         public DbSet<DetailOrderStatus> DetailOrderStatuses { get; set; }
+        public DbSet<ExportProduct> ExportProducts { get; set; }
+        public DbSet<ExportProductDetail> ExportProductDetails { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<UserVoucher> UserVouchers { get; set; }
         public static ApplicationDbContext Create()

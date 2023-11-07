@@ -183,6 +183,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExportProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
@@ -286,6 +287,10 @@
     <Compile Include="Migrations\202311051126244_AddTypeUV.Designer.cs">
       <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311070201300_addExportProduct.cs" />
+    <Compile Include="Migrations\202311070201300_addExportProduct.Designer.cs">
+      <DependentUpon>202311070201300_addExportProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -297,6 +302,8 @@
     <Compile Include="Models\EF\Category.cs" />
     <Compile Include="Models\EF\Contact.cs" />
     <Compile Include="Models\EF\DetailOrderStatus.cs" />
+    <Compile Include="Models\EF\ExportProduct.cs" />
+    <Compile Include="Models\EF\ExportProductDetail.cs" />
     <Compile Include="Models\EF\ImportProduct.cs" />
     <Compile Include="Models\EF\ImportProductDetail.cs" />
     <Compile Include="Models\EF\News.cs" />
@@ -3577,6 +3584,8 @@
     <Content Include="Areas\Admin\Views\Voucher\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Voucher\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Voucher\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ExportProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ExportProduct\Add.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3830,6 +3839,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311051126244_AddTypeUV.resx">
       <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311070201300_addExportProduct.resx">
+      <DependentUpon>202311070201300_addExportProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

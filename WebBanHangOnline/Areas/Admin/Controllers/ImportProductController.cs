@@ -37,6 +37,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         {
             List<Product> a = db.Products.ToList();
             ViewBag.p = a;
+            ViewBag.Titles = db.Products.ToList();
             return View();
         }
 
@@ -136,7 +137,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 db.ImportProductDetails.Add(ipd);
             }
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Products");
         }
 
         public ActionResult Detail(int id)
