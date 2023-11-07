@@ -14,7 +14,8 @@ namespace WebBanHangOnline.Models.EF
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } 
         public int ExportProductId { get; set; }    
-        public int ProductId { get; set; }  
+        public int ProductId { get; set; }
+        public string Title { get; set; }
         public int Quantity { get; set; }
         public string Color { get; set; }   
         public string Size { get; set; }

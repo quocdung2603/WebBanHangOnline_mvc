@@ -19,6 +19,20 @@
 
     var dt = ViewBag.Titles;
 }
+@{ 
+    List<ProductSize> ProductSizeNow = new List<ProductSize>();
+    foreach (var item in Model.ExportProductDetails)
+    {
+
+        ProductSizeNow.Add(new ProductSize
+        {
+            ProductId = item.ProductId,
+            SizeName = item.Size,
+            ColorName = item.Color,
+            Quantity = item.Quantity,
+        });
+    }
+}
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
 @section naviheader {
     <!-- Left navbar links -->
@@ -54,9 +68,8 @@
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
-
         <div class="ContainerCreateExam">
-            <form action="/admin/ExportProduct/add" method="post">
+            <form action="/admin/ExportProduct/edit" method="post">
                 <div class="form-horizontal">
                     <h4>Phiếu Xuất Hàng</h4>
                     <hr />
@@ -64,13 +77,18 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Tên Đợt Xuất Hàng</label>
                         <div class="col-md-10">
-                            <input type="text" name="TenDotNhapHang" class="NameKyThi" />
+                            <input type="text" name="TenDotNhapHang" class="NameKyThi" value="@Model.Title" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Ghi Chú</label>
                         <div class="col-md-10">
-                            <textarea type="text" name="GhiChu" class="NameKyThi"></textarea>
+                            <textarea type="text" name="GhiChu" class="NameKyThi" value="@Model.Note"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="hidden" name="ipId" value="@Model.Id" />
                         </div>
                     </div>
 
@@ -83,61 +101,77 @@
                                 <th>Màu Sắc</th>
                                 <th>Kích Thước</th>
                                 <th>Số Lượng</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="Exams">
-                            <tr class="text-center" id="Exam">
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].ProductId" id="@i" />
+                            @foreach (var item in Model.ExportProductDetails)
+                            {
+                                <tr class="text-center" id="Exam">
+                                    <td style="display:none;">
+                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input type="hidden" name="LProduct[@i].Id" value="@item.Id" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title">
-                                            <datalist id="Titles">
-                                                <option value="">
-                                            </datalist>
+                                    </td>
+                                    <td style="display:none;">
+                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input type="hidden" name="ProductSizeNow[@i].ProductId" value="@ProductSizeNow[i].ProductId" />
+                                                <input type="hidden" name="ProductSizeNow[@i].ColorName" value="@ProductSizeNow[i].ColorName" />
+                                                <input type="hidden" name="ProductSizeNow[@i].SizeName" value="@ProductSizeNow[i].SizeName" />
+                                                <input type="hidden" name="ProductSizeNow[@i].Quantity" value="@ProductSizeNow[i].Quantity" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Color" />
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].ProductId" id="@i" value="@item.ProductId" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Size" />
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title" value="@item.Title">
+                                                <datalist id="Titles">
+                                                    <option value="">
+                                                </datalist>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Quantity" />
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].Color" value="@item.Color" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].Size" value="@item.Size" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].Quantity" value="@item.Quantity" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
                         </tbody>
                     </table>
                     <div style="margin-top: 10px">
-                        <button type="submit" class="btn btn-primary">Tạo Phiếu Xuất</button>
+                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>
         </div>
         <div>
             @Html.ActionLink("Back to List", "Index")
@@ -230,4 +264,3 @@
         }
     </script>
 }
-

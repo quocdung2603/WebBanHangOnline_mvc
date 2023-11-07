@@ -46,7 +46,7 @@
             <h3 class="card-title">@ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/importproduct/add" class="btn btn-primary">Thêm Mới</a>
+                <a href="/admin/exportproduct/add" class="btn btn-primary">Thêm Mới</a>
                 <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
             </div>
         </div>
@@ -86,8 +86,8 @@
                                 <td>@item.CreatedBy</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td>
-                                    <a href="@Url.Action("detail","exportproduct",new { id = item.Id})" class="btn btn-sm btn-success">Xem Chi Tiết</a>
-                                    <a href="/admin/importproduct/edit/@item.Id" class="btn btn-sm btn-warning">Chỉnh Sửa</a>
+                                    <a href="@Url.Action("detail","ExportProduct",new { id = item.Id})" class="btn btn-sm btn-success">Xem Chi Tiết</a>
+                                    <a href="/admin/exportproduct/edit/@item.Id" class="btn btn-sm btn-warning">Chỉnh Sửa</a>
                                 </td>
                             </tr>
                             i++;

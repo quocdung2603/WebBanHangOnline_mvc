@@ -21,6 +21,37 @@
 }
 
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin" class="nav-link">Trang Chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/category" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Xuất Hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
@@ -125,7 +156,6 @@
             </form>
             <button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>
         </div>
-        <button class="btn btn-primary" onclick="Test()" style="float: right">test</button>
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
@@ -154,7 +184,7 @@
         }
 
         document.getElementById("Title").addEventListener("input", function () {
-            
+
             var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
             var selectedObject = Lquestion.find(function (item) {
                 return item.Title === selectedValue;

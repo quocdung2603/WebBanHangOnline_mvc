@@ -1,7 +1,8 @@
-﻿@model WebBanHangOnline.Models.EF.ImportProduct
+﻿@model WebBanHangOnline.Models.EF.ExportProduct
 @{
-    ViewBag.Title = "Xem Chi Tiết Phiếu Nhập";
+    ViewBag.Title = "Chi Tiết Phiếu Xuất";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
 }
 
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
@@ -35,26 +36,27 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
 
         <div class="ContainerCreateExam">
-            <form action="/admin/ImportProduct/add" method="post">
+            <form action="/admin/ExportProduct/add" method="post">
                 <div class="form-horizontal">
-                    <h4>Xem Chi Tiết Phiếu Nhập Hàng</h4>
+                    <h4>Phiếu Xuất Hàng</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label class="control-label col-md-2">Tên Đợt Nhập Hàng</label>
+                        <label class="control-label col-md-2">Tên Đợt Xuất Hàng</label>
                         <div class="col-md-10">
-                            <input type="text" name="TenDotNhapHang" class="NameKyThi" readonly value="@Model.Title" />
+                            <input type="text" name="TenDotNhapHang" class="NameKyThi" value="@Model.Title"  readonly/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Ghi Chú</label>
                         <div class="col-md-10">
-                            <textarea type="text" name="GhiChu" class="NameKyThi" readonly value="@Model.Note"></textarea>
+                            <textarea type="text" name="GhiChu" class="NameKyThi" value="@Model.Note" readonly></textarea>
                         </div>
                     </div>
 
@@ -64,15 +66,13 @@
                             <tr class="text-center">
                                 <th>Mã Sản Phẩm</th>
                                 <th>Tên Sản Phẩm</th>
-                                <th>Giá Nhập</th>
-                                <th>Giá Bán</th>
                                 <th>Màu Sắc</th>
                                 <th>Kích Thước</th>
                                 <th>Số Lượng</th>
                             </tr>
                         </thead>
                         <tbody id="Exams">
-                            @foreach (var item in Model.ImportProductDetails)
+                            @foreach (var item in Model.ExportProductDetails)
                             {
                                 <tr class="text-center" id="Exam">
                                     <td>
@@ -86,20 +86,6 @@
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
                                                 <input list="Titles" id="Title" class="form-control" value="@item.Title" readonly>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" value="@item.OriginalPrice" readonly />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" value="@item.Price" readonly />
                                             </div>
                                         </div>
                                     </td>
@@ -131,12 +117,12 @@
                 </div>
             </form>
         </div>
-
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
 
     </div>
 </div>
+
 
 

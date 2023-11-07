@@ -149,6 +149,9 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var items = db.ImportProducts.FirstOrDefault(x => x.Id == id);
+            List<Product> a = db.Products.ToList();
+            ViewBag.p = a;
+            ViewBag.Titles = db.Products.ToList();
             return View(items);
         }
 
