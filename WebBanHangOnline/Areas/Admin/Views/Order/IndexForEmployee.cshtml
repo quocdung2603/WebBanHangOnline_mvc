@@ -63,7 +63,8 @@
             <table class="table table-hover table-bordered" style="margin-top:10px;">
                 <thead style="background-color:aquamarine;">
                     <tr class="text-center">
-                        <th>#</th>
+                        <th><input type="checkbox" id="SelectAll" /></th>
+                        <th>STT</th>
                         <th>Mã Đơn Hàng</th>
                         <th>Tổng Tiền</th>
                         <th>Phương thức TT</th>
@@ -80,6 +81,7 @@
                         foreach (var item in Model)
                         {
                             <tr class="text-center">
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
                                 <td>@i</td>
                                 <td>@item.Code</td>
                                 <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount, 0)đ</td>
@@ -226,14 +228,30 @@
             });
             $('body').on('click', '.btnChange', function () {
                 var id = $(this).data('id');
-                $.ajax({
-                    url: '/admin/order/ChangeOrderStatus',
-                    type: 'POST',
-                    data: { id: id },
-                    success: function (rs) {
-                        if (rs.success) {
-                            location.reload();
+                var conf = confirm("Xác nhận hành động");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/admin/order/ChangeOrderStatus',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                location.reload();
+                            }
                         }
+                    });
+                }
+            });
+            $('body').on('change', '#SelectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                    }
+                    else {
+                        checkbox.attr('selected', '');
                     }
                 });
             });
