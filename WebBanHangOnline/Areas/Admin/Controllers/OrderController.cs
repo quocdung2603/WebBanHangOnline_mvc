@@ -9,6 +9,9 @@ using PagedList.Mvc;
 using WebBanHangOnline.Models.EF;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using System.ComponentModel;
+using OfficeOpenXml;
+using System.IO;
 
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
@@ -167,11 +170,19 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             ViewBag.Page = page;
             return View(items);
         }
+        
         public ActionResult View(int id)
         {
             var item = db.Orders.Find(id);
             return View(item);
         }
+
+        public ActionResult Edit(int id)
+        {
+            var item = db.Orders.Find(id);
+            return View(item);
+        }
+
 
         public ActionResult Partial_SanPham(int id)
         {
@@ -335,6 +346,283 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return Json(new { success = false });
         }
 
+        [HttpPost]
+        public ActionResult ExportFileExcel_StoreKeeper(string data)
+        {
+            List<Product> p = new List<Product>();
+            if (!string.IsNullOrEmpty(data))
+            {
+                var items = data.Split(',');
+                if (items != null && items.Any())
+                {
+                    foreach (var o in items)
+                    {
+                        var oid = Convert.ToInt32(o);
+                        var od = db.OrderDetails.Where(x => x.OrderId == oid ).ToList();
+                        if (od != null)
+                        {
+                            foreach (var item in od)
+                            {
+                                var p1 = db.Products.Find(item.ProductId);
+                                if (p1 != null)
+                                {
+                                    var pcheck = p.FirstOrDefault(x => x.Id == p1.Id);
+                                    if (pcheck != null)
+                                    {
+                                        pcheck.Quantity += item.Quantity;
+                                    }
+                                    else
+                                    {
+                                        p1.Quantity = item.Quantity;
+                                        p.Add(p1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var worksheet = package.Workbook.Worksheets.Add("SanPham");
+                worksheet.Cells.AutoFitColumns();
+                worksheet.Cells[1, 1].Value = "PHIẾU TIẾP NHẬN ĐƠN HÀNG";
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 3].Merge = true;
+
+                worksheet.Cells[2, 1].Value = "Mã Sản Phẩm";
+                worksheet.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[2, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                worksheet.Cells[2, 1].AutoFitColumns();
+                worksheet.Cells[2, 2].Value = "Tên Sản Phẩm";
+                worksheet.Cells[2, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[2, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                worksheet.Cells[2, 2].AutoFitColumns();
+                worksheet.Cells[2, 3].Value = "Số Lượng Lấy";
+                worksheet.Cells[2, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells[2, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                worksheet.Cells[2, 3].AutoFitColumns();
+                int row = 3;
+                foreach (var item in p)
+                {
+                    worksheet.Cells[row,1].Value = item.Id;
+                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[row, 1].AutoFitColumns();
+                    worksheet.Cells[row,2].Value = item.Title;
+                    worksheet.Cells[row, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[row, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[row, 2].AutoFitColumns();
+                    worksheet.Cells[row,3].Value = item.Quantity;
+                    worksheet.Cells[row, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[row, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[row, 3].AutoFitColumns();
+                    row++;
+                }
+                
+                package.Save();
+                stream.Position = 0;
+                var fileName = $"SanPhamCanLay_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ExportFileExcel_Shipper_Employee(string data)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                // lấy user đang login
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                //lấy dữ liệu vào list
+                List<Product> p = new List<Product>();
+
+                var stream = new MemoryStream();
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("SanPham");
+                    worksheet.Cells[1, 1].Value = "PHIẾU TIẾP NHẬN ĐƠN HÀNG";
+                    if (User.IsInRole("Employee"))
+                    {
+                        worksheet.Cells[1, 1].Value = "PHIẾU XÁC NHẬN ĐƠN HÀNG";
+                    }    
+                    worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[1, 1, 1, 8].Merge = true;
+
+                    worksheet.Cells[2, 1].Value = "Tên người nhận";
+                    worksheet.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[2, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[2, 1].AutoFitColumns();
+
+                    worksheet.Cells[2, 2].Value = user.FullName;
+                    worksheet.Cells[2, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[2, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[2, 2].AutoFitColumns();
+
+                    worksheet.Cells[3, 1].Value = "Ngày Nhận";
+                    worksheet.Cells[3, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[3, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[3, 1].AutoFitColumns();
+
+                    worksheet.Cells[3, 2].Value = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+                    worksheet.Cells[3, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[3, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    worksheet.Cells[3, 2].AutoFitColumns();
+
+                    int row = 5;
+
+                    if (!string.IsNullOrEmpty(data))
+                    {
+                        var items = data.Split(',');
+                        if (items != null && items.Any())
+                        {
+                            foreach (var o in items)
+                            {
+                                var oid = Convert.ToInt32(o);
+                                var tmp = db.Orders.Find(oid);
+                                if (tmp != null)
+                                {
+                                    worksheet.Cells[row, 1].Value = "Thông Tin Đơn Hàng";
+                                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 1, row, 3].Merge = true;
+                                    worksheet.Cells[row, 5].Value = "Thông Tin Khách Hàng";
+                                    worksheet.Cells[row, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 5, row, 7].Merge = true;
+                                    row++;
+                                    worksheet.Cells[row, 1].Value = "Mã đơn hàng";
+                                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 1].AutoFitColumns();
+
+                                    worksheet.Cells[row, 2].Value = "Tổng Hóa Đơn";
+                                    worksheet.Cells[row, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 2].AutoFitColumns();
+
+                                    worksheet.Cells[row, 3].Value = "Ngày Đặt";
+                                    worksheet.Cells[row, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 3].AutoFitColumns();
+
+                                    worksheet.Cells[row, 5].Value = "Tên Khách Hàng";
+                                    worksheet.Cells[row, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 5].AutoFitColumns();
+
+                                    worksheet.Cells[row, 6].Value = "Số Điện Thoại";
+                                    worksheet.Cells[row, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 6].AutoFitColumns();
+
+                                    worksheet.Cells[row, 7].Value = "Địa Chỉ Giao Hàng";
+                                    worksheet.Cells[row, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 7].AutoFitColumns();
+                                    row++;
+
+                                    worksheet.Cells[row, 1].Value = tmp.Id;
+                                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 1].AutoFitColumns();
+
+                                    worksheet.Cells[row, 2].Value = tmp.TotalAmount;
+                                    worksheet.Cells[row, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 2].AutoFitColumns();
+
+                                    worksheet.Cells[row, 3].Value = tmp.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss");
+                                    worksheet.Cells[row, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 3].AutoFitColumns();
+
+                                    worksheet.Cells[row, 5].Value = tmp.CustomerName;
+                                    worksheet.Cells[row, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 5].AutoFitColumns();
+
+                                    worksheet.Cells[row, 6].Value = tmp.Phone;
+                                    worksheet.Cells[row, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 6].AutoFitColumns();
+
+                                    worksheet.Cells[row, 7].Value = tmp.Address;
+                                    worksheet.Cells[row, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 7].AutoFitColumns();
+
+                                    row += 2;
+                                    worksheet.Cells[row, 1].Value = "Thông Tin Sản Phẩm Trong Đơn Hàng";
+                                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 1, row, 7].Merge = true;
+                                    row++;
+                                    worksheet.Cells[row, 1].Value = "Tên Sản Phẩm";
+                                    worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 1].AutoFitColumns();
+
+                                    worksheet.Cells[row, 2].Value = "Giá Sản Phẩm";
+                                    worksheet.Cells[row, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 2].AutoFitColumns();
+
+                                    worksheet.Cells[row, 3].Value = "Số Lượng Sản Phẩm";
+                                    worksheet.Cells[row, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[row, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    worksheet.Cells[row, 3].AutoFitColumns();
+                                    row++;
+                                    var od = db.OrderDetails.Where(x => x.OrderId == oid).ToList();
+                                    if (od != null)
+                                    {
+                                        foreach (var item in od)
+                                        {
+                                            var p1 = db.Products.Find(item.ProductId);
+                                            if (p1 != null)
+                                            {
+                                                worksheet.Cells[row, 1].Value = p1.Title;
+                                                worksheet.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                                worksheet.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                                worksheet.Cells[row, 1].AutoFitColumns();
+
+                                                worksheet.Cells[row, 2].Value = item.Price;
+                                                worksheet.Cells[row, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                                worksheet.Cells[row, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                                worksheet.Cells[row, 2].AutoFitColumns();
+
+                                                worksheet.Cells[row, 3].Value = item.Quantity;
+                                                worksheet.Cells[row, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                                worksheet.Cells[row, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                                worksheet.Cells[row, 3].AutoFitColumns();
+                                                row++;
+                                            }
+                                        }
+                                        row++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    package.Save();
+                    stream.Position = 0;
+                    var fileName = $"PhieuTiepNhanDonHang_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+                    if(User.IsInRole("Employee"))
+                    {
+                        fileName = $"PhieuXacNhanDonHang_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+                    }    
+                    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+            return View();
+        }
 
     }
 }

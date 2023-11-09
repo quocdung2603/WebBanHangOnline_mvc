@@ -29,6 +29,16 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">@ViewBag.Title</h3>
+            <div class="card-tools">
+                <div class="row">
+                    @using (Html.BeginForm("ExportFileExcel_Shipper_Employee", "Order", FormMethod.Post))
+                    {
+                        <input type="hidden" name="data" id="data" />
+                        <button type="submit" class="btn btn-primary" style="margin-right:15px;" id="btnChooseAll">Xuất file Excel</button>
+                    }
+                    <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
+                </div>
+            </div>
         </div>
 
         <div class="card-body">
@@ -140,8 +150,9 @@
                                     }
                                 </td>
                                 <td style="width:200px;">
-                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success">Xem Chi Tiết</a>
-                                    <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>
+                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success">Xem</a>
+                                    <a href="/admin/order/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                    @*<a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>*@
                                 </td>
                             </tr>
                             i++;
@@ -254,6 +265,42 @@
                         checkbox.attr('selected', '');
                     }
                 });
+            });
+
+            // chọn nhiều sản phẩm
+            $('#btnChooseAll').on('click', function (e) {
+                e.preventDefault();
+
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox');
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                        var _id = $(this).val();
+                        if (i === 0) {
+                            str += _id;
+                        }
+                        else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+
+                if (str.length > 0) {
+                    var conf = confirm("Bạn có muốn xuất file excel không");
+                    if (conf === true) {
+                        // Gán giá trị chuỗi str vào input ẩn
+                        $('#data').val(str);
+
+                        // Submit form để gửi dữ liệu đến action
+                        $('#btnChooseAll').closest('form').submit();
+                    }
+                }
             });
         });
     </script>
