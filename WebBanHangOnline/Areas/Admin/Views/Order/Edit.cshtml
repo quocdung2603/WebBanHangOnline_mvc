@@ -2,7 +2,197 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    List<WebBanHangOnline.Models.EF.OrderDetail> od = ViewBag.DanhSachSanPham;
+    var i = 0;
 }
 
-<h2>Edit</h2>
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin" class="nav-link">Trang Chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
 
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Xuất Hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Order", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-center">Thông tin Đơn Hàng</h3>
+                        <div class="form-group">
+                            <label>Mã Đơn Hàng</label>
+                            <input type="text" class="form-control" name="Code" value="@Model.Code" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="text-center">Thông tin Khách Hàng</h3>
+                        <div class="form-group">
+                            <label>Họ Tên Khách Hàng</label>
+                            <input type="text" class="form-control" name="CustomerName" value="@Model.CustomerName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tổng Tiền</label>
+                            <input type="hidden" class="form-control" name="TotalAmount" value="@Model.TotalAmount" />
+                            <input type="text" class="form-control" value="@WebBanHangOnline.Common.Common.FormatNumber(Model.TotalAmount,0)" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Số Điện Thoại</label>
+                            <input type="text" class="form-control" name="Phone" value="@Model.Phone" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Ngày Đặt Hàng</label>
+                            <input type="text" class="form-control" name="CreatedDate" value="@Model.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss")" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" name="Email" value="@Model.Email" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Trạng Thái</label>
+                            <input type="hidden" class="form-control" name="TypePayment" value="@Model.TypePayment"/>
+                            <input type="text" class="form-control" value="@(Model.TypePayment == 1? "Chờ Thanh Toán": "Đã Thanh Toán")" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Địa Chỉ Giao Hàng</label>
+                            <input type="text" class="form-control" name="Address" value="@Model.Address" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="CustomerId" value="@Model.CustomerId" />
+                    <input type="hidden" class="form-control" name="Status" value="@Model.Status" />
+                    <input type="hidden" class="form-control" name="OrderStatus" value="@Model.OrderStatus" />
+                    <input type="hidden" class="form-control" name="Id" value="@Model.Id" />
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center">Danh Sách Sản Phẩm</h2>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>#</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số Lượng</th>
+                                    <th>Thành Tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in od)
+                                {
+                                    <tr class="text-center">
+                                        <td>@(i+1)</td>
+                                        <td style="display:none;">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" name="LProduct[@i].Id" value="@item.Id" />
+                                                <input type="hidden" class="form-control" name="LProduct[@i].OrderId" value="@item.OrderId" />
+                                                <input type="hidden" class="form-control" name="LProduct[@i].ProductId" value="@item.ProductId" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" value="@item.Product.Title" readonly />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" name="LProduct[@i].Price" value="@item.Price" />
+                                                <input type="text" class="form-control" name="LProduct[@i].Price" value="@WebBanHangOnline.Common.Common.FormatNumber(item.Price,0)" readonly/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="LProduct[@i].Quantity" value="@item.Quantity" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="LProduct[@i].TotalAmount" value="@WebBanHangOnline.Common.Common.FormatNumber((item.Quantity * item.Price), 0)" readonly/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center">Tình trạng đơn hàng</h2>
+                    </div>
+                    <div class="col-12">
+                        @Html.Action("Partial_TinhTrangDonHang", "Order", new { id = Model.Id })
+                    </div>
+                </div>*@
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                        <a href="/admin/order/IndexForEmployee" class="btn btn-warning">Quay Lại</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->

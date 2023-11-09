@@ -180,9 +180,44 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var item = db.Orders.Find(id);
+            ViewBag.DanhSachSanPham = db.OrderDetails.Where(x => x.OrderId == id).ToList();
             return View(item);
         }
 
+        [HttpPost]
+        public ActionResult Edit(Order model, List<OrderDetail> LProduct)
+        {
+            if(ModelState.IsValid)
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+                    var user = userManager.FindByName(User.Identity.Name);
+                    var i = 0;
+                    foreach(var item in LProduct)
+                    {
+                        var lpOrderId = LProduct[i].OrderId;
+                        var lpProductId = LProduct[i].ProductId;
+                        var orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId);
+                        if(orderdetail != null)
+                        {
+                            orderdetail.Price = LProduct[i].Price;
+                            orderdetail.Quantity = LProduct[i].Quantity;
+                            db.SaveChanges();
+                        }
+                        i++;
+                    }    
+                    model.ModifierBy = user.FullName;
+                    model.ModifierDate = DateTime.Now;
+                    db.Orders.Attach(model);
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("IndexForEmployee");
+                }
+            }    
+            return View(model); 
+        }
 
         public ActionResult Partial_SanPham(int id)
         {
@@ -200,7 +235,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var tmp = "";
                 //confirm
-                if(items.IdUConfirm != null)
+                if(!string.IsNullOrEmpty(items.IdUConfirm))
                 {
                     tmp = items.IdUConfirm;
                 }
