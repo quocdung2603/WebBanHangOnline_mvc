@@ -71,6 +71,7 @@ namespace WebBanHangOnline.Models
 
         //acc no block
         public bool IsActive { get; set; }
+        public bool IsLeader { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -96,6 +97,8 @@ namespace WebBanHangOnline.Models
         public string FullName { get; set; }
         public string Phone { get; set; }
         public List<string> Roles { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsLeader { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

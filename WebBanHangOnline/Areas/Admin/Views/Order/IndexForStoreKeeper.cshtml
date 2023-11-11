@@ -6,6 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 @section naviheader {
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -29,17 +30,27 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">@ViewBag.Title</h3>
-            <div class="card-tools">
-                <div class="row">
-                    @using (Html.BeginForm("ExportFileExcel_StoreKeeper", "Order", FormMethod.Post))
-                    {
-                        <input type="hidden" name="data" id="data" />
-                        <button type="submit" class="btn btn-primary" style="margin-right:15px;" id="btnChooseAll">Xuất file Excel</button>
-                    }
-                    @*<a href="/admin/order/efe" class="btn btn-primary">Xuất File Excel</a>*@
-                    <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
+            @if (ViewBag.IsLeader)
+            {
+                <div class="card-tools">
+                    <div class="row">
+                        @using (Html.BeginForm("ExportFileExcel_StoreKeeper", "Order", FormMethod.Post))
+                        {
+                            <input type="hidden" name="data" id="data" />
+                            <button type="submit" class="btn btn-primary" style="margin-right:15px;" id="btnChooseAll">Xuất file Excel</button>
+                        }
+
+                        @using (Html.BeginForm("Tmp", "Order", FormMethod.Post))
+                        {
+                            <input type="hidden" name="data" id="data1" />
+                            <button type="submit" class="btn btn-warning BtnShareWork" style="margin-right:15px;" id="BtnShareWork">Giao Việc</button>
+                        }
+
+                        @*<a href="#" class="btn btn-warning BtnShareWork" id="BtnShareWork" style="margin-right:15px;">Giao Việc</a>*@
+                        <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div class="card-body">
@@ -92,7 +103,7 @@
                         foreach (var item in Model)
                         {
                             <tr class="text-center">
-                                 <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id"/></td>
                                 <td>@i</td>
                                 <td>@item.Code</td>
                                 <td>@WebBanHangOnline.Common.Common.FormatNumber(item.TotalAmount, 0)đ</td>
@@ -213,8 +224,46 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<div id="dialog">
+    <iframe id="myIframe" style="border:0; width:100%; height:100%;"></iframe>
+</div>
 
 @section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#BtnShareWork').on('click', function (e) {
+                e.preventDefault();
+
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox');
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                        var _id = $(this).val();
+                        if (i === 0) {
+                            str += _id;
+                        }
+                        else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+                if (str.length > 0) {
+                    // Gán giá trị chuỗi str vào input ẩn
+                    $('#data1').val(str);
+
+                    // Submit form để gửi dữ liệu đến action
+                    $('#BtnShareWork').closest('form').submit();
+                }
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             $('body').on('click', '.btnCapNhat', function () {

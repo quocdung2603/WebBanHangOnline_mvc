@@ -129,7 +129,8 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     Email = model.Email,
                     FullName = model.FullName,
                     Phone = model.Phone,
-                    IsActive = true,
+                    IsActive = model.IsActive,
+                    IsLeader = model.IsLeader,
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -196,6 +197,8 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 newUser.Phone = item.Phone;
                 newUser.UserName = item.UserName;
                 newUser.Roles = roles;
+                newUser.IsActive = item.IsActive;
+                newUser.IsLeader = item.IsLeader;
             }
             ViewBag.Role = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View(newUser);
@@ -212,6 +215,8 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 user.FullName = model.FullName;
                 user.Phone = model.Phone;
                 user.Email = model.Email;
+                user.IsActive = model.IsActive;
+                user.IsLeader = model.IsLeader;
                 var result = await UserManager.UpdateAsync(user);
 
                 if (result.Succeeded)

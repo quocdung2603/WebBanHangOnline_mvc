@@ -308,6 +308,10 @@
     <Compile Include="Migrations\202311070729386_AddTitleExportProductDetail.Designer.cs">
       <DependentUpon>202311070729386_AddTitleExportProductDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311100754095_AddisLeader.cs" />
+    <Compile Include="Migrations\202311100754095_AddisLeader.Designer.cs">
+      <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3606,6 +3610,7 @@
     <Content Include="Areas\Admin\Views\ExportProduct\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\ExportProduct\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\ShareWork.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3865,6 +3870,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311070729386_AddTitleExportProductDetail.resx">
       <DependentUpon>202311070729386_AddTitleExportProductDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311100754095_AddisLeader.resx">
+      <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

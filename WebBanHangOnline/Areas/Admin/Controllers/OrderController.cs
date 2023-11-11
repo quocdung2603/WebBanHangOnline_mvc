@@ -61,114 +61,169 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         /*index cho nhân viên */
         public ActionResult IndexForEmployee(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
         {
-            var pageSize = 10;
-            if (page == null)
+            if(User.Identity.IsAuthenticated)
             {
-                page = 1;
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                var pageSize = 10;
+                if (page == null)
+                {
+                    page = 1;
+                }
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 0).OrderByDescending(x => x.CreatedDate).ToList();
+                //search
+                if (!string.IsNullOrEmpty(Searchtext))
+                {
+                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
+                }
+                //lọc
+                if (!string.IsNullOrEmpty(Cod) && Cod == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 1);
+                }
+                else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 2);
+                }
+                else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
+                {
+                    items = items.Where(x => x.Status == "1");
+                }
+                else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
+                {
+                    items = items.Where(x => x.Status == "2");
+                }
+                var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                items = items.ToPagedList(pageIndex, pageSize);
+                ViewBag.PageSize = pageSize;
+                ViewBag.Page = page;
+                ViewBag.IsLeader = user.IsLeader;
+                return View(items);
             }
-            IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 0).OrderByDescending(x => x.CreatedDate).ToList();
-            //search
-            if (!string.IsNullOrEmpty(Searchtext))
-            {
-                items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
-            }
-            //lọc
-            if (!string.IsNullOrEmpty(Cod) && Cod == "true")
-            {
-                items = items.Where(x => x.TypePayment == 1);
-            }
-            else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
-            {
-                items = items.Where(x => x.TypePayment == 2);
-            }
-            else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
-            {
-                items = items.Where(x => x.Status == "1");
-            }
-            else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
-            {
-                items = items.Where(x => x.Status == "2");
-            }
-            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            items = items.ToPagedList(pageIndex, pageSize);
-            ViewBag.PageSize = pageSize;
-            ViewBag.Page = page;
-            return View(items);
+            return View();
         }
         /*index cho nhan viên kho*/
         public ActionResult IndexForStoreKeeper(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
         {
-            var pageSize = 10;
-            if (page == null)
+            if(User.Identity.IsAuthenticated)
             {
-                page = 1;
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                var pageSize = 10;
+                if (page == null)
+                {
+                    page = 1;
+                }
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 1).OrderByDescending(x => x.CreatedDate).ToList();
+                if (user.IsLeader == false)
+                {
+                    var tmp = db.DetailOrderStatuses.Where(x => x.IdUExport == user.Id).ToList();
+                    List<Order> o = new List<Order>();
+                    foreach(var item in tmp)
+                    {
+                        var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && x.OrderStatus == 1);
+                        if(i!=null)
+                        {
+                            o.Add(i);
+                        }
+                    }
+                    items = o.OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                //search
+                if (!string.IsNullOrEmpty(Searchtext))
+                {
+                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
+                }
+                //lọc
+                if (!string.IsNullOrEmpty(Cod) && Cod == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 1);
+                }
+                else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 2);
+                }
+                else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
+                {
+                    items = items.Where(x => x.Status == "1");
+                }
+                else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
+                {
+                    items = items.Where(x => x.Status == "2");
+                }
+                var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                items = items.ToPagedList(pageIndex, pageSize);
+                ViewBag.PageSize = pageSize;
+                ViewBag.Page = page;
+                ViewBag.IsLeader = user.IsLeader;
+                return View(items);
             }
-            IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 1).OrderByDescending(x => x.CreatedDate).ToList();
-            //search
-            if (!string.IsNullOrEmpty(Searchtext))
-            {
-                items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
-            }
-            //lọc
-            if (!string.IsNullOrEmpty(Cod) && Cod == "true")
-            {
-                items = items.Where(x => x.TypePayment == 1);
-            }
-            else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
-            {
-                items = items.Where(x => x.TypePayment == 2);
-            }
-            else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
-            {
-                items = items.Where(x => x.Status == "1");
-            }
-            else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
-            {
-                items = items.Where(x => x.Status == "2");
-            }
-            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            items = items.ToPagedList(pageIndex, pageSize);
-            ViewBag.PageSize = pageSize;
-            ViewBag.Page = page;
-            return View(items);
+            return View();
         }
 
-        /*index cho nhan viên kho*/
+        /*index cho shipper*/
         public ActionResult IndexForShipper(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
         {
-            var pageSize = 10;
-            if (page == null)
+            if(User.Identity.IsAuthenticated)
             {
-                page = 1;
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                var pageSize = 10;
+                if (page == null)
+                {
+                    page = 1;
+                }
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 2).OrderByDescending(x => x.CreatedDate).ToList();
+                if (user.IsLeader == false)
+                {
+                    var tmp = db.DetailOrderStatuses.Where(x => x.IdUDelivery == user.Id).ToList();
+                    List<Order> o = new List<Order>();
+                    foreach (var item in tmp)
+                    {
+                        var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && x.OrderStatus == 2);
+                        if (i != null)
+                        {
+                            o.Add(i);
+                        }
+                    }
+                    items = o.OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                //search
+                if (!string.IsNullOrEmpty(Searchtext))
+                {
+                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
+                }
+                //lọc
+                if (!string.IsNullOrEmpty(Cod) && Cod == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 1);
+                }
+                else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
+                {
+                    items = items.Where(x => x.TypePayment == 2);
+                }
+                else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
+                {
+                    items = items.Where(x => x.Status == "1");
+                }
+                else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
+                {
+                    items = items.Where(x => x.Status == "2");
+                }
+                var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                items = items.ToPagedList(pageIndex, pageSize);
+                ViewBag.PageSize = pageSize;
+                ViewBag.Page = page;
+                ViewBag.IsLeader = user.IsLeader;
+                return View(items);
             }
-            IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 2).OrderByDescending(x => x.CreatedDate).ToList();
-            //search
-            if (!string.IsNullOrEmpty(Searchtext))
-            {
-                items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
-            }
-            //lọc
-            if (!string.IsNullOrEmpty(Cod) && Cod == "true")
-            {
-                items = items.Where(x => x.TypePayment == 1);
-            }
-            else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
-            {
-                items = items.Where(x => x.TypePayment == 2);
-            }
-            else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
-            {
-                items = items.Where(x => x.Status == "1");
-            }
-            else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
-            {
-                items = items.Where(x => x.Status == "2");
-            }
-            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            items = items.ToPagedList(pageIndex, pageSize);
-            ViewBag.PageSize = pageSize;
-            ViewBag.Page = page;
-            return View(items);
+            return View();
         }
         
         public ActionResult View(int id)
@@ -381,6 +436,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return Json(new { success = false });
         }
 
+        //trưởng bộ phận có thể xuất file excel
         [HttpPost]
         public ActionResult ExportFileExcel_StoreKeeper(string data)
         {
@@ -659,5 +715,85 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return View();
         }
 
+        //trưởng bộ phân có thể phân chia việc cho nhân viên cùng bộ phận
+        public ActionResult ShareWork(string data)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+                var item = userManager.GetRoles(user.Id);
+                var item1 = item.ElementAt(0);
+                var u = db.Users.ToList();
+                List<ApplicationUser> listuser = new List<ApplicationUser>();
+                foreach (var us in u)
+                {
+                    var check = userManager.GetRoles(us.Id);
+                    var check1 = check.ElementAt(0);
+                    Console.WriteLine(check);
+                    Console.WriteLine(item1);
+                    if (check1 == item1 && us.IsLeader == false)
+                    {
+                        listuser.Add(us);
+                    }
+                }
+                ViewBag.Users = new SelectList(listuser, "Id", "FullName");
+                ViewBag.Data = data;
+                return View();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ShareWork(string data, string idUser)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var userRole = userManager.GetRoles(idUser);
+                var ur = userRole.ElementAt(0);
+
+                if (!string.IsNullOrEmpty(data))
+                {
+                    var items = data.Split(',');
+                    foreach (var item in items)
+                    {
+                        int orderid = Convert.ToInt32(item);
+                        var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == orderid);
+                        if (dos != null)
+                        {
+                            if(ur=="StoreKeeper")
+                            {
+                                dos.IdUExport = idUser;
+                                dos.ExportDate = DateTime.Now;
+                            }
+                            else if(ur=="Shipper")
+                            {
+                                dos.IdUDelivery = idUser;
+                                dos.DeliveryDate = DateTime.Now;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                    if(ur== "StoreKeeper")
+                    {
+                        return RedirectToAction("IndexForStoreKeeper");
+                    }
+                    else if(ur == "Shipper")
+                    {
+                        return RedirectToAction("IndexForShipper");
+                    }
+                }
+            }    
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Tmp(string data)
+        {
+            return RedirectToAction("ShareWork", new { @data = data});
+        }
     }
 }
