@@ -428,5 +428,17 @@ namespace WebBanHangOnline.Controllers
 
             return urlPayment;
         }
+    
+        //getColor
+        [HttpPost]
+        public ActionResult GetColor(int id , string sz)
+        {
+            List < ProductSize > listCS = db.ProductSizes.Where(x => x.ProductId == id && x.SizeName == sz).ToList();
+            if(listCS.Count >0)
+            {
+                return Json(new { success = true, listCS = listCS });
+            }    
+            return Json(new { success = false });
+        }
     }
 }

@@ -6,6 +6,18 @@
 }
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_responsive.css">
+<style>
+    #colorButtons {
+        display: flex;
+    }
+
+    .colorButton {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+        border: none;
+    }
+</style>
 @if (Model != null)
 {
 
@@ -87,15 +99,14 @@
                         {
                             if (item.Quantity > 0)
                             {
-                                <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
-                                //<input type="text" hidden id="size_value_1_@item.Id" value="@item.SizeName" />
-                            }
-                            else
-                            {
-                                <a class="btn btn-sm" style="border:1px solid grey; margin-left:5px;">@item.SizeName</a>
+                                <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" data-id="@Model.Id" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
+                                <div id="colorList" style="display:none;">
+                                    <h5>Màu sắc:</h5>
+                                    <div id="colorButtons"></div>
+                                </div>
                             }
                         }
-                        <input type="text" name="SizeName" hidden id="value_size_product" value=""/>
+                        <input type="text" name="SizeName" hidden id="value_size_product" />
                     </div>
                     @if (Model.PriceSale > 0)
                     {
@@ -190,14 +201,44 @@
         $(document).ready(function () {
             $('body').on('click', '.size_value', function (e) {
                 e.preventDefault();
-                debugger
-                var s = $(this).data("size");
-                $('#value_size_product').val(s);
-                var k = $('#value_size_product').val();
+                var id = $(this).data('id');
+                var sz = $(this).data("size");
+                $('#value_size_product').val(sz);
 
-                console.log(k);
+                @*var k = $('#value_size_product').val();
+                console.log(k);*@
+                ShowColor(id, sz);
             });
         });
+        function ShowColor(id,sz) {
+            $('#colorList').hide();
+            $.ajax({
+                url: '/shoppingcart/getcolor',
+                type: 'POST',
+                data: { id: id, sz: sz },
+                success: function (rs) {
+                    if (rs.success) {
+                        alert("haha");
+                        // Lấy danh sách màu sắc dựa trên kích cỡ (đây chỉ là ví dụ, bạn cần điều chỉnh cho phù hợp)
+@*                        var colorList = rs.listCS;
+                        debugger
+                        // Hiển thị danh sách màu sắc nếu có
+                        if (colorList.length > 0) {
+                            $('#colorButtons').empty();
+                            for (var i = 0; i < colorList.length; i++) {
+                                var color = colorList[i].ColorName;
+
+                                console.log(color);
+                                // Tạo nút màu sắc và thêm vào danh sách
+                                var colorButton = $('<button class="colorButton" style="background-color:' + color + '"></button>');
+                                $('#colorButtons').append(colorButton);
+                            }
+                            $('#colorList').show();
+                        }*@
+                    }
+                }
+            });
+        }
     </script>
 }
 

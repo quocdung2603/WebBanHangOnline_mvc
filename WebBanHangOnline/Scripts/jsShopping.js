@@ -5,7 +5,11 @@
         var id = $(this).data('id');
         var quantity = 1;
         var tQuantity = $('#quantity_value').text();
-        var SizeName = $('#value_size_product').text();
+        var SizeName = $('#value_size_product').val();
+
+        debugger
+        console.log(SizeName);
+
         if (tQuantity != '') {
             quantity = parseInt(tQuantity);
         }
