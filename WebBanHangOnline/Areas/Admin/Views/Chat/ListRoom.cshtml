@@ -1,0 +1,11 @@
+﻿@model HashSet<int>
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item active">
+            <a href="/Admin/Home/Index?id=@item" class="btn-room" style="color: white">
+                @item
+            </a>
+        </li>
+    }
+</ul>

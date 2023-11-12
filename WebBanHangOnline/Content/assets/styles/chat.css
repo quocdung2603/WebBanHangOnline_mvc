@@ -1,0 +1,96 @@
+﻿html, body {
+    margin: 0;
+    padding: 0
+}
+
+.Container-chat {
+    display: flex;
+    flex-direction: row;
+}
+
+.ListRoom {
+    flex: 0.1
+}
+
+.Body-chat {
+    flex: 0.9;
+}
+
+.btn-room {
+    border: 1px solid;
+    height: 70px;
+    margin: 0.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: blueviolet;
+}
+
+.body-message {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    max-height: 700px;
+    min-height: 700px;
+    padding-bottom: 1rem;
+    overflow: auto;
+}
+
+.message {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.2rem;
+}
+
+    .message:first-child {
+        margin-top: auto;
+    }
+
+    .message * {
+        padding: 0.2rem;
+    }
+
+    .message > header {
+        min-width: 100px;
+        text-align: right;
+        font-weight: bold;
+    }
+
+.txtMessage {
+    margin: 0;
+    flex-grow: 5;
+}
+
+.message > footer {
+    min-width: 60px;
+    text-align: center;
+}
+
+.input-chat {
+    background-color: blueviolet;
+    min-height: 70px;
+    max-height: 70px;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+    .input-chat > input {
+        flex-grow: 1;
+        margin-right: 5px;
+    }
+
+    .input-chat > button {
+        width: 50px;
+    }
+
+.ListRoom {
+    max-height: 700px;
+    min-height: 700px;
+    overflow: auto;
+}

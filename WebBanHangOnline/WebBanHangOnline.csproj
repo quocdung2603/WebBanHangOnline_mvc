@@ -202,6 +202,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExportProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportProductController.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Migrations\202310240741584_DataNew.cs" />
     <Compile Include="Migrations\202310240741584_DataNew.Designer.cs">
       <DependentUpon>202310240741584_DataNew.cs</DependentUpon>
@@ -318,6 +320,14 @@
     <Compile Include="Migrations\202311100754095_AddisLeader.Designer.cs">
       <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311111444152_AddRoomChatMessage.cs" />
+    <Compile Include="Migrations\202311111444152_AddRoomChatMessage.Designer.cs">
+      <DependentUpon>202311111444152_AddRoomChatMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311111456425_UpdateMessage.cs" />
+    <Compile Include="Migrations\202311111456425_UpdateMessage.Designer.cs">
+      <DependentUpon>202311111456425_UpdateMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -333,6 +343,7 @@
     <Compile Include="Models\EF\ExportProductDetail.cs" />
     <Compile Include="Models\EF\ImportProduct.cs" />
     <Compile Include="Models\EF\ImportProductDetail.cs" />
+    <Compile Include="Models\EF\Message.cs" />
     <Compile Include="Models\EF\News.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
@@ -342,6 +353,7 @@
     <Compile Include="Models\EF\ProductImage.cs" />
     <Compile Include="Models\EF\ProductSize.cs" />
     <Compile Include="Models\EF\ReviewProduct.cs" />
+    <Compile Include="Models\EF\RoomChat.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\EF\UserVoucher.cs" />
@@ -609,6 +621,7 @@
     <Content Include="Content\assets\styles\bootstrap4\popper.js" />
     <Content Include="Content\assets\styles\categories_responsive.css" />
     <Content Include="Content\assets\styles\categories_styles.css" />
+    <Content Include="Content\assets\styles\chat.css" />
     <Content Include="Content\assets\styles\contact_responsive.css" />
     <Content Include="Content\assets\styles\contact_styles.css" />
     <Content Include="Content\assets\styles\CreateExam.css" />
@@ -3617,6 +3630,7 @@
     <Content Include="Areas\Admin\Views\ExportProduct\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\ShareWork.cshtml" />
+    <Content Include="Areas\Admin\Views\Chat\ListRoom.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3881,6 +3895,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311100754095_AddisLeader.resx">
       <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311111444152_AddRoomChatMessage.resx">
+      <DependentUpon>202311111444152_AddRoomChatMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311111456425_UpdateMessage.resx">
+      <DependentUpon>202311111456425_UpdateMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
