@@ -1,7 +1,10 @@
-﻿
+﻿@using WebBanHangOnline.Models;
+@using WebBanHangOnline.Models.EF
+@model IEnumerable<Message>
 @{
     ViewBag.Title = "ShowChat";
     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    ApplicationDbContext db = new ApplicationDbContext();
 }
 
 <div class="col-md-3">
@@ -25,35 +28,36 @@
         <div class="card-body">
             <!-- Conversations are loaded here -->
             <div class="direct-chat-messages">
-                <!-- Message. Default to the left -->
-                <div class="direct-chat-msg">
-                    <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-left">Alexander Pierce</span>
-                        <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                        Is this template really for free? That's unbelievable!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                </div>
-                <!-- /.direct-chat-msg -->
-                <!-- Message to the right -->
-                <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-right">Sarah Bullock</span>
-                        <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                    </div>
-                    <!-- /.direct-chat-infos -->
+                @foreach (var item in Model)
+                {
+                    if (item.UserId == ViewBag.UserId)
+                    {
+                        <div class="direct-chat-msg right">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-right">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</span>
+                                <span class="direct-chat-timestamp float-left">@item.TimesChat</span>
+                            </div>
+                            <div class="direct-chat-text">
+                                @item.Content
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="direct-chat-msg">
+                            <div class="direct-chat-infos clearfix">
+                                <span class="direct-chat-name float-left">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</span>
+                                <span class="direct-chat-timestamp float-right">@item.TimesChat</span>
+                            </div>
+                            <div class="direct-chat-text">
+                               @item.Content
+                            </div>
+                        </div>
 
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                        You better believe it!
-                    </div>
-                    <!-- /.direct-chat-text -->
-                </div>
-                <!-- /.direct-chat-msg -->
+
+                    }
+                }
+              
             </div>
             <!--/.direct-chat-messages-->
             <!-- Contacts are loaded here -->
@@ -81,10 +85,10 @@
         <!-- /.card-body -->
         <div class="card-footer">
             <form action="#" method="post">
-                <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <div class="input-g roup">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="txtMessage">
                     <span class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="submit" class="btn btn-primary" id="btnSend">Send</button>
                     </span>
                 </div>
             </form>
@@ -93,3 +97,50 @@
     </div>
 </div>
 
+@section scripts {
+    @* Chat start*@
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+                var name = '@ViewBag.Name';
+                var idRoom = '@ViewBag.IdRoom';
+                var UserId = '@ViewBag.UserId';
+                $(function () {
+                    var chat = $.connection.Chat;
+                    console.log(chat);
+                    loadClient(chat);
+                    $.connection.hub.start().done(function () {
+                        chat.server.connect(name);
+                        chat.server.joinRoom(idRoom);
+                        $('#btnSend').click(function () {
+                            var mess = $('#txtMessage').val();
+                            //alert(mess);
+                            chat.server.message(name, mess, idRoom, UserId);
+                            $('#txtMessage').val('').focus('');
+                        });
+                    });
+
+                })
+
+                function loadClient(chat) {
+                    // sửa lại cái phần này làm sao để nhận dc cái id của người dùng để còn hiện cho đúng bên
+                    chat.client.message = function (name, msg,id,UserId) {
+                        var currentDate = new Date();  // Tạo đối tượng Date
+                        var formattedDate = currentDate.toLocaleDateString();
+                        var ms = `<div class="direct-chat-msg">
+                                    <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">`+ name + ` </span>
+                                    <span class="direct-chat-timestamp float-left">`+ formattedDate +`</span>
+                                    </div>
+                                    <div class="direct-chat-text">
+                                        `+ msg +`
+                                    </div>
+                                </div>`;
+                        console.log(ms);
+                        $(".direct-chat-messages").append(ms);
+                    };
+                }
+    </script>
+
+    @* Chat end*@
+}

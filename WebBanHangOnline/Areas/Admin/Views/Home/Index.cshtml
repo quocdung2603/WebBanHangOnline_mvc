@@ -125,7 +125,17 @@
             chat.client.message = function (name, msg,id,UserId) {
                 var currentDate = new Date();  // Tạo đối tượng Date
                 var formattedDate = currentDate.toLocaleDateString();
-                var ms = `<div class="message"><header>` + name + `: </header>  <p class="txtMessage">` + msg + `</p><footer>` + formattedDate + `</footer></div>`;
+                var ms = `<div class="message" style="text-align: right; margin-bottom: 10px; margin-right:20px; margin-left:800px;">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">` + formattedDate + `</p>
+                                    <strong class="txtMessage">` + name + `</strong>
+                                </div>
+                                <div class="row" style="background-color: #f0f0f0; border-radius: 10px; padding: 10px;">
+                                    <p class="txtMessage">` + msg + `</p>
+                                </div>
+                            </div>
+                        </div>`;
                 console.log(ms);
                 $(".body-message").append(ms);
             };
