@@ -5,6 +5,7 @@
     ViewBag.Title = "Trang chủ admin";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ApplicationDbContext db = new ApplicationDbContext();
+    
 }
 
 <link href="~/Content/assets/styles/chat.css" rel="stylesheet" />
@@ -55,11 +56,34 @@
                 {
                     foreach (var item in Model)
                     {
-                        <div class="message">
-                            <header>@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</header>
-                            <p class="txtMessage">@item.Content</p>
-                            <footer>@item.TimesChat</footer>
-                        </div>
+                        if (item.UserId == ViewBag.UserId)
+                        {
+                            <div class="message" style="text-align: right; margin-bottom: 10px; margin-right:20px; margin-left:800px;">
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">@item.TimesChat</p>
+                                        <strong class="txtMessage">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</strong>
+                                    </div>
+                                    <div class="row" style="background-color: #f0f0f0; border-radius: 10px; padding: 10px;">
+                                        <p class="txtMessage">@item.Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="message" style="text-align: left; margin-bottom: 10px; margin-right:1000px; margin-left:20px;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <strong class="txtMessage">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</strong>
+                                        <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">@item.TimesChat</p>
+                                    </div>
+                                    <div class="row" style="background-color: #fde0db; border-radius: 10px; padding: 10px;">
+                                        <p class="txtMessage">@item.Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     }
                 }
 
@@ -78,15 +102,18 @@
     <script src="~/signalr/hubs"></script>
     <script>
         var name = '@ViewBag.Name';
+        var idRoom = '@ViewBag.IdRoom';
+        var UserId = '@ViewBag.UserId';
         $(function () {
             var chat = $.connection.Chat;
             console.log(chat);
             loadClient(chat);
             $.connection.hub.start().done(function () {
                 chat.server.connect(name);
+                chat.server.joinRoom(idRoom);
                 $('#btnSend').click(function () {
                     var mess = $('#txtMessage').val();
-                    chat.server.message(name, mess);
+                    chat.server.message(name, mess, idRoom, UserId);
                     $('#txtMessage').val('').focus('');
                 });
             });
@@ -94,7 +121,8 @@
         })
 
         function loadClient(chat) {
-            chat.client.message = function (name, msg) {
+            // sửa lại cái phần này làm sao để nhận dc cái id của người dùng để còn hiện cho đúng bên
+            chat.client.message = function (name, msg,id,UserId) {
                 var currentDate = new Date();  // Tạo đối tượng Date
                 var formattedDate = currentDate.toLocaleDateString();
                 var ms = `<div class="message"><header>` + name + `: </header>  <p class="txtMessage">` + msg + `</p><footer>` + formattedDate + `</footer></div>`;

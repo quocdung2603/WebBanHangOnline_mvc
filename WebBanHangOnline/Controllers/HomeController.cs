@@ -52,5 +52,10 @@ namespace WebBanHangOnline.Controllers
             }    
             return View("Partial_Subcribe",req);
         }
+
+        public ActionResult ShowChat()
+        {
+            return View();
+        }
     }
 }

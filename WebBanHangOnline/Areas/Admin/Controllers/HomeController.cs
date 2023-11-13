@@ -36,7 +36,10 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     var userManager = new UserManager<ApplicationUser>(userStore);
                     var user = userManager.FindByName(User.Identity.Name);
                     ViewBag.Name = user.FullName;
-                    var tmp = db.Messages.Where(item => item.UserId == user.Id && item.RoomId == id).ToList();
+                    ViewBag.UserId = user.Id;
+                    var tmp = db.Messages.Where(item => item.RoomId == id && item.Content!=null).ToList();
+
+                    ViewBag.IdRoom = id;
                     return View(tmp);
                 }
             }    

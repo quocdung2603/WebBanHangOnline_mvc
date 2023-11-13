@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "Thống Kê Theo Danh Mục Sản Phẩm";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    @*Thống kê theo doanh thu *@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Theo Doanh Thu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart">
+                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên Danh Mục</th>
+                                <th>Doanh Thu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="load_data1">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Theo Lợi Nhuận</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart">
+                        <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên Danh Mục</th>
+                                <th>Lợi Nhuận</th>
+                            </tr>
+                        </thead>
+                        <tbody id="load_data2">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Content/clients/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/Content/assets/plugins/moment/moment.min.js"></script>
+    <script>
+        $(function () {
+            var arrDanhMuc = [];
+            var arrDoanhThu = [];
+            var arrLoiNhuan = [];
+            $.ajax({
+                url: '/Statistical/GetStatistical_Categories',
+                type: 'GET',
+                data: {},
+                success: function (rs) {
+                    $.each(rs.Data, function (i, item) {
+                        arrDanhMuc.push(item.Title);
+                        arrDoanhThu.push(item.DoanhThu);
+                        arrLoiNhuan.push(item.LoiNhuan);
+                        console.log(arrDoanhThu);
+                    });
+                    //-------------
+                    //- DONUT CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+                    var donutData = {
+                        labels: [
+                            'MAN',
+                            'WOMEN',
+                            'ACCESSORIES',
+                        ],
+                        datasets: [
+                            {
+                                data: arrDoanhThu,
+                                backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
+                            }
+                        ]
+                    }
+                    var donutOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    new Chart(donutChartCanvas, {
+                        type: 'doughnut',
+                        data: donutData,
+                        options: donutOptions
+                    })
+                    load_data1(rs.Data);
+                }
+            });
+
+        })
+        function load_data1(data) {
+            var strHtml = "";
+            $.each(data, function (i, item) {
+                strHtml += "<tr>";
+                strHtml += "<td>" + (i + 1) + "</td>";
+                strHtml += "<td>" + item.Title + "</td>";
+                strHtml += "<td>" + item.DoanhThu + "</td>";
+                strHtml += "</tr>";
+            });
+            $('#load_data1').html(strHtml);
+        }
+    </script>
+
+    <script>
+        $(function () {
+            var arrDanhMuc = [];
+            var arrDoanhThu = [];
+            var arrLoiNhuan = [];
+            $.ajax({
+                url: '/Statistical/GetStatistical_Categories',
+                type: 'GET',
+                data: {},
+                success: function (rs) {
+                    $.each(rs.Data, function (i, item) {
+                        arrDanhMuc.push(item.Title);
+                        arrDoanhThu.push(item.DoanhThu);
+                        arrLoiNhuan.push(item.LoiNhuan);
+                        console.log(arrDoanhThu);
+                    });
+                    //-------------
+                    //- DONUT CHART -
+                    //-------------
+                    // Get context with jQuery - using jQuery's .get() method.
+                    var donutChartCanvas1 = $('#donutChart1').get(0).getContext('2d')
+                    var donutData1 = {
+                        labels: [
+                            'MAN',
+                            'WOMEN',
+                            'ACCESSORIES',
+                        ],
+                        datasets: [
+                            {
+                                data: arrLoiNhuan,
+                                backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
+                            }
+                        ]
+                    }
+                    var donutOptions = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                    }
+                    //Create pie or douhnut chart
+                    // You can switch between pie and douhnut using the method below.
+                    new Chart(donutChartCanvas1, {
+                        type: 'doughnut',
+                        data: donutData1,
+                        options: donutOptions
+                    })
+                    load_data2(rs.Data);
+                }
+            });
+        })
+        function load_data2(data) {
+            var strHtml = "";
+            $.each(data, function (i, item) {
+                strHtml += "<tr>";
+                strHtml += "<td>" + (i + 1) + "</td>";
+                strHtml += "<td>" + item.Title + "</td>";
+                strHtml += "<td>" + item.LoiNhuan + "</td>";
+                strHtml += "</tr>";
+            });
+            $('#load_data2').html(strHtml);
+        }
+    </script>
+}
+
