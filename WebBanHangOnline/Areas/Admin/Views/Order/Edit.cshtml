@@ -127,18 +127,21 @@
                                     <th>#</th>
                                     <th>Tên Sản Phẩm</th>
                                     <th>Giá</th>
+                                    <th>Kích Thước</th>
+                                    <th>Màu Sắc</th>
                                     <th>Số Lượng</th>
                                     <th>Thành Tiền</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in od)
                                 {
-                                    <tr class="text-center">
+                                    <tr class="text-center" id="trow_@item.Id">
                                         <td>@(i+1)</td>
                                         <td style="display:none;">
                                             <div class="form-group">
-                                                <input type="hidden" class="form-control" name="LProduct[@i].Id" value="@item.Id" />
+                                                <input type="hidden" class="form-control" name="LProduct[@i].Id" value="@item.Id"/>
                                                 <input type="hidden" class="form-control" name="LProduct[@i].OrderId" value="@item.OrderId" />
                                                 <input type="hidden" class="form-control" name="LProduct[@i].ProductId" value="@item.ProductId" />
                                             </div>
@@ -174,6 +177,9 @@
                                                 <input type="text" class="form-control" name="LProduct[@i].TotalAmount" value="@WebBanHangOnline.Common.Common.FormatNumber((item.Quantity * item.Price), 0)" readonly/>
                                             </div>
                                         </td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-danger btnDeleteRow" data-id="@item.Id">Xóa</a>
+                                        </td>
                                     </tr>
                                     i++;
                                 }
@@ -181,14 +187,6 @@
                         </table>
                     </div>
                 </div>
-                @*<div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center">Tình trạng đơn hàng</h2>
-                    </div>
-                    <div class="col-12">
-                        @Html.Action("Partial_TinhTrangDonHang", "Order", new { id = Model.Id })
-                    </div>
-                </div>*@
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Cập Nhật</button>
@@ -207,3 +205,27 @@
 
 </section>
 <!-- /.content -->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDeleteRow', function () {
+                var id = $(this).data("id");
+                console.log(id);
+                var conf = confirm('Bạn có muốn xóa đối tượng không?');
+                if (conf === true) {
+                    $.ajax({
+                        url: '/admin/order/DeleteInEditOrder',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>    
+    
+}

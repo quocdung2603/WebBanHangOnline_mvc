@@ -286,6 +286,33 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return View(model); 
         }
 
+
+        [HttpPost]
+        public ActionResult DeleteInEditOrder(int id)
+        {
+            var item = db.OrderDetails.Find(id);
+            if(item!=null)
+            {
+                var p = db.ProductSizes.FirstOrDefault(x=>x.ProductId == item.ProductId && x.SizeName == item.ProductSize && x.ColorName == item.ProductColor);
+                if(string.IsNullOrEmpty(item.ProductSize))
+                {
+                    p = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.ColorName == item.ProductColor);
+                }
+                if(string.IsNullOrEmpty(item.ProductColor))
+                {
+                    p = db.ProductSizes.FirstOrDefault(x => x.ProductId == item.ProductId && x.SizeName == item.ProductSize);
+                }
+                if(p!=null)
+                {
+                    p.Quantity += item.Quantity;
+                    db.SaveChanges();
+                }
+                db.OrderDetails.Remove(item);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
         public ActionResult Partial_SanPham(int id)
         {
             var items = db.OrderDetails.Where(x => x.OrderId == id).ToList();
