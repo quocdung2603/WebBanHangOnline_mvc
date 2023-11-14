@@ -4,7 +4,8 @@
         <th>STT</th>
         <th>Ảnh Sản Phẩm</th>
         <th>Tên Sản Phẩm</th>
-        <th>Size</th>
+        <th>Kích Cỡ</th>
+        <th>Màu Sắc</th>
         <th>Danh Mục</th>
         <th>Giá</th>
         <th style="width:100px;">Số Lượng</th>
@@ -25,6 +26,7 @@
                 <td><img src="@item.ProductImg" width="60" /></td>
                 <td><a href="/chi-tiet/@item.Alias-p@(item.ProductId)">@item.ProductName</a></td>
                 <td>@item.ProductSize</td>
+                <td>@item.ProductColor</td>
                 <td>@item.CategoryName</td>
                 <td>@WebBanHangOnline.Common.Common.FormatNumber(item.Price, 0)</td>
                 <td><input type="number" value="@item.Quantity" min="1" class="form-control" id="Quantity_@item.ProductId"/></td>

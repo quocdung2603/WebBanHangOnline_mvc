@@ -1,8 +1,18 @@
 ﻿@model WebBanHangOnline.Models.EF.Product
+@using WebBanHangOnline.Models.EF
 @{
     ViewBag.Title = Model.SeoTitle;
     ViewBag.SeoDescription = Model.SeoDescription ?? Model.Title;
     ViewBag.SeoKeyWord = Model.SeoKeywords ?? Model.Title;
+    HashSet<string> cl = new HashSet<string>();
+    foreach(var item in Model.ProductSizes)
+    {
+        if(item.Quantity>0 && item.ColorName != null)
+        {
+            cl.Add(item.ColorName);
+        }
+
+    }
 }
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_responsive.css">
@@ -93,21 +103,31 @@
                             <a class="btn btn-sm" style="background-color: #0066ff; color: white; width: 55px; height: 25px; justify-content: center; align-items: center; display: flex; margin-left: 5px;">Feature</a>
                         }
                     </div>
+
+                    @*Kích Cỡ*@
                     <div class="row" style="margin-top:30px;align-items:center;">
                         <h5>Kích Cỡ:  </h5>
                         @foreach (var item in Model.ProductSizes)
                         {
-                            if (item.Quantity > 0)
+                            if (item.Quantity > 0 && item.SizeName != null)
                             {
-                                <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" data-id="@Model.Id" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
-                                <div id="colorList" style="display:none;">
-                                    <h5>Màu sắc:</h5>
-                                    <div id="colorButtons"></div>
-                                </div>
+                                <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
                             }
                         }
                         <input type="text" name="SizeName" hidden id="value_size_product" />
                     </div>
+
+                    @*Màu Sắc*@
+                    <div class="row" style="margin-top:30px;align-items:center;">
+                        <h5>Màu Sắc:  </h5>
+                        @foreach (var item in cl)
+                        {
+
+                            <a href="#" class="btn btn-sm color_value" data-color="@item" style="border:1px solid red; margin-left:5px;">@item</a>
+                        }
+                        <input type="text" name="ColorName" hidden id="value_color_product" />
+                    </div>
+
                     @if (Model.PriceSale > 0)
                     {
                         <div class="original_price">@WebBanHangOnline.Common.Common.FormatNumber(Model.Price, 0)</div>
@@ -126,7 +146,7 @@
                         <li><i class="fa fa-star" aria-hidden="true"></i></li>
                         <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                     </ul>
-
+                    
                     <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                         <span>Quantity:</span>
                         <div class="quantity_selector">
@@ -199,46 +219,20 @@
     <script src="~/Content/assets/js/single_custom.js"></script>
     <script>
         $(document).ready(function () {
+
             $('body').on('click', '.size_value', function (e) {
                 e.preventDefault();
-                var id = $(this).data('id');
                 var sz = $(this).data("size");
                 $('#value_size_product').val(sz);
+            });
 
-                @*var k = $('#value_size_product').val();
-                console.log(k);*@
-                ShowColor(id, sz);
+            $('body').on('click', '.color_value', function (e) {
+                e.preventDefault();
+                var cl = $(this).data('color');
+                $('#value_color_product').val(cl);
+
             });
         });
-        function ShowColor(id,sz) {
-            $('#colorList').hide();
-            $.ajax({
-                url: '/shoppingcart/getcolor',
-                type: 'POST',
-                data: { id: id, sz: sz },
-                success: function (rs) {
-                    if (rs.success) {
-                        alert("haha");
-                        // Lấy danh sách màu sắc dựa trên kích cỡ (đây chỉ là ví dụ, bạn cần điều chỉnh cho phù hợp)
-@*                        var colorList = rs.listCS;
-                        debugger
-                        // Hiển thị danh sách màu sắc nếu có
-                        if (colorList.length > 0) {
-                            $('#colorButtons').empty();
-                            for (var i = 0; i < colorList.length; i++) {
-                                var color = colorList[i].ColorName;
-
-                                console.log(color);
-                                // Tạo nút màu sắc và thêm vào danh sách
-                                var colorButton = $('<button class="colorButton" style="background-color:' + color + '"></button>');
-                                $('#colorButtons').append(colorButton);
-                            }
-                            $('#colorList').show();
-                        }*@
-                    }
-                }
-            });
-        }
     </script>
 }
 

@@ -84,6 +84,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Ngày Đặt Hàng</label>
+                            <input type="hidden" class="form-control" name="CreatedDate" value="@Model.CreatedDate" />
                             <input type="text" class="form-control" name="CreatedDate" value="@Model.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss")" readonly />
                         </div>
                     </div>
@@ -151,6 +152,16 @@
                                             <div class="form-group">
                                                 <input type="hidden" class="form-control" name="LProduct[@i].Price" value="@item.Price" />
                                                 <input type="text" class="form-control" name="LProduct[@i].Price" value="@WebBanHangOnline.Common.Common.FormatNumber(item.Price,0)" readonly/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="LProduct[@i].ProductSize" value="@item.ProductSize" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="LProduct[@i].ProductColor" value="@item.ProductColor" />
                                             </div>
                                         </td>
                                         <td>

@@ -6,8 +6,7 @@
         var quantity = 1;
         var tQuantity = $('#quantity_value').text();
         var SizeName = $('#value_size_product').val();
-
-        debugger
+        var ColorName = $('#value_color_product').val();
         console.log(SizeName);
 
         if (tQuantity != '') {
@@ -17,7 +16,7 @@
         $.ajax({
             url: '/shoppingcart/addtocart',
             type: 'POST',
-            data: { id: id, quantity: quantity, SizeName : SizeName},
+            data: { id: id, quantity: quantity, SizeName: SizeName, ColorName: ColorName},
             success: function (rs) {
                 if (rs.success) {
                     $('#checkout_items').html(rs.Count);

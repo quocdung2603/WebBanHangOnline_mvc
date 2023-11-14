@@ -242,7 +242,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Order model, List<OrderDetail> LProduct)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (User.Identity.IsAuthenticated)
                 {
@@ -254,11 +254,23 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     {
                         var lpOrderId = LProduct[i].OrderId;
                         var lpProductId = LProduct[i].ProductId;
-                        var orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId);
+                        var lpProductSize = LProduct[i].ProductSize;
+                        var lpProductColor = LProduct[i].ProductColor;
+                        var orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId && x.ProductSize == lpProductSize && x.ProductColor == lpProductColor);
+                        if(string.IsNullOrEmpty(lpProductSize))
+                        {
+                            orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId && x.ProductColor == lpProductColor);
+                        }   
+                        if(string.IsNullOrEmpty(lpProductColor))
+                        {
+                            orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId && x.ProductSize == lpProductSize);
+                        }    
                         if(orderdetail != null)
                         {
                             orderdetail.Price = LProduct[i].Price;
                             orderdetail.Quantity = LProduct[i].Quantity;
+                            orderdetail.ProductSize = LProduct[i].ProductSize;
+                            orderdetail.ProductColor = LProduct[i].ProductColor;
                             db.SaveChanges();
                         }
                         i++;
@@ -270,7 +282,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     db.SaveChanges();
                     return RedirectToAction("IndexForEmployee");
                 }
-            }    
+            }
             return View(model); 
         }
 

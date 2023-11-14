@@ -107,8 +107,26 @@ namespace WebBanHangOnline.Controllers
                         ProductId = x.ProductId,
                         Quantity = x.Quantity,
                         Price = x.Price,
-            
+                        ProductSize = x.ProductSize,
+                        ProductColor = x.ProductColor,
                     }));
+                    foreach(var tmp1 in cart.Items)
+                    {
+                        var psz = db.ProductSizes.FirstOrDefault(x => x.ProductId == tmp1.ProductId && x.SizeName == tmp1.ProductSize && x.ColorName == tmp1.ProductColor);
+                        if(string.IsNullOrEmpty(tmp1.ProductSize))
+                        {
+                            psz = db.ProductSizes.FirstOrDefault(x => x.ProductId == tmp1.ProductId && x.ColorName == tmp1.ProductColor);
+                        }    
+                        if(string.IsNullOrEmpty(tmp1.ProductColor))
+                        {
+                            psz = db.ProductSizes.FirstOrDefault(x => x.ProductId == tmp1.ProductId && x.SizeName == tmp1.ProductSize);
+                        }    
+                        if(psz!=null)
+                        {
+                            psz.Quantity -= tmp1.Quantity;
+                            db.SaveChanges();
+                        }    
+                    }    
                     order.TotalAmount = cart.Items.Sum(x => (x.Price * x.Quantity));
                     order.TypePayment = req.TypePayment;
                     order.CreatedDate = DateTime.Now;
@@ -229,7 +247,7 @@ namespace WebBanHangOnline.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult AddToCart(int id, int quantity, string SizeName)
+        public ActionResult AddToCart(int id, int quantity, string SizeName, string ColorName)
         {
             var code = new { success = false, msg = "", code = -1, Count = 0 };
             var db = new ApplicationDbContext();
@@ -249,6 +267,7 @@ namespace WebBanHangOnline.Controllers
                     Alias = checkProduct.Alias,
                     Quantity = quantity,
                     ProductSize = SizeName,
+                    ProductColor = ColorName,
                 };
                 if (checkProduct.ProductImage.FirstOrDefault(x => x.IsDefault) != null)
                 {
@@ -260,7 +279,7 @@ namespace WebBanHangOnline.Controllers
                     item.Price = (decimal)checkProduct.PriceSale;
                 }
                 item.TotalPrice = item.Quantity * item.Price;
-                cart.AddToCart(item, quantity,SizeName);
+                cart.AddToCart(item, quantity,SizeName,ColorName);
                 Session["Cart"] = cart;
                 code = new { success = true, msg = "Thêm sản phẩm vào giỏ hàng thành công!", code = 1, Count = cart.Items.Count };
             }
