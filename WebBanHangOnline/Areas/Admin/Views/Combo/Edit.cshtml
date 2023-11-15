@@ -1,8 +1,8 @@
-﻿@model WebBanHangOnline.Models.EF.ImportProduct
+﻿@model WebBanHangOnline.Models.EF.Combo
 @using WebBanHangOnline.Models.EF
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = "Chỉnh Sửa Phiếu Nhập";
+    ViewBag.Title = "Chỉnh Sửa Phiếu Nhập Combo";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var i = 0;
     List<Product> p = ViewBag.p;
@@ -16,21 +16,13 @@
     }).ToList();
 
     var LP = Newtonsoft.Json.JsonConvert.SerializeObject(ListSp);
-
-    var dt = ViewBag.Titles;
 }
-@{
-    List<ProductSize> ProductSizeNow = new List<ProductSize>();
-    foreach (var item in Model.ImportProductDetails)
-    {
 
-        ProductSizeNow.Add(new ProductSize
-        {
-            ProductId = item.ProductId,
-            SizeName = item.Size,
-            ColorName = item.Color,
-            Quantity = item.Quantity,
-        });
+@{
+    List<ComboDetail> ComboDetailNow = new List<ComboDetail>();
+    foreach (var z in Model.ComboDetails)
+    {
+        ComboDetailNow.Add(z);
     }
 }
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
@@ -53,7 +45,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Nhập Hàng</h1>
+                <h1>Quản Lý Combo</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -64,81 +56,71 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
 
         <div class="ContainerCreateExam">
-            <form action="/admin/ImportProduct/edit" method="post">
+            <form action="/admin/combo/edit" method="post">
                 <div class="form-horizontal">
-                    <h4>Phiếu Nhập Hàng</h4>
+                    <h4>Phiếu Chỉnh Sửa Combo</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label class="control-label col-md-2">Tên Đợt Nhập Hàng</label>
+                        <label class="control-label col-md-2">Tên Combo</label>
                         <div class="col-md-10">
-                            <input type="text" name="TenDotNhapHang" class="form-control" value="@Model.Title" />
+                            <input type="text" name="TenCombo" class="form-control" value="@Model.Title" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Ghi Chú</label>
+                        <label class="control-label col-md-2">Số Lượng Combo</label>
                         <div class="col-md-10">
-                            <textarea type="text" name="GhiChu" class="form-control" value="@Model.Note"></textarea>
+                            <input type="text" name="SoLuongCombo" class="form-control" value="@Model.Quantity" />
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-2">Phần Trăm Giảm</label>
                         <div class="col-md-10">
-                            <input type="hidden" name="ipId" value="@Model.Id" />
+                            <input type="text" name="PhanTramGiam" class="form-control" value="@Model.PercentDec" />
                         </div>
                     </div>
-
-                    @*mau hien tai*@
-
+                    <div class="form-group">
+                        <input type="hidden" name="CreatedDate" class="form-control" value="@Model.CreatedDate" />
+                        <input type="hidden" name="CreatedBy" class="form-control" value="@Model.CreatedBy" />
+                        <input type="hidden" name="Id" class="form-control" value="@Model.Id" />
+                        <input type="hidden" name="IsActive" class="form-control" value="@Model.IsActive" />
+                    </div>
                     @*Thông tin phiếu nhập*@
                     <table class="table table-bordered table-hover">
                         <thead style="background-color:aquamarine">
                             <tr class="text-center">
                                 <th>Mã Sản Phẩm</th>
                                 <th>Tên Sản Phẩm</th>
-                                <th>Giá Nhập</th>
+                                <th>Giá Gốc</th>
                                 <th>Giá Bán</th>
-                                <th>Màu Sắc</th>
-                                <th>Kích Thước</th>
-                                <th>Số Lượng</th>
                             </tr>
                         </thead>
                         <tbody id="Exams">
-                            @foreach (var item in Model.ImportProductDetails)
+                            @foreach (var item in Model.ComboDetails)
                             {
-                                <tr class="text-center" id="Exam">
+                                <tr class="text-center" id="Exam_@i">
                                     <td style="display:none;">
-                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input type="hidden" name="LProduct[@i].Id" value="@item.Id" />
-                                            </div>
-                                        </div>
+                                        <input type="hidden" name="ComboDetailNow[@i].Id" value="@ComboDetailNow[i].Id"/>
+                                        <input type="hidden" name="ComboDetailNow[@i].ProductId" value="@ComboDetailNow[i].ProductId" />
+                                        <input type="hidden" name="ComboDetailNow[@i].ComboId" value="@ComboDetailNow[i].ComboId" />
                                     </td>
-                                    <td style="display:none;">
-                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <td>
+                                        <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
-                                                <input type="hidden" name="ProductSizeNow[@i].ProductId" value="@ProductSizeNow[i].ProductId" />
-                                                <input type="hidden" name="ProductSizeNow[@i].ColorName" value="@ProductSizeNow[i].ColorName" />
-                                                <input type="hidden" name="ProductSizeNow[@i].SizeName" value="@ProductSizeNow[i].SizeName" />
-                                                <input type="hidden" name="ProductSizeNow[@i].Quantity" value="@ProductSizeNow[i].Quantity" />
+                                                <input class="form-control" name="LProduct[@i].Id" id="@i" value="@item.ProductId" />
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].ProductId" id="@i" value="@item.ProductId" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title" value="@item.Title">
+                                                <input list="Titles" id="Title_@i" class="form-control" name="LProduct[@i].Title" value="@item.Product.Title">
                                                 <datalist id="Titles">
                                                     <option value="">
                                                 </datalist>
@@ -148,42 +130,23 @@
                                     <td>
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.OriginalPrice" />
+                                                <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.Product.OriginalPrice" />
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Price" value="@item.Price" />
+                                                <input class="form-control" name="LProduct[@i].Price" value="@item.Product.Price" />
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Color" value="@item.Color" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Size" value="@item.Size" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Quantity" value="@item.Quantity" />
-                                            </div>
-                                        </div>
-                                    </td>
+                                    @*<td>
+                                            <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
+                                        </td>*@
                                 </tr>
                                 i++;
                             }
-
                         </tbody>
                     </table>
                     <div style="margin-top: 10px">
@@ -193,7 +156,6 @@
             </form>
             @*<button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>*@
         </div>
-
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
@@ -201,39 +163,6 @@
     </div>
 </div>
 @section scripts{
-
-    <script>
-        //phieu nhap
-        function Test() {
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            console.log(examsForm);
-        }
-        var Lquestion = @Html.Raw(LP);
-
-        const currentTime = document.querySelector("h1"),
-            content = document.querySelector(".content"),
-            selectMenu = document.querySelectorAll("datalist"),
-            setAlarmBtn = document.querySelector("button");
-
-        for (let i = 0; i < Lquestion.length; i++) {
-            let option = `<option value="${Lquestion[i].Title}">`;
-            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
-        }
-
-        document.getElementById("Title").addEventListener("input", function () {
-
-            var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
-            var selectedObject = Lquestion.find(function (item) {
-                return item.Title === selectedValue;
-            });
-            var item = this.parentElement.parentElement.parentElement.parentElement;
-            var Einput = item.getElementsByTagName('INPUT');
-            Einput[0].value = selectedObject.Id;
-            Einput[2].value = selectedObject.OriginalPrice;
-            Einput[3].value = selectedObject.Price;
-        });
-    </script>
     <script>
         var i = 0;
         var id = 0;
@@ -263,9 +192,9 @@
                 });
                 var item = this.parentElement.parentElement.parentElement.parentElement;
                 var Einput = item.getElementsByTagName('INPUT');
-                Einput[0].value = selectedObject.Id;
-                Einput[2].value = selectedObject.OriginalPrice;
-                Einput[3].value = selectedObject.Price;
+                Einput[3].value = selectedObject.Id;
+                Einput[5].value = selectedObject.OriginalPrice;
+                Einput[6].value = selectedObject.Price;
             });
         }
 
@@ -286,5 +215,42 @@
             examsForm.appendChild(examClone);
         }
     </script>
+
+    <script>
+        //phieu nhap
+        function Test() {
+            var examsForm = document.getElementById('Exams');
+            var examClone = document.getElementById('Exam').cloneNode(true);
+            console.log(examsForm);
+        }
+        var Lquestion = @Html.Raw(LP);
+
+        const currentTime = document.querySelector("h1"),
+            content = document.querySelector(".content"),
+            selectMenu = document.querySelectorAll("datalist"),
+            setAlarmBtn = document.querySelector("button");
+        console.log(selectMenu);
+
+        for (let j = 0; j < selectMenu.length; j++) {
+            for (let i = 0; i < Lquestion.length; i++) {
+                let option = `<option value="${Lquestion[i].Title}">`;
+                selectMenu[j].firstElementChild.insertAdjacentHTML("afterend", option);
+            }
+
+            document.getElementById("Title_" + j).addEventListener("input", function () {
+                var selectedValue = this.value;
+                var selectedObject = Lquestion.find(function (item) {
+                    return item.Title === selectedValue;
+                });
+                var item = this.closest("tr"); // Tìm phần tử <tr> cha gần nhất
+                console.log(selectedObject);
+                var Einput = item.getElementsByTagName('INPUT');
+                Einput[3].value = selectedObject.Id;
+                Einput[5].value = selectedObject.OriginalPrice;
+                Einput[6].value = selectedObject.Price;
+            });
+        }
+    </script>
+
 }
 

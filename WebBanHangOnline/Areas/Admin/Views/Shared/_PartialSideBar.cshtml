@@ -81,12 +81,6 @@
                     </ul>
                 </li>
             }
-            <li class="nav-item">
-                <a href="/admin/voucher" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Voucher</p>
-                </a>
-            </li>
             @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
             {
                 <li class="nav-item">
@@ -133,6 +127,18 @@
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
+                            <li class="nav-item">
+                                <a href="/admin/voucher" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Voucher</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/combo/Index" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Combo</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="/admin/order/Index" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>

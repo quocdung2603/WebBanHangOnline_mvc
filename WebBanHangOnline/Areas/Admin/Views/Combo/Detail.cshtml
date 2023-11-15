@@ -1,0 +1,129 @@
+﻿@model WebBanHangOnline.Models.EF.Combo
+@{
+    ViewBag.Title = "Xem Chi Tiết Combo";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin" class="nav-link">Trang Chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/category" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Combo</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        @*Xây dựng nội dung ở đây*@
+
+        <div class="ContainerCreateExam">
+            <form>
+                <div class="form-horizontal">
+                    <h4>Thông Tin Chi Tiết Combo</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Tên Combo</label>
+                        <div class="col-md-10">
+                            <input type="text" name="TenCombo" class="form-control" value="@Model.Title" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Số Lượng Combo</label>
+                        <div class="col-md-10">
+                            <input type="text" name="SoLuongCombo" class="form-control" value="@Model.Quantity" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Phần Trăm Giảm</label>
+                        <div class="col-md-10">
+                            <input type="text" name="PhanTramGiam" class="form-control" value="@Model.PercentDec" readonly/>
+                        </div>
+                    </div>
+                    @*Thông tin phiếu nhập*@
+                    <table class="table table-bordered table-hover">
+                        <thead style="background-color:aquamarine">
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Mã Sản Phẩm</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Giá Gốc</th>
+                                <th>Giá Bán</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Exams">
+                            @foreach (var item in Model.ComboDetails)
+                            {
+                                <tr class="text-center" id="Exam">
+                                    <td>@(i+1)</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" value="@item.ProductId" readonly />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input list="Titles" id="Title" class="form-control" value="@item.Product.Title" readonly>
+                                                <datalist id="Titles">
+                                                    <option value="">
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" value="@item.Product.OriginalPrice" readonly/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" value="@item.Product.Price" readonly />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+
+

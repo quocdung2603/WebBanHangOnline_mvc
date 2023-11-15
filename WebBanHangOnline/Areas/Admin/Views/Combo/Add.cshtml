@@ -1,8 +1,8 @@
-﻿@model WebBanHangOnline.Models.EF.ImportProduct
+﻿@model WebBanHangOnline.Models.EF.Combo
 @using WebBanHangOnline.Models.EF
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = "Chỉnh Sửa Phiếu Nhập";
+    ViewBag.Title = "Thêm Phiếu Nhập Combo";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var i = 0;
     List<Product> p = ViewBag.p;
@@ -16,23 +16,8 @@
     }).ToList();
 
     var LP = Newtonsoft.Json.JsonConvert.SerializeObject(ListSp);
-
-    var dt = ViewBag.Titles;
 }
-@{
-    List<ProductSize> ProductSizeNow = new List<ProductSize>();
-    foreach (var item in Model.ImportProductDetails)
-    {
 
-        ProductSizeNow.Add(new ProductSize
-        {
-            ProductId = item.ProductId,
-            SizeName = item.Size,
-            ColorName = item.Color,
-            Quantity = item.Quantity,
-        });
-    }
-}
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
 @section naviheader {
     <!-- Left navbar links -->
@@ -53,7 +38,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Nhập Hàng</h1>
+                <h1>Quản Lý Combo</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -64,136 +49,91 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
 <div class="page-wrapper">
     <div class="container-fluid">
         @*Xây dựng nội dung ở đây*@
 
         <div class="ContainerCreateExam">
-            <form action="/admin/ImportProduct/edit" method="post">
+            <form action="/admin/combo/add" method="post">
                 <div class="form-horizontal">
-                    <h4>Phiếu Nhập Hàng</h4>
+                    <h4>Phiếu Tạo Combo</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label class="control-label col-md-2">Tên Đợt Nhập Hàng</label>
+                        <label class="control-label col-md-2">Tên Combo</label>
                         <div class="col-md-10">
-                            <input type="text" name="TenDotNhapHang" class="form-control" value="@Model.Title" />
+                            <input type="text" name="TenCombo" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Ghi Chú</label>
+                        <label class="control-label col-md-2">Số Lượng Combo</label>
                         <div class="col-md-10">
-                            <textarea type="text" name="GhiChu" class="form-control" value="@Model.Note"></textarea>
+                            <input type="text" name="SoLuongCombo" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-2">Phần Trăm Giảm</label>
                         <div class="col-md-10">
-                            <input type="hidden" name="ipId" value="@Model.Id" />
+                            <input type="text" name="PhanTramGiam" class="form-control" />
                         </div>
                     </div>
-
-                    @*mau hien tai*@
-
                     @*Thông tin phiếu nhập*@
                     <table class="table table-bordered table-hover">
                         <thead style="background-color:aquamarine">
                             <tr class="text-center">
                                 <th>Mã Sản Phẩm</th>
                                 <th>Tên Sản Phẩm</th>
-                                <th>Giá Nhập</th>
+                                <th>Giá Gốc</th>
                                 <th>Giá Bán</th>
-                                <th>Màu Sắc</th>
-                                <th>Kích Thước</th>
-                                <th>Số Lượng</th>
                             </tr>
                         </thead>
                         <tbody id="Exams">
-                            @foreach (var item in Model.ImportProductDetails)
-                            {
-                                <tr class="text-center" id="Exam">
-                                    <td style="display:none;">
-                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input type="hidden" name="LProduct[@i].Id" value="@item.Id" />
-                                            </div>
+                            <tr class="text-center" id="Exam">
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Id" id="@i" />
                                         </div>
-                                    </td>
-                                    <td style="display:none;">
-                                        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input type="hidden" name="ProductSizeNow[@i].ProductId" value="@ProductSizeNow[i].ProductId" />
-                                                <input type="hidden" name="ProductSizeNow[@i].ColorName" value="@ProductSizeNow[i].ColorName" />
-                                                <input type="hidden" name="ProductSizeNow[@i].SizeName" value="@ProductSizeNow[i].SizeName" />
-                                                <input type="hidden" name="ProductSizeNow[@i].Quantity" value="@ProductSizeNow[i].Quantity" />
-                                            </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title">
+                                            <datalist id="Titles">
+                                                <option value="">
+                                            </datalist>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].ProductId" id="@i" value="@item.ProductId" />
-                                            </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].OriginalPrice" />
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title" value="@item.Title">
-                                                <datalist id="Titles">
-                                                    <option value="">
-                                                </datalist>
-                                            </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col-md-10" style="background-color: white;">
+                                            <input class="form-control" name="LProduct[@i].Price" />
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.OriginalPrice" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Price" value="@item.Price" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Color" value="@item.Color" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Size" value="@item.Size" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-10" style="background-color: white;">
-                                                <input class="form-control" name="LProduct[@i].Quantity" value="@item.Quantity" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                i++;
-                            }
-
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <div style="margin-top: 10px">
-                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                        <button type="submit" class="btn btn-primary">Tạo Phiếu Nhập</button>
                     </div>
                 </div>
             </form>
-            @*<button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>*@
+            <button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>
         </div>
-
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
@@ -234,6 +174,7 @@
             Einput[3].value = selectedObject.Price;
         });
     </script>
+
     <script>
         var i = 0;
         var id = 0;

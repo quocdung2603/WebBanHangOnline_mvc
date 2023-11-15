@@ -203,6 +203,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ChatController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExportProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportProductController.cs" />
@@ -332,6 +333,26 @@
     <Compile Include="Migrations\202311140715558_UpdateOrderDetail_Add2Column.Designer.cs">
       <DependentUpon>202311140715558_UpdateOrderDetail_Add2Column.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311141305512_AddCombo_ComboDetail.cs" />
+    <Compile Include="Migrations\202311141305512_AddCombo_ComboDetail.Designer.cs">
+      <DependentUpon>202311141305512_AddCombo_ComboDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311141311423_UpdateCombo.cs" />
+    <Compile Include="Migrations\202311141311423_UpdateCombo.Designer.cs">
+      <DependentUpon>202311141311423_UpdateCombo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.cs" />
+    <Compile Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.Designer.cs">
+      <DependentUpon>202311141323159_UpdateCombo_Add_IsActive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311141347436_Add_Quantity_Combo.cs" />
+    <Compile Include="Migrations\202311141347436_Add_Quantity_Combo.Designer.cs">
+      <DependentUpon>202311141347436_Add_Quantity_Combo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311141358123_Add_PercentDec_Combo.cs" />
+    <Compile Include="Migrations\202311141358123_Add_PercentDec_Combo.Designer.cs">
+      <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -341,6 +362,8 @@
     <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\EF\Adv.cs" />
     <Compile Include="Models\EF\Category.cs" />
+    <Compile Include="Models\EF\Combo.cs" />
+    <Compile Include="Models\EF\ComboDetail.cs" />
     <Compile Include="Models\EF\Contact.cs" />
     <Compile Include="Models\EF\DetailOrderStatus.cs" />
     <Compile Include="Models\EF\ExportProduct.cs" />
@@ -3651,6 +3674,10 @@
     <Content Include="Content\assets\plugins\jquery\jquery.min.map" />
     <Content Include="Content\assets\plugins\jquery\jquery.slim.min.map" />
     <Content Include="Areas\Admin\Views\Statistical\Index_Categories.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3925,6 +3952,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311140715558_UpdateOrderDetail_Add2Column.resx">
       <DependentUpon>202311140715558_UpdateOrderDetail_Add2Column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311141305512_AddCombo_ComboDetail.resx">
+      <DependentUpon>202311141305512_AddCombo_ComboDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311141311423_UpdateCombo.resx">
+      <DependentUpon>202311141311423_UpdateCombo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.resx">
+      <DependentUpon>202311141323159_UpdateCombo_Add_IsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311141347436_Add_Quantity_Combo.resx">
+      <DependentUpon>202311141347436_Add_Quantity_Combo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311141358123_Add_PercentDec_Combo.resx">
+      <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

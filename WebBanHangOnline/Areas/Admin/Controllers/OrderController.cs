@@ -250,9 +250,11 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     var userManager = new UserManager<ApplicationUser>(userStore);
                     var user = userManager.FindByName(User.Identity.Name);
                     var i = 0;
+                    var tmpOrderId = 0;
                     foreach(var item in LProduct)
                     {
                         var lpOrderId = LProduct[i].OrderId;
+                        tmpOrderId = LProduct[i].OrderId;
                         var lpProductId = LProduct[i].ProductId;
                         var lpProductSize = LProduct[i].ProductSize;
                         var lpProductColor = LProduct[i].ProductColor;
@@ -274,7 +276,14 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                             db.SaveChanges();
                         }
                         i++;
-                    }    
+                    }
+                    var tmp = db.OrderDetails.Where(x => x.OrderId == tmpOrderId).ToList();
+                    decimal totalAmount = Decimal.Zero;
+                    foreach (var z in tmp)
+                    {
+                        totalAmount += (z.Price * z.Quantity);
+                    }
+                    model.TotalAmount = totalAmount;
                     model.ModifierBy = user.FullName;
                     model.ModifierDate = DateTime.Now;
                     db.Orders.Attach(model);
@@ -308,6 +317,17 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
                 db.OrderDetails.Remove(item);
+                db.SaveChanges();
+                var tmp = db.OrderDetails.Where(x => x.OrderId == item.OrderId).ToList();
+                decimal totalAmount = Decimal.Zero;
+                foreach(var z in tmp)
+                {
+                    totalAmount += (z.Price * z.Quantity);
+                }
+                var o = db.Orders.FirstOrDefault(x => x.Id == item.OrderId);
+                o.TotalAmount = totalAmount;
+                db.Orders.Attach(o);
+                db.Entry(o).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Json(new { success = true });
             }

@@ -1,8 +1,8 @@
-﻿@model PagedList<WebBanHangOnline.Models.EF.ImportProduct>
+﻿@model PagedList<WebBanHangOnline.Models.EF.Combo>
 @using PagedList;
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Quản Lý Nhập Hàng";
+    ViewBag.Title = "Quản Lý Combo";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -46,14 +46,14 @@
             <h3 class="card-title">@ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/importproduct/add" class="btn btn-primary">Thêm Mới</a>
+                <a href="/admin/combo/add" class="btn btn-primary">Thêm Mới</a>
                 <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    @using (Html.BeginForm("index", "importproduct", FormMethod.Get, new { }))
+                    @using (Html.BeginForm("index", "Combo", FormMethod.Get, new { }))
                     {
                         <div class="input-group input-group-sm">
                             @Html.TextBox("Searchtext")
@@ -68,26 +68,32 @@
                 <thead style="background-color:aquamarine">
                     <tr class="text-center">
                         <th>STT</th>
-                        <th>Tên Phiếu</th>
+                        <th>Tên Combo</th>
                         <th>Người Tạo</th>
                         <th>Ngày Tạo</th>
-                        <th>Hành Động</th>
+                        <th>Hoạt Động</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model != null && Model.Any())
                     {
-                        var i =(ViewBag.Page - 1) * ViewBag.PageSize + 1; 
+                        var i = (ViewBag.Page - 1) * ViewBag.PageSize + 1;
                         foreach (var item in Model)
                         {
+                            var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             <tr id="trow_@item.Id" class="text-center">
                                 <td>@i</td>
                                 <td>@item.Title</td>
                                 <td>@item.CreatedBy</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                                </td>
                                 <td>
-                                    <a href="@Url.Action("detail","importproduct",new { id = item.Id})" class="btn btn-sm btn-success">Xem Chi Tiết</a>
-                                    <a href="/admin/importproduct/edit/@item.Id" class="btn btn-sm btn-warning">Chỉnh Sửa</a>
+                                    <a href="@Url.Action("detail","Combo",new { id = item.Id})" class="btn btn-sm btn-success">Xem</a>
+                                    <a href="/admin/combo/edit/@item.Id" class="btn btn-sm btn-warning">Chỉnh Sửa</a>
+                                    <a href="#" class="btn btn-sm btn-danger btnDelete" data-id="@item.Id">Xóa</a>
                                 </td>
                             </tr>
                             i++;
@@ -182,7 +188,7 @@
                 var conf = confirm('Bạn có muốn xóa đối tượng không?');
                 if (conf === true) {
                     $.ajax({
-                        url: '/admin/news/delete',
+                        url: '/admin/combo/delete',
                         type: 'POST',
                         data: { id: id },
                         success: function (rs) {
@@ -194,12 +200,12 @@
                 }
             });
 
-            @*$('body').on('click', '.btnActive', function (e) {
+            $('body').on('click', '.btnActive', function (e) {
                 e.preventDefault();
                 var btn = $(this);
                 var id = btn.data("id");
                 $.ajax({
-                    url: '/admin/news/IsActive',
+                    url: '/admin/combo/IsActive',
                     type: 'POST',
                     data: { id: id },
                     success: function (rs) {
@@ -213,7 +219,7 @@
                         }
                     }
                 });
-            });*@
+            });
         });
     </script>
 }

@@ -53,6 +53,8 @@ namespace WebBanHangOnline.Models
         public DbSet<UserVoucher> UserVouchers { get; set; }
         public DbSet<RoomChat> RoomChats { get; set; }  
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Combo> Combos { get; set; }    
+        public DbSet<ComboDetail> ComboDetails { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
