@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<WebBanHangOnline.Models.EF.Order>
+@{ 
+    ViewBag.Idr = 0;
+}
 @if (Model != null)
 {
     var i = 1;
@@ -24,13 +27,13 @@
                     @if (item.OrderStatus == 0)
                     {
                         <td>
-                            <button id="btnHuy" class="btn btn-sm btn-danger btnChange" data-id="@item.Id">Hủy đơn hàng</button>
+                            <button class="btn btn-sm btn-danger btnChange btnHuy" data-id="@item.Id">Hủy đơn hàng</button>
                         </td>
                     }
                     else if (item.OrderStatus == 3)
                     {
                         <td>
-                            <button id="btnTraHang" class="btn btn-sm btn-danger btnChange" data-id="@item.Id">Trả Hàng</button>
+                            <button class="btn btn-sm btn-danger btnChange btnTraHang" data-id="@item.Id">Trả Hàng</button>
                         </td>
                     }
                 </tr>

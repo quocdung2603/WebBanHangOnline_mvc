@@ -27,6 +27,27 @@
         margin-right: 5px;
         border: none;
     }
+    .swiper-container {
+        -webkit-font-smoothing: antialiased;
+        text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+        --swiper-theme-color: #007aff;
+        --swiper-navigation-size: 44px;
+        color: #4a4a4a;
+        font-size: 1em;
+        font-weight: 400;
+        line-height: 1.5;
+        font-family: Roboto,sans-serif !important;
+        box-sizing: inherit;
+        list-style: none;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        padding: 10px;
+        width: 100%;
+    }
 </style>
 @if (Model != null)
 {
@@ -49,7 +70,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-bottom:70px;">
             <div class="col-lg-7">
                 @if (Model.ProductImage != null && Model.ProductImage.Any())
                 {
@@ -146,7 +167,7 @@
                         <li><i class="fa fa-star" aria-hidden="true"></i></li>
                         <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                     </ul>
-                    
+
                     <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                         <span>Quantity:</span>
                         <div class="quantity_selector">
@@ -160,9 +181,14 @@
                 </div>
             </div>
         </div>
-
+        
+         <hr />
+        <div class="row" style="margin-top: 70px;">
+            @Html.Action("PartialView_Combo", "Products", new { ProductId = Model.Id })
+        </div>
     </div>
 
+    // phan khac
     <div class="tabs_section_container">
 
         <div class="container">
@@ -231,6 +257,21 @@
                 var cl = $(this).data('color');
                 $('#value_color_product').val(cl);
 
+            });
+            $('.btnAddComboToCart').on('click', function () {
+                var id = $(this).data('id');
+                var ids = $('.value_list_idp').val();
+                $.ajax({
+                    url: '/ShoppingCart/AddComboToCart',
+                    type: 'POST',
+                    data: { id: id, ids: ids },
+                    success: function (rs) {
+                        if (rs.success) {
+                            $('#checkout_items').html(rs.Count);
+                            alert(rs.msg);
+                        }
+                    }
+                });
             });
         });
     </script>

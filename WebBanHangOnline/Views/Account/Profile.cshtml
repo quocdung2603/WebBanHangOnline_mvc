@@ -202,25 +202,49 @@
 </div>
 @section scripts{
     <script>
-        var Huy = document.getElementById('btnHuy');
-        Huy.addEventListener('click', function () {
-            var id = $(this).data('id');
-            var conf = confirm("Bạn có chắc muốn hủy đơn hàng không?");
-            if (conf === true) {
-                $.ajax({
-                    url: '/Review/CancelOrder',
-                    type: 'POST',
-                    data: { id: id },
-                    success: function (rs) {
-                        if (rs.success) {
-                            location.reload();
+        $(document).ready(function () {
+            $('.btnHuy').on('click', function () {
+                var id = $(this).data('id');
+                var conf = confirm("Bạn có chắc muốn hủy đơn hàng không?");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/Review/CancelOrder',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                location.reload();
+                                alert("Bạn đã hủy thành công đơn hàng này!");
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     </script>
+
     <script>
+        $(document).ready(function () {
+            $('.btnTraHang').on('click', function () {
+                var id = $(this).data('id');
+                var conf = confirm("Bạn có chắc muốn trả hàng không?");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/Review/ReturnOrder',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                location.reload();
+                                alert("Bạn đã trả đơn hàng thành công!");
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    @*<script>
         var TraHang = document.getElementById('btnTraHang');
         TraHang.addEventListener('click', function () {
             var id = $(this).data('id');
@@ -233,10 +257,11 @@
                     success: function (rs) {
                         if (rs.success) {
                             location.reload();
+                            alert("Bạn đã trả đơn hàng thành công!");
                         }
                     }
                 });
             }
         });
-    </script>
+    </script>*@
 }

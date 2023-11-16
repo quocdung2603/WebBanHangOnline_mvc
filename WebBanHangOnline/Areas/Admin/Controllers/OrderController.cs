@@ -105,7 +105,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return View();
         }
         /*index cho nhan viên kho*/
-        public ActionResult IndexForStoreKeeper(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
+        public ActionResult IndexForStoreKeeper(int? page, string Searchtext, string ods1, string ods4)
         {
             if(User.Identity.IsAuthenticated)
             {
@@ -118,14 +118,14 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 {
                     page = 1;
                 }
-                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 1).OrderByDescending(x => x.CreatedDate).ToList();
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 1 || x.OrderStatus == 4).OrderByDescending(x => x.CreatedDate).ToList();
+                List<Order> o = new List<Order>();
                 if (user.IsLeader == false)
                 {
                     var tmp = db.DetailOrderStatuses.Where(x => x.IdUExport == user.Id).ToList();
-                    List<Order> o = new List<Order>();
                     foreach(var item in tmp)
                     {
-                        var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && x.OrderStatus == 1);
+                        var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && (x.OrderStatus == 1 || x.OrderStatus == 4));
                         if(i!=null)
                         {
                             o.Add(i);
@@ -139,21 +139,13 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
                 }
                 //lọc
-                if (!string.IsNullOrEmpty(Cod) && Cod == "true")
+                if(!string.IsNullOrEmpty(ods1) && ods1 == "true")
                 {
-                    items = items.Where(x => x.TypePayment == 1);
+                    items = o.Where(x => x.OrderStatus == 1).OrderByDescending(x => x.CreatedDate).ToList();
                 }
-                else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
+                if (!string.IsNullOrEmpty(ods4) && ods4 == "true")
                 {
-                    items = items.Where(x => x.TypePayment == 2);
-                }
-                else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
-                {
-                    items = items.Where(x => x.Status == "1");
-                }
-                else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
-                {
-                    items = items.Where(x => x.Status == "2");
+                    items = o.Where(x => x.OrderStatus == 4).OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
                 items = items.ToPagedList(pageIndex, pageSize);
@@ -275,6 +267,24 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                             orderdetail.ProductColor = LProduct[i].ProductColor;
                             db.SaveChanges();
                         }
+                        else
+                        {
+                            orderdetail = db.OrderDetails.FirstOrDefault(x => x.OrderId == lpOrderId && x.ProductId == lpProductId && x.ProductColor == "" && x.ProductSize == "");
+                            if(orderdetail != null)
+                            {
+                                orderdetail.Price = LProduct[i].Price;
+                                orderdetail.Quantity = LProduct[i].Quantity;
+                                orderdetail.ProductSize = LProduct[i].ProductSize;
+                                orderdetail.ProductColor = LProduct[i].ProductColor;
+                                db.SaveChanges();
+                                var psz = db.ProductSizes.FirstOrDefault(x => x.ProductId == lpProductId && x.SizeName == lpProductSize && x.ColorName == lpProductColor);
+                                if(psz!=null)
+                                {
+                                    psz.Quantity -= orderdetail.Quantity;
+                                    db.SaveChanges();
+                                }
+                            }    
+                        } 
                         i++;
                     }
                     var tmp = db.OrderDetails.Where(x => x.OrderId == tmpOrderId).ToList();
@@ -294,7 +304,6 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             }
             return View(model); 
         }
-
 
         [HttpPost]
         public ActionResult DeleteInEditOrder(int id)
@@ -853,6 +862,84 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         public ActionResult Tmp(string data)
         {
             return RedirectToAction("ShareWork", new { @data = data});
+        }
+
+        [HttpPost]
+        public ActionResult AcceptedAll(string data)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                var url = 0;
+                if (!string.IsNullOrEmpty(data))
+                {
+                    var items = data.Split(',');
+                    if (items != null && items.Any())
+                    {
+                        foreach (var z in items)
+                        {
+                            var item = db.Orders.Find(Convert.ToInt32(z));
+                            if (item != null)
+                            {
+                                if (item.OrderStatus == 0) //xác nhận đơn hàng
+                                {
+                                    url = 0;
+                                    var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                                    dos.IdUConfirm = user.Id;
+                                    dos.CofirmDate = DateTime.Now;
+                                    db.SaveChanges();
+                                    item.OrderStatus += 1;
+                                }
+                                else if (item.OrderStatus == 1) //lấy hàng ra từ kho, cập nhật lại số lượng sản phẩm trong đơn hàng
+                                {
+                                    url = 1;
+                                    var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                                    dos.IdUExport = user.Id;
+                                    dos.ExportDate = DateTime.Now;
+                                    //tru lai so luong hang hoa
+                                    List<OrderDetail> od = db.OrderDetails.Where(x => x.OrderId == item.Id).ToList();
+                                    foreach (var i in od)
+                                    {
+                                        Product p = db.Products.FirstOrDefault(x => x.Id == i.ProductId);
+                                        p.Quantity -= i.Quantity;
+                                        db.SaveChanges();
+                                    }
+                                    db.SaveChanges();
+                                    item.OrderStatus += 1;
+                                }
+                                else if (item.OrderStatus == 2)
+                                {
+                                    url = 2;
+                                    var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
+                                    dos.IdUDelivery = user.Id;
+                                    dos.DeliveryDate = DateTime.Now;
+                                    db.SaveChanges();
+                                    item.OrderStatus += 1;
+                                }
+                                db.Orders.Attach(item);
+                                db.Entry(item).Property(x => x.OrderStatus).IsModified = true;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+                if (url == 0)
+                {
+                    return RedirectToAction("IndexForEmployee");
+                }
+                else if (url == 1)
+                {
+                    return RedirectToAction("IndexForStoreKeeper");
+                }
+                else if(url == 2)
+                {
+                    return RedirectToAction("IndexForShipper");
+                }
+            }
+            return View();
         }
     }
 }

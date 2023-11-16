@@ -119,6 +119,28 @@ namespace WebBanHangOnline.Controllers
                         db.SaveChanges();
                         item.OrderStatus = -1;
                     }
+                    var od = db.OrderDetails.Where(x => x.OrderId == item.Id).ToList();
+                    if(od != null)
+                    {
+                        foreach(var z in od)
+                        {
+                            var ps = db.ProductSizes.FirstOrDefault(x => x.ProductId == z.ProductId && x.SizeName == z.ProductSize && x.ColorName == z.ProductColor);
+                            if(string.IsNullOrEmpty(z.ProductSize))
+                            {
+                                ps = db.ProductSizes.FirstOrDefault(x => x.ProductId == z.ProductId && x.ColorName == z.ProductColor);
+                            }    
+                            if(string.IsNullOrEmpty(z.ProductColor))
+                            {
+                                ps = db.ProductSizes.FirstOrDefault(x => x.ProductId == z.ProductId && x.SizeName == z.ProductSize);
+                            }    
+                            if(ps!=null)
+                            {
+                                ps.Quantity += z.Quantity;
+                                db.OrderDetails.Remove(z);
+                                db.SaveChanges();
+                            }    
+                        }    
+                    }    
                     db.Orders.Attach(item);
                     db.Entry(item).Property(x => x.OrderStatus).IsModified = true;
                     db.SaveChanges();
@@ -143,7 +165,7 @@ namespace WebBanHangOnline.Controllers
                     if (item.OrderStatus == 3)
                     {
                         var dos = db.DetailOrderStatuses.FirstOrDefault(x => x.OrderId == item.Id);
-                        dos.IdUReturn = user.Id;
+                        dos.IdUReturn = dos.IdUDelivery;
                         dos.ReturnDate = DateTime.Now;
                         List<OrderDetail> od = db.OrderDetails.Where(x => x.OrderId == item.Id).ToList();
                         foreach (var i in od)

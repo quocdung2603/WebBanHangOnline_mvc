@@ -1,0 +1,120 @@
+﻿@model IEnumerable<int>
+@using WebBanHangOnline.Models.EF
+@using WebBanHangOnline.Models
+
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+}
+<style>
+    #crossSellBlock #callToAction {
+        justify-content: space-between;
+        padding: 0 10px 10px;
+        text-align: left;
+        width: 100%;
+    }
+
+        #crossSellBlock #callToAction .temp-price {
+            align-items: flex-start;
+            flex-flow: column;
+            margin-right: 10px;
+        }
+
+        #crossSellBlock #callToAction button#buyNow {
+            background-color: #d2011a;
+            color: #fff;
+            display: flex;
+            flex-flow: column;
+            line-height: 1.2;
+            margin-right: 10px;
+            min-width: 150px;
+        }
+
+        #crossSellBlock #callToAction button#addToCart {
+            align-items: center;
+            border: 1px solid crimson;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            width: 60px;
+        }
+</style>
+
+
+@if (Model != null && Model.Any())
+{
+    <h3>Mua Kèm Sản Phẩm</h3>
+
+    foreach (var item in Model)
+    {
+        var ids = "";
+        <div class="swiper-container list-combo swiper-container-initialized swiper-container-horizontal">
+            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); display: flex; flex-direction: row">
+                @{
+                    var ListItem = db.ComboDetails.Where(x => x.ComboId == item).ToList();
+                    List<Product> p = new List<Product>();
+                    foreach (var x in ListItem)
+                    {
+                        Product tmp = db.Products.FirstOrDefault(i => i.Id == x.ProductId);
+                        p.Add(tmp);
+                    }
+                    var c = db.Combos.FirstOrDefault(x => x.Id == item);
+                }
+                @foreach (var Pd in p)
+                {
+                    var strImage = "";
+                    var img = Pd.ProductImage.FirstOrDefault(x => x.IsDefault);
+                    if (img != null)
+                    {
+                        strImage = img.Image;
+                    }
+                    @*if(ids=="")
+                    {
+                        ids += Pd.Id;
+                    }
+                    else
+                    {
+                        ids += ",";
+                        ids += Pd.Id;
+                    }*@
+                    <div class="combo-item swiper-slide swiper-slide-active" style="width: 180px; margin-right: 30px; border:1px solid gray;border-radius:10px;">
+                        <div class="combo-category">
+                            <div class="combo-item-wrapper">
+                                <div class="box-info-top" style="display:flex; justify-content:center;flex-direction:column; align-items:center;padding:10px;">
+                                    <div class="combo-item-img">
+                                        <img style="width:150px;" src="@strImage"
+                                             width="358">
+                                    </div>
+                                    <h6 style="text-align:center;"><a style="color:black;" class="product_name" href="/chi-tiet/@Pd.Alias-p@(Pd.Id)">@Pd.Title</a></h6>
+                                    <p class="text-percent">Giá: @(WebBanHangOnline.Common.Common.FormatNumber(Pd.Price,0))đ</p>
+                                    <a href="#" class="btnAddToCart" data-id="@Pd.Id" ;
+                                        style="background-color: #fe4c50; color: #fff; font-size:13px; padding:5px 10px 5px 10px; border-radius:5px;">THÊM VÀO GIỎ HÀNG</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div id="callToAction" class="is-flex" style="display: flex; flex-direction: row; justify-content: space-between; padding: 0 10px 10px; text-align: left; width: 100%;">
+                    <div class="is-flex temp-price" style=" align-items: flex-start; flex-flow: column; margin-right: 10px;">
+                        <div class="is-flex"><strong>Tạm tính:</strong> <span class="total-price">@(WebBanHangOnline.Common.Common.FormatNumber(c.Price,0))đ</span></div>
+                        <em>
+                            (Tiết kiệm @(c.PercentDec)%)
+                        </em>
+                    </div>
+                    @*<input type="hidden" name="value_list_idp" class="value_list_idp" value="@ids"/>*@
+                    <button type="submit" class="btnAddComboToCart" data-id="@c.Id"
+                            style="background-color: #fe4c50; color: #fff; display: flex; flex-flow: column; line-height: 1.2; margin-right: 10px; align-items: center; justify-content: center; border-radius:5px; padding:0 10px 0 10px;">
+                        THÊM VÀO GIỎ HÀNG
+                    </button>
+                </div>
+            <div class="swiper-button-prev swiper-button-disabled" tabindex="-1" role="button" aria-label="Previous slide"
+                 aria-disabled="true"></div>
+            <div class="swiper-button-next swiper-button-disabled" tabindex="-1" role="button" aria-label="Next slide"
+                 aria-disabled="true"></div><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        </div>
+    }
+}
+
+
+

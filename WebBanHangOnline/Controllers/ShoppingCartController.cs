@@ -81,7 +81,6 @@ namespace WebBanHangOnline.Controllers
         [AllowAnonymous]
         public ActionResult CheckOutSuccess()
         {
-
             return View();
         }
 
@@ -103,13 +102,14 @@ namespace WebBanHangOnline.Controllers
                     order.Email = req.Email;
                     order.Status = "1"; // 1- chưa thanh toán | 2 - đã thanh toán | 3 - hoàn thành | 4 - hủy
                     order.OrderStatus = 0; //cho xac nhan 0 - da xac nhan 1 - dang giao 2 - da giao 3 - da huy -1 - tra hang 4
-                    cart.Items.ForEach(x => order.OrderDetails.Add(new OrderDetail { 
+                    /*cart.Items.ForEach(x => order.OrderDetails.Add(new OrderDetail { 
                         ProductId = x.ProductId,
                         Quantity = x.Quantity,
                         Price = x.Price,
                         ProductSize = x.ProductSize,
                         ProductColor = x.ProductColor,
-                    }));
+                    }));*/
+
                     foreach(var tmp1 in cart.Items)
                     {
                         var psz = db.ProductSizes.FirstOrDefault(x => x.ProductId == tmp1.ProductId && x.SizeName == tmp1.ProductSize && x.ColorName == tmp1.ProductColor);
@@ -125,8 +125,35 @@ namespace WebBanHangOnline.Controllers
                         {
                             psz.Quantity -= tmp1.Quantity;
                             db.SaveChanges();
-                        }    
-                    }    
+                            order.OrderDetails.Add(new OrderDetail { 
+                                ProductId = tmp1.ProductId,
+                                Quantity = tmp1.Quantity,
+                                Price = tmp1.Price,
+                                ProductSize = tmp1.ProductSize,
+                                ProductColor = tmp1.ProductColor,
+                            });
+                        }
+                        else
+                        {
+                            var c = db.Combos.FirstOrDefault(x => x.Id == tmp1.ProductId);
+                            if (c != null)
+                            {
+                                c.Quantity -= tmp1.Quantity;
+                                db.SaveChanges();
+                                var cd = db.ComboDetails.Where(x => x.ComboId == c.Id).ToList();
+                                foreach(var z in cd)
+                                {
+                                    order.OrderDetails.Add(new OrderDetail {
+                                        ProductId = z.ProductId,
+                                        Quantity = tmp1.Quantity,
+                                        Price = tmp1.Price/2,
+                                        ProductSize = "",
+                                        ProductColor ="",
+                                    });
+                                }
+                            }
+                        } 
+                    }   
                     order.TotalAmount = cart.Items.Sum(x => (x.Price * x.Quantity));
                     order.TypePayment = req.TypePayment;
                     order.CreatedDate = DateTime.Now;
@@ -280,6 +307,35 @@ namespace WebBanHangOnline.Controllers
                 }
                 item.TotalPrice = item.Quantity * item.Price;
                 cart.AddToCart(item, quantity,SizeName,ColorName);
+                Session["Cart"] = cart;
+                code = new { success = true, msg = "Thêm sản phẩm vào giỏ hàng thành công!", code = 1, Count = cart.Items.Count };
+            }
+            return Json(code);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult AddComboToCart(int id)
+        {
+            var code = new { success = false, msg = "", code = -1, Count = 0 };
+            var db = new ApplicationDbContext();
+            var checkCombo = db.Combos.FirstOrDefault(x => x.Id == id);
+            if (checkCombo != null)
+            {
+                ShoppingCart cart = (ShoppingCart)Session["Cart"];
+                if (cart == null)
+                {
+                    cart = new ShoppingCart();
+                }
+                ShoppingCartItem item = new ShoppingCartItem
+                {
+                    ProductId = checkCombo.Id,
+                    ProductName = checkCombo.Title,
+                    Quantity = 1,
+                };
+                item.Price = checkCombo.Price;
+                item.TotalPrice = item.Quantity * item.Price;
+                cart.AddToCart(item, 1);
                 Session["Cart"] = cart;
                 code = new { success = true, msg = "Thêm sản phẩm vào giỏ hàng thành công!", code = 1, Count = cart.Items.Count };
             }

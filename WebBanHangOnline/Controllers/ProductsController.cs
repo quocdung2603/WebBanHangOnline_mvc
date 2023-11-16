@@ -111,5 +111,17 @@ namespace WebBanHangOnline.Controllers
             var items = db.Products.Where(x => x.IsSale && x.IsActive).Take(12).ToList();
             return PartialView(items);
         }
+
+
+        public ActionResult PartialView_Combo(int ProductId)
+        {
+            var items = db.ComboDetails.Where(x => x.ProductId == ProductId);
+            HashSet<int> cb = new HashSet<int>();
+            foreach (var i in items)
+            {
+                cb.Add(i.ComboId);
+            }
+            return PartialView(cb);
+        }
     }
 }
