@@ -3692,6 +3692,7 @@
     <Content Include="Areas\Admin\Views\TimePromotion\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Add.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TimePromotion\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -143,6 +143,46 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult Detail(int id)
+        {
+            var item = db.TimePromotions.FirstOrDefault(x => x.Id == id);
+            return View(item);
+        }
+
+        [HttpPost] 
+        public ActionResult Delete(int id)
+        {
+            var item = db.TimePromotions.FirstOrDefault(x => x.Id == id);
+            if(item!= null)
+            {
+                db.TimePromotions.Remove(item);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAll(string ids)
+        {
+            if(!string.IsNullOrEmpty(ids))
+            {
+                var data = ids.Split(',');
+                foreach(var item in data)
+                {
+                    var _id = Convert.ToInt32(item);
+                    var tp = db.TimePromotions.FirstOrDefault(x => x.Id == _id);
+                    if (tp != null)
+                    {
+                        db.TimePromotions.Remove(tp);
+                        db.SaveChanges();
+                    }
+                }
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
         [HttpPost]
         public ActionResult IsBan(int id)
         {
@@ -155,6 +195,43 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 return Json(new { success = true, isBan = item.IsBan });
             }
             return Json(new { success = false });
+        }
+
+
+        public void ApplyPromotion()
+        {
+            var tp = db.TimePromotions.ToList();
+            var dtn = DateTime.Now;
+            foreach(var item in tp)
+            {
+                if(dtn >= item.StartDate && dtn <= item.EndDate)
+                {
+                    item.IsActive = true;
+                    db.SaveChanges();
+                }
+            }
+
+            tp = db.TimePromotions.Where(x => x.IsActive == true).ToList();
+            if(tp!=null)
+            {
+                foreach(var item in tp)
+                {
+                    var tpd = db.TimePromotionDetails.Where(x => x.TimePromotionId == item.Id).ToList();
+                    if(tpd!=null)
+                    {
+                        foreach(var t in tpd)
+                        {
+                            var p = db.Products.FirstOrDefault(x=>x.Id == t.ProductId);
+                            if(p!=null)
+                            {
+                                p.PriceSale = p.Price * (1 - item.PercentValue / 100);
+                                p.IsSale = true;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

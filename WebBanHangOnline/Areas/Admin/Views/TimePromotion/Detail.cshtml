@@ -1,0 +1,168 @@
+﻿@model WebBanHangOnline.Models.EF.TimePromotion
+@using WebBanHangOnline.Models.EF
+@{
+    ViewBag.Title = "Thêm Phiếu Tạo Chương Trình Khuyến Mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin" class="nav-link">Trang Chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/category" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Chương Trình Khuyến Mãi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        @*Xây dựng nội dung ở đây*@
+
+        <div class="ContainerCreateExam">
+            <form action="/admin/timepromotion/edit" method="post">
+                <div class="form-horizontal">
+                    <h4>Phiếu Tạo Chương Trình Khuyến Mãi</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Tên Khuyến Mãi</label>
+                        <div class="col-md-10">
+                            <input type="text" name="TenKM" class="form-control" value="@Model.Title" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Phần Trăm Giá Trị</label>
+                        <div class="col-md-10">
+                            <input type="text" name="PercentPrice" class="form-control" value="@Model.PercentValue" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="Id" class="form-control" value="@Model.Id" readonly/>
+                    </div>
+
+                    @*thời gian bắt đầu*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Bắt Đầu</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="StartDate" name="StartDate" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Model.StartDate)" readonly>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SHour" class="form-control">
+                                    <option value="SHour" selected disabled hidden>@Model.StartDate.Hour</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SMinute" class="form-control">
+                                    <option value="SMinute" selected disabled hidden>@Model.StartDate.Minute</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @*Thời gian kết thúc*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Kết Thúc</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="EndDate" name="EndDate" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Model.EndDate)" readonly>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EHour" class="form-control">
+                                    <option value="EHour" selected disabled hidden>@Model.EndDate.Hour</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EMinute" class="form-control">
+                                    <option value="EMinute" selected disabled hidden>@Model.EndDate.Minute</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Thông tin phiếu nhập*@
+                    <table class="table table-bordered table-hover">
+                        <thead style="background-color:aquamarine">
+                            <tr class="text-center">
+                                <th>Mã Sản Phẩm</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Giá Gốc</th>
+                                <th>Giá Bán</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Exams">
+                            @foreach (var item in Model.TimePromotionDetails)
+                            {
+                                <tr class="text-center" id="Exam">
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].Id" id="@i" value="@item.ProductId" readonly />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input list="Titles" id="Title_@i" class="form-control" name="LProduct[@i].Title" value="@item.Product.Title" readonly>
+                                                <datalist id="Titles">
+                                                    <option value="">
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].OriginalPrice" value="@item.Product.OriginalPrice" readonly/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-10" style="background-color: white;">
+                                                <input class="form-control" name="LProduct[@i].Price" value="@item.Product.Price" readonly />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 10px">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+    </div>
+</div>
+
+
