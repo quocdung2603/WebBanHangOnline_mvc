@@ -354,6 +354,14 @@
     <Compile Include="Migrations\202311141358123_Add_PercentDec_Combo.Designer.cs">
       <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311160853031_Add_TimePromotion.cs" />
+    <Compile Include="Migrations\202311160853031_Add_TimePromotion.Designer.cs">
+      <DependentUpon>202311160853031_Add_TimePromotion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311160905493_Update_TimePromotion.cs" />
+    <Compile Include="Migrations\202311160905493_Update_TimePromotion.Designer.cs">
+      <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -384,6 +392,8 @@
     <Compile Include="Models\EF\RoomChat.cs" />
     <Compile Include="Models\EF\Subscribe.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
+    <Compile Include="Models\EF\TimePromotion.cs" />
+    <Compile Include="Models\EF\TimePromotionDetail.cs" />
     <Compile Include="Models\EF\UserVoucher.cs" />
     <Compile Include="Models\EF\Voucher.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -3680,6 +3690,8 @@
     <Content Include="Areas\Admin\Views\Combo\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TimePromotion\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\TimePromotion\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3970,6 +3982,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311141358123_Add_PercentDec_Combo.resx">
       <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311160853031_Add_TimePromotion.resx">
+      <DependentUpon>202311160853031_Add_TimePromotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311160905493_Update_TimePromotion.resx">
+      <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -55,6 +55,8 @@ namespace WebBanHangOnline.Models
         public DbSet<Message> Messages { get; set; }
         public DbSet<Combo> Combos { get; set; }    
         public DbSet<ComboDetail> ComboDetails { get; set; }
+        public DbSet<TimePromotion> TimePromotions { get; set; }
+        public DbSet<TimePromotionDetail> TimePromotionDetails { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

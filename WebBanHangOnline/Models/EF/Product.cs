@@ -20,6 +20,7 @@ namespace WebBanHangOnline.Models.EF
             this.ImportProductDetails = new HashSet<ImportProductDetail>();
             this.ExportProductDetails = new HashSet<ExportProductDetail>();
             this.ComboDetails = new HashSet<ComboDetail>();
+            this.TimePromotionDetails = new HashSet<TimePromotionDetail>();
         }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -66,6 +67,7 @@ namespace WebBanHangOnline.Models.EF
         public virtual ICollection<ImportProductDetail> ImportProductDetails { get; set; }
         public virtual ICollection<ExportProductDetail> ExportProductDetails { get; set; }
         public virtual ICollection<ComboDetail> ComboDetails { get; set; }
+        public virtual ICollection<TimePromotionDetail> TimePromotionDetails { get; set; }
    
     }
 }

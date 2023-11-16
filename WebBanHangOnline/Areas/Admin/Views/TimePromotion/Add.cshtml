@@ -1,8 +1,8 @@
-﻿@model WebBanHangOnline.Models.EF.ExportProduct
+﻿@model WebBanHangOnline.Models.EF.TimePromotion
 @using WebBanHangOnline.Models.EF
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = "Thêm Phiếu Xuất";
+    ViewBag.Title = "Thêm Phiếu Tạo Chương Trình Khuyến Mãi";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var i = 0;
     List<Product> p = ViewBag.p;
@@ -16,9 +16,8 @@
     }).ToList();
 
     var LP = Newtonsoft.Json.JsonConvert.SerializeObject(ListSp);
-
-    var dt = ViewBag.Titles;
 }
+
 <link rel="stylesheet" href="~/Content/assets/styles/CreateExam.css" />
 @section naviheader {
     <!-- Left navbar links -->
@@ -39,7 +38,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Xuất Hàng</h1>
+                <h1>Quản Lý Chương Trình Khuyến Mãi</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -56,21 +55,60 @@
         @*Xây dựng nội dung ở đây*@
 
         <div class="ContainerCreateExam">
-            <form action="/admin/ExportProduct/add" method="post">
+            <form action="/admin/timepromotion/add" method="post">
                 <div class="form-horizontal">
-                    <h4>Phiếu Xuất Hàng</h4>
+                    <h4>Phiếu Tạo Chương Trình Khuyến Mãi</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label class="control-label col-md-2">Tên Đợt Xuất Hàng</label>
+                        <label class="control-label col-md-2">Tên Khuyến Mãi</label>
                         <div class="col-md-10">
-                            <input type="text" name="TenDotNhapHang" class="NameKyThi" />
+                            <input type="text" name="TenKM" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Ghi Chú</label>
+                        <label class="control-label col-md-2">Phần Trăm Giá Trị</label>
                         <div class="col-md-10">
-                            <textarea type="text" name="GhiChu" class="NameKyThi"></textarea>
+                            <input type="text" name="PercentPrice" class="form-control" />
+                        </div>
+                    </div>
+
+                    @*thời gian bắt đầu*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Bắt Đầu</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="StartDate" name="StartDate" class="form-control">
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SHour" class="form-control">
+                                    <option value="SHour" selected disabled hidden>Giờ Bắt Đầu</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="SMinute" class="form-control">
+                                    <option value="SMinute" selected disabled hidden>Phút Bắt Đầu</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @*Thời gian kết thúc*@
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Thời Gian Kết Thúc</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="date" id="EndDate" name="EndDate" class="form-control">
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EHour" class="form-control">
+                                    <option value="EHour" selected disabled hidden>Giờ Kết Thúc</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 content">
+                                <select name="EMinute" class="form-control">
+                                    <option value="EMinute" selected disabled hidden>Phút Kết Thúc</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -80,10 +118,8 @@
                             <tr class="text-center">
                                 <th>Mã Sản Phẩm</th>
                                 <th>Tên Sản Phẩm</th>
-                                <th>Màu Sắc</th>
-                                <th>Kích Thước</th>
-                                <th>Số Lượng</th>
-                                <th></th>
+                                <th>Giá Gốc</th>
+                                <th>Giá Bán</th>
                             </tr>
                         </thead>
                         <tbody id="Exams">
@@ -91,7 +127,7 @@
                                 <td>
                                     <div class="form-group">
                                         <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].ProductId" id="@i" />
+                                            <input class="form-control" name="LProduct[@i].Id" id="@i" />
                                         </div>
                                     </div>
                                 </td>
@@ -108,32 +144,22 @@
                                 <td>
                                     <div class="form-group">
                                         <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Color" />
+                                            <input class="form-control" name="LProduct[@i].OriginalPrice" />
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
                                         <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Size" />
+                                            <input class="form-control" name="LProduct[@i].Price" />
                                         </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col-md-10" style="background-color: white;">
-                                            <input class="form-control" name="LProduct[@i].Quantity" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div style="margin-top: 10px">
-                        <button type="submit" class="btn btn-primary">Tạo Phiếu Xuất</button>
+                        <button type="submit" class="btn btn-primary">Tạo Phiếu Nhập</button>
                     </div>
                 </div>
             </form>
@@ -145,28 +171,50 @@
 
     </div>
 </div>
-
 @section scripts{
 
     <script>
-        //phieu nhap
-        function Test() {
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            console.log(examsForm);
-        }
-        var Lquestion = @Html.Raw(LP);
-
-        const currentTime = document.querySelector("h1"),
+            const currentTime = document.querySelector("h1"),
             content = document.querySelector(".content"),
-            selectMenu = document.querySelectorAll("datalist"),
+            selectMenu = document.querySelectorAll("select"),
             setAlarmBtn = document.querySelector("button");
 
-        for (let i = 0; i < Lquestion.length; i++) {
-            let option = `<option value="${Lquestion[i].Title}">`;
+        //bat dau
+        for (let i = 23; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
             selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
         }
 
+        for (let i = 59; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[1].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        //ket thuc
+        for (let i = 23; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[2].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        for (let i = 59; i >= 0; i--) {
+            i = i < 10 ? `0${i}` : i;
+            let option = `<option value="${i}">${i}</option>`;
+            selectMenu[3].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+        
+    </script>
+    <script>
+        //phieu nhap
+        var Lquestion = @Html.Raw(LP);
+        const selectMenu1 = document.querySelectorAll("datalist");
+
+        for (let i = 0; i < Lquestion.length; i++) {
+            let option = `<option value="${Lquestion[i].Title}">`;
+            selectMenu1[0].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
         document.getElementById("Title").addEventListener("input", function () {
 
             var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
@@ -176,9 +224,11 @@
             var item = this.parentElement.parentElement.parentElement.parentElement;
             var Einput = item.getElementsByTagName('INPUT');
             Einput[0].value = selectedObject.Id;
-
+            Einput[2].value = selectedObject.OriginalPrice;
+            Einput[3].value = selectedObject.Price;
         });
     </script>
+
     <script>
         var i = 0;
         var id = 0;
@@ -209,26 +259,12 @@
                 var item = this.parentElement.parentElement.parentElement.parentElement;
                 var Einput = item.getElementsByTagName('INPUT');
                 Einput[0].value = selectedObject.Id;
-
+                Einput[2].value = selectedObject.OriginalPrice;
+                Einput[3].value = selectedObject.Price;
             });
         }
-
-        function ThemKichThuoc() {
-            i += 1; // Tăng giá trị i lên 1
-
-            console.log("i sau khi tăng lên 1: " + i);
-
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            var inputFields = examClone.getElementsByTagName('input');
-
-            // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
-            }
-            // Thêm bản sao vào Exams
-            examsForm.appendChild(examClone);
-        }
     </script>
+
+    
 }
 
