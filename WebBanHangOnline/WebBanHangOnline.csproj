@@ -217,6 +217,7 @@
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingSystemController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TimePromotionController.cs" />
     <Compile Include="Areas\Admin\Controllers\VoucherController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
@@ -3678,6 +3679,7 @@
     <Content Include="Areas\Admin\Views\Combo\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TimePromotion\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

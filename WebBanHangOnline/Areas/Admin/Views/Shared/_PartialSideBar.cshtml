@@ -30,7 +30,7 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+            with font-awesome or any other icon font library -->
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">
@@ -80,8 +80,142 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Tin tức & Bài viết
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/news" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tin Tức</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/posts" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> Bài Viết </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Sản Phẩm
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/products" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sản Phẩm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/order/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đơn Đặt Hàng</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Khuyến Mãi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/combo/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Combo</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/voucher" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Voucher</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/TimePromotion" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Khuyến Mãi Theo Thời Gian</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Nhập / Xuất
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/importproduct/index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Nhập Hàng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/exportproduct/index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Xuất Hàng</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Thống Kê Kinh Doanh
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/Statistical/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tình hình kinh doanh</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Statistical/Index_Categories" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Mục Sản Phẩm</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/admin/settingsystem" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Cấu Hình Hệ Thống</p>
+                    </a>
+                </li>
+
             }
-            @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+            @if (User.IsInRole("Employee"))
             {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -106,9 +240,36 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Sản Phẩm
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/products" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sản Phẩm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/order/IndexForEmployee" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đơn Đặt Hàng</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             }
 
-            @if (!User.IsInRole("Shipper"))
+
+
+            @if (User.IsInRole("StoreKeeper"))
             {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -125,62 +286,15 @@
                                 <p>Sản Phẩm</p>
                             </a>
                         </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a href="/admin/voucher" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Voucher</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/combo/Index" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Combo</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/admin/order/Index" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Đơn Đặt Hàng</p>
-                                </a>
-                            </li>
-                        }
-                        else if (User.IsInRole("Employee"))
-                        {
-                            <li class="nav-item">
-                                <a href="/admin/order/IndexForEmployee" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Đơn Đặt Hàng</p>
-                                </a>
-                            </li>
-                        }
-                        else if (User.IsInRole("StoreKeeper"))
-                        {
-                            <li class="nav-item">
-                                <a href="/admin/order/IndexForStoreKeeper" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Đơn Đặt Hàng</p>
-                                </a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a href="/admin/order/IndexForStoreKeeper" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đơn Đặt Hàng</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
-            }
 
-            @*shipper*@
-            @if (User.IsInRole("Shipper"))
-            {
-                <li class="nav-item">
-                    <a href="/admin/order/IndexForShipper" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Đơn Đặt Hàng</p>
-                    </a>
-                </li>
-            }
-
-            @if (User.IsInRole("StoreKeeper") || User.IsInRole("Admin"))
-            {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -205,38 +319,17 @@
                     </ul>
                 </li>
             }
-            @if (User.IsInRole("Admin"))
+
+            @if (User.IsInRole("Shipper"))
             {
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Thống Kê Kinh Doanh
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/admin/Statistical/Index" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tình hình kinh doanh</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin/Statistical/Index_Categories" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Mục Sản Phẩm</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/settingsystem" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Cấu Hình Hệ Thống</p>
+                    <a href="/admin/order/IndexForShipper" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Đơn Đặt Hàng</p>
                     </a>
                 </li>
             }
+
             <li class="nav-item">
                 <a href="javascript:document.getElementById('logOffForm').submit()" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
