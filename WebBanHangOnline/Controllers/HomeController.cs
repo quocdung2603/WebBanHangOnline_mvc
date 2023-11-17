@@ -50,6 +50,11 @@ namespace WebBanHangOnline.Controllers
                     CreatedDate = DateTime.Now
                 });
                 db.SaveChanges();
+                string contentCustomer = System.IO.File.ReadAllText(Server.MapPath("~/Content/templates/send_subcribe.html"));
+                contentCustomer = contentCustomer.Replace("{{DiaChiMailKhach}}", req.Email);
+                contentCustomer = contentCustomer.Replace("{{DiaChiMailAdmin}}", "nguyenquocdung26032003@gmail.com");
+                contentCustomer = contentCustomer.Replace("{{SoDienThoai}}", "0901291640");
+                WebBanHangOnline.Common.Common.SendMail("ABC Store", "CẢM ƠN QUÝ KHÁCH ĐÃ ĐĂNG KÝ NHẬN THÔNG BÁO QUA EMAIL", contentCustomer.ToString(), req.Email);
                 return Json(new { success = true});
             }    
             return View("Partial_Subcribe",req);

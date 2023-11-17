@@ -177,6 +177,17 @@
             });
         });
     </script>
-
-
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/admin/TimePromotion/ApplyPromotion', 
+                type: 'GET',
+                success: function (rs) {
+                    if (rs.success) {
+                        location.reload();
+                    }
+                },
+            });
+        });
+    </script>
 }

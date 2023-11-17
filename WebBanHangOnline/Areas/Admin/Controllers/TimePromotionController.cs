@@ -198,31 +198,52 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         }
 
 
-        public void ApplyPromotion()
+        [HttpGet]
+        public ActionResult ApplyPromotion()
         {
             var tp = db.TimePromotions.ToList();
             var dtn = DateTime.Now;
-            foreach(var item in tp)
+            foreach (var item in tp)
             {
-                if(dtn >= item.StartDate && dtn <= item.EndDate)
+                if (dtn >= item.StartDate && dtn <= item.EndDate)
                 {
                     item.IsActive = true;
                     db.SaveChanges();
                 }
-            }
-
-            tp = db.TimePromotions.Where(x => x.IsActive == true).ToList();
-            if(tp!=null)
-            {
-                foreach(var item in tp)
+                else
                 {
+                    item.IsActive = false;
+                    db.SaveChanges();
                     var tpd = db.TimePromotionDetails.Where(x => x.TimePromotionId == item.Id).ToList();
                     if(tpd!=null)
                     {
                         foreach(var t in tpd)
                         {
-                            var p = db.Products.FirstOrDefault(x=>x.Id == t.ProductId);
+                            var p = db.Products.FirstOrDefault(x => x.Id == t.ProductId);
                             if(p!=null)
+                            {
+                                p.PriceSale = decimal.Zero;
+                                p.IsSale = false;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            tp = db.TimePromotions.Where(x => x.IsActive == true).ToList();
+            if (tp != null)
+            {
+                foreach (var item in tp)
+                {
+                    var tpd = db.TimePromotionDetails.Where(x => x.TimePromotionId == item.Id).ToList();
+                    if (tpd != null)
+                    {
+                        foreach (var t in tpd)
+                        {
+                            var p = db.Products.FirstOrDefault(x => x.Id == t.ProductId);
+                            if (p != null)
                             {
                                 p.PriceSale = p.Price * (1 - item.PercentValue / 100);
                                 p.IsSale = true;
@@ -232,6 +253,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     }
                 }
             }
+            return Json(new { success = true });
         }
     }
 }
