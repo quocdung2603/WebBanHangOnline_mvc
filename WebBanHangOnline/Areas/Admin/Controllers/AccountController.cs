@@ -294,12 +294,19 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 if (item.IsActive == true)
                 {
                     item.IsActive = false;
-                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "Thông Báo Khóa Tài Khoản", "Tài khoản của bạn đã bị khóa do vi phạm một số chính sách cộng đồng của ABC Store. Để biết thêm thông tin chi tiết vui lòng phản hồi cho chúng tôi hoặc liên hệ 0901291640 để được giải quyết sớm nhất.", item.Email);
+                    string contentCustomer = System.IO.File.ReadAllText(Server.MapPath("~/Content/templates/send_BanAcc.html"));
+                    contentCustomer = contentCustomer.Replace("{{TenKhachHang}}", item.FullName);
+                    contentCustomer = contentCustomer.Replace("{{DiaChiMailAdmin}}", "nguyenquocdung26032003@gmail.com");
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "THÔNG BÁO KHÓA TÀI KHOẢN TẠI ABC STORE", contentCustomer.ToString(), item.Email);
                 }
                 else
                 {
                     item.IsActive = true;
-                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "Thông Báo Mở Khóa Tài Khoản", "Tài khoản của bạn đã được mở khóa trở lại. Chúc bạn có một trải nghiệm tuyệt vời tại ABC Store", item.Email);
+                    string contentCustomer = System.IO.File.ReadAllText(Server.MapPath("~/Content/templates/send_BanAcc.html"));
+                    contentCustomer = contentCustomer.Replace("{{TenKhachHang}}", item.FullName);
+                    contentCustomer = contentCustomer.Replace("{{DiaChiMailAdmin}}", "nguyenquocdung26032003@gmail.com");
+                    contentCustomer = contentCustomer.Replace("{{SoDienThoaiAdmin}}","0901291640");
+                    WebBanHangOnline.Common.Common.SendMail("ABC Store", "THÔNG BÁO MỞ KHÓA TÀI KHOẢN TẠI ABC STORE", contentCustomer.ToString(), item.Email);
                 }
                 /*db.Entry(item).State = System.Data.Entity.EntityState.Modified;*/
                 var result = await UserManager.UpdateAsync(item);

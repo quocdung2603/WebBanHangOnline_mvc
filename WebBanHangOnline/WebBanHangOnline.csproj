@@ -3467,7 +3467,9 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\templates\send1.html" />
     <Content Include="Content\templates\send2.html" />
+    <Content Include="Content\templates\send_BanAcc.html" />
     <Content Include="Content\templates\send_subcribe.html" />
+    <Content Include="Content\templates\send_UnbanAcc.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

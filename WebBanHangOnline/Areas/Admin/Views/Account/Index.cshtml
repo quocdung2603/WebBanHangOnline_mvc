@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<WebBanHangOnline.Models.ApplicationUser>
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using WebBanHangOnline.Models; 
 @{
     ViewBag.Title = "Quản Lý Tài Khoản";
+    var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+    var userManager = new UserManager<ApplicationUser>(userStore);
+
 }
 @section naviheader {
     <!-- Left navbar links -->
@@ -38,6 +44,7 @@
                         <th>Họ Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
+                        <th>Bộ Phận</th>
                         <th>Hoạt động</th>
                         <th>Trưởng Bộ Phận</th>
                         <th>Hành Động</th>
@@ -49,27 +56,29 @@
                         var i = 1;
                         foreach (var item in Model)
                         {
+                            var ur = userManager.GetRoles(item.Id).ElementAt(0); ;
                             var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
-                        <tr id="trow_@item.Id" class="text-center">
-                            <td>@i</td>
-                            <td>@item.UserName</td>
-                            <td>@item.FullName</td>
-                            <td>@item.Email</td>
-                            <td>@item.Phone</td>
-                            <td class="text-center">
-                                <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
-                            </td>
-                            <td>
-                                @if(item.IsLeader)
-                                {
-                                    <span><i class='fa fa-check text-success'></i></span>
-                                }
-                            </td>
-                            <td>
-                                <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                                <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                            </td>
-                        </tr>
+                            <tr id="trow_@item.Id" class="text-center">
+                                <td>@i</td>
+                                <td>@item.UserName</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>@item.Phone</td>
+                                <td>@ur</td>
+                                <td class="text-center">
+                                    <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                                </td>
+                                <td>
+                                    @if (item.IsLeader)
+                                    {
+                                        <span><i class='fa fa-check text-success'></i></span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                    <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                </td>
+                            </tr>
                             i++;
                         }
 
@@ -98,7 +107,7 @@
                 if (conf == true) {
                     $.ajax({
                         url: '/admin/account/DeleteAccount',
-                        type:'POST',
+                        type: 'POST',
                         data: { user: user, id: id },
                         success: function (rs) {
                             if (rs.success) {
