@@ -73,6 +73,8 @@
 </div>
 <!-- Best Sellers -->
 @Html.Action("Partial_ProductSales", "Products")
+@Html.Action("Partial_ProductHots","Products")
+@Html.Action("Partial_ProductFeatures", "Products")
 <!-- Benefit -->
 
 <div class="benefit">
@@ -140,7 +142,7 @@
 @if (User.Identity.IsAuthenticated)
 {
     <button id="openChatButton">
-        <i class="fas fa-comments"></i>
+        <i class="fa fa-comments" aria-hidden="true"></i>
     </button>
 }
 
@@ -162,8 +164,8 @@
                 show: "fade",
                 hide: "fade",
                 modal: true,
-                height: '600',
-                width: '700',
+                height: '440',
+                width: '450',
                 resizable: true,
                 title: 'Messages',
                 close: function () {

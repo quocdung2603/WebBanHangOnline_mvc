@@ -175,14 +175,31 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             foreach (var item in LProduct)
             {
                 ImportProductDetail ipd = db.ImportProductDetails.FirstOrDefault(x => x.Id == item.Id);
-                ipd.ImportProductId = ip.Id;
-                ipd.ProductId = item.ProductId;
-                ipd.Title = item.Title;
-                ipd.OriginalPrice = item.OriginalPrice;
-                ipd.Price = item.Price;
-                ipd.Color = item.Color;
-                ipd.Size = item.Size;
-                ipd.Quantity = item.Quantity;
+                if(ipd != null)
+                {
+                    ipd.ImportProductId = ip.Id;
+                    ipd.ProductId = item.ProductId;
+                    ipd.Title = item.Title;
+                    ipd.OriginalPrice = item.OriginalPrice;
+                    ipd.Price = item.Price;
+                    ipd.Color = item.Color;
+                    ipd.Size = item.Size;
+                    ipd.Quantity = item.Quantity;
+                }
+                else
+                {
+                    ipd = new ImportProductDetail();
+                    ipd.ImportProductId = ip.Id;
+                    ipd.ProductId = item.ProductId;
+                    ipd.Title = item.Title;
+                    ipd.OriginalPrice = item.OriginalPrice;
+                    ipd.Price = item.Price;
+                    ipd.Color = item.Color;
+                    ipd.Size = item.Size;
+                    ipd.Quantity = item.Quantity;
+                    db.ImportProductDetails.Add(ipd);
+                    db.SaveChanges();
+                }
 
                 Product p = db.Products.FirstOrDefault(x => x.Id == item.ProductId);
                 if (p != null)

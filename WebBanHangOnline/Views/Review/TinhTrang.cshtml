@@ -6,9 +6,9 @@
 {
     var i = 1;
     var s = decimal.Zero;
-    <table class="table table-bordered">
-        <thead>
-            <tr>
+    <table class="table table-bordered table-hover">
+        <thead style="background-color: #fe4c50; color:white;">
+            <tr class="text-center">
                 <th>STT</th>
                 <th>Mã DH</th>
                 <th>Ngày Mua</th>
@@ -19,7 +19,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="text-center">
                     <td>@i</td>
                     <td>@item.Code</td>
                     <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>

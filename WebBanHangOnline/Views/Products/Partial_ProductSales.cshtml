@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>SẢN PHẨM BÁN CHẠY</h2>
+                        <h2>SẢN PHẨM GIẢM GIÁ</h2>
                     </div>
                 </div>
             </div>
@@ -30,32 +30,9 @@
                                              <img src="@strImage" alt="@item.Alias" style="width:221px; height:221px; display:flex; justify-content:center; align-items:center">
                                          </div>
                                          <div class="favorite favorite_left"></div>
-                                         @if (item.IsHot == true && item.IsSale != true && item.IsFeature != true)
-                                         {
-                                             <div class="product_bubble d-flex flex-column align-items-center" style="color: #fe4c50; background-color: #fe4c50; right: 15px; ">
-                                                 <span>Hot</span>
-                                             </div>
-                                         }
-                                         else if (item.IsHot != true && item.IsSale == true && item.IsFeature != true)
-                                         {
-                                             <div class="product_bubble d-flex flex-column align-items-center" style="color: #51a042; background-color: #51a042; right: 15px;">
-                                                 <span>Sale</span>
-                                             </div>
-                                         }
-                                         else if (item.IsHot != true && item.IsSale != true && item.IsFeature == true)
-                                         {
-                                             @*product_bubble_feature*@
-                                             <div class="product_bubble d-flex flex-column align-items-center" style="color: #0066ff; background-color: #0066ff; right: 15px; ">
-                                                 <span>Feature</span>
-                                             </div>
-                                         }
-                                         else
-                                         {
-                                             @*product_bubble_special*@
-                                             <div class="product_bubble d-flex flex-column align-items-center" style="color: #eded1d; background-color: #eded1d; right: 15px; ">
-                                                 <span>Special</span>
-                                             </div>
-                                         }
+                                         <div class="product_bubble d-flex flex-column align-items-center" style="color: #51a042; background-color: #51a042; right: 15px;">
+                                             <span>Sale</span>
+                                         </div>
                                          <div class="product_info">
                                              <h6 class="product_name"><a href="/chi-tiet/@item.Alias-p@(item.Id)">@item.Title</a></h6>
                                              @if (item.PriceSale > 0)
@@ -70,7 +47,7 @@
                                              }
                                          </div>
                                      </div>
-                                     <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.Id">Thêm Vào Giỏ Hàng</a></div>
+                                     @*<div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.Id">Thêm Vào Giỏ Hàng</a></div>*@
                                  </div>
                              </div>
                             }

@@ -4,6 +4,8 @@
 @using WebBanHangOnline.Models; 
 @{
     ViewBag.Title = "Quản Lý Tài Khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
     var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
     var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -36,11 +38,10 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered table-striped">
                 <thead style="background-color:aquamarine;">
                     <tr class="text-center">
                         <th>#</th>
-                        <th>Tài Khoản</th>
                         <th>Họ Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
@@ -60,7 +61,6 @@
                             var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             <tr id="trow_@item.Id" class="text-center">
                                 <td>@i</td>
-                                <td>@item.UserName</td>
                                 <td>@item.FullName</td>
                                 <td>@item.Email</td>
                                 <td>@item.Phone</td>
@@ -75,8 +75,9 @@
                                     }
                                 </td>
                                 <td>
-                                    <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                                    <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                    <a href="/admin/account/detail/@item.Id" class="btn btn-sm btn-success"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" data-user="@item.UserName" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             i++;

@@ -51,23 +51,16 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-6">
-                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
-                    {
-                        <div class="input-group input-group-sm">
-                            @Html.TextBox("Searchtext")
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
-                            </span>
-                        </div>
-                    }
+                <div class="col-4">
+                    <div class="input-group input-group-sm">
+                        <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
+                    </div>
                 </div>
-                <div class="col-6">
-                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
+                <div class="col-4">
+                    @using (Html.BeginForm("indexforshipper", "Order", FormMethod.Get, new { }))
                     {
                         <ul style="list-style-type:none; display:flex;">
-                            <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
-                            <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
+                            <li style="padding-left:10px;"><strong>TT Thanh Toán</strong></li>
                             <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
                             <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
                             <li style="padding-left:10px;">
@@ -75,6 +68,28 @@
                             </li>
                         </ul>
 
+                    }
+                    @if (ViewBag.IsLeader)
+                    {
+                        using (Html.BeginForm("indexforshipper", "Order", FormMethod.Get, new { }))
+                        {
+                            <ul style="list-style-type:none; display:flex;">
+                                <li style="padding-left:10px;"><strong>TT Đơn Hàng</strong></li>
+                                <li style="padding-left:10px;">@Html.CheckBox("ods2")<span> Đang Giao</span></li>
+                                <li style="padding-left:10px;">@Html.CheckBox("ods3")<span> Đã Giao</span></li>
+                                <li style="padding-left:10px;">
+                                    <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
+                                </li>
+                            </ul>
+
+                        }
+                    }
+                </div>
+                <div class="col-4">
+                    @using (Html.BeginForm("AcceptedAll", "Order", FormMethod.Post))
+                    {
+                        <input type="hidden" name="data" id="data2" />
+                        <button type="submit" class="btn btn-sm btn-success btnAcceptedAll" id="btnAcceptedAll" style="float:right">Xác Nhận</button>
                     }
                 </div>
             </div>
@@ -92,7 +107,7 @@
                         <th>Thao Tác</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     @if (Model != null && Model.Any())
                     {
                         var i = (ViewBag.Page - 1) * ViewBag.PageSize + 1;
@@ -132,14 +147,6 @@
                                 </td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td>
-                                    @if (item.OrderStatus == 0)
-                                    {
-                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Chờ Xác Nhận</span>
-                                    }
-                                    @if (item.OrderStatus == 1)
-                                    {
-                                        <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Xác Nhận</span>
-                                    }
                                     @if (item.OrderStatus == 2)
                                     {
                                         <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đang Giao</span>
@@ -148,18 +155,10 @@
                                     {
                                         <span class="btn btn-sm btnChange" style="background-color:#00e600; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Giao</span>
                                     }
-                                    @if (item.OrderStatus == -1)
-                                    {
-                                        <span class="btn btn-sm btnChange" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Hủy</span>
-                                    }
-                                    @if (item.OrderStatus == 4)
-                                    {
-                                        <span class="btn btn-sm btnChange" style="background-color:#fe2203; height: 25px; justify-content: center; align-items: center; display: flex; color: white;" data-id="@item.Id">Đã Trả Hàng</span>
-                                    }
                                 </td>
                                 <td style="width:200px;">
-                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success">Xem Chi Tiết</a>
-                                    <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>
+                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             i++;
@@ -224,6 +223,17 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
             $('#BtnShareWork').on('click', function (e) {
                 e.preventDefault();
 
@@ -252,6 +262,41 @@
 
                     // Submit form để gửi dữ liệu đến action
                     $('#BtnShareWork').closest('form').submit();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#btnAcceptedAll').on('click', function (e) {
+                e.preventDefault();
+
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox');
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                        var _id = $(this).val();
+                        if (i === 0) {
+                            str += _id;
+                        }
+                        else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+                if (str.length > 0) {
+                    // Gán giá trị chuỗi str vào input ẩn
+                    $('#data2').val(str);
+
+                    // Submit form để gửi dữ liệu đến action
+                    $('#btnAcceptedAll').closest('form').submit();
                 }
             });
         });

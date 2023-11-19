@@ -1,10 +1,16 @@
 ﻿@model WebBanHangOnline.Models.CreateAccountViewModel
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using WebBanHangOnline.Models;
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    @* ViewBag.cnt = ViewBag.Cnt;
-        ViewBag.TotalBuysss = ViewBag.TtBuy;*@
 
+    ViewBag.Title = "Quản Lý Tài Khoản";
+    var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+    var userManager = new UserManager<ApplicationUser>(userStore);
+    var user = userManager.FindByName(User.Identity.Name);
+    var ur = userManager.GetRoles(user.Id).ElementAt(0);
 }
 
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
@@ -44,7 +50,7 @@
 
                                     <h3 class="profile-username text-center">@Model.FullName</h3>
 
-                                    <p class="text-muted text-center">@Model.UserName</p>
+                                    <p class="text-muted text-center">@ur</p>
 
                                     <ul class="list-group list-group-unbordered mb-3">
                                         <li class="list-group-item">
@@ -58,15 +64,15 @@
                                 <!-- /.card-body -->
                             </div>
                             <div class="card card-primary">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: #fe4c50">
                                     <h3 class="card-title">Thông Tin Tài Khoản</h3>
                                 </div>
                                 <div class="card-body">
                                     <strong> Số lần mua hàng: </strong>
-                                    <p class="text-muted"> @TempData["a2"]</p>
+                                    <p class="text-muted"> @Session["TotalCount"]</p>
                                     <hr>
                                     <strong>Tổng Số Tiền Đã Chi:</strong>
-                                    <p class="text-muted">@TempData["a1"]</p>
+                                    <p class="text-muted">@Session["totalAmount"]</p>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +154,7 @@
                                                                 @Html.Action("Partial_User_Voucher", "Voucher", new { type = 1 })
                                                             </div>
                                                             <div class="tab-pane" id="MaVanChuyen">
-                                                                 @Html.Action("Partial_User_Voucher", "Voucher", new { type = 2 })
+                                                                @Html.Action("Partial_User_Voucher", "Voucher", new { type = 2 })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -245,23 +251,23 @@
         });
     </script>
     @*<script>
-        var TraHang = document.getElementById('btnTraHang');
-        TraHang.addEventListener('click', function () {
-            var id = $(this).data('id');
-            var conf = confirm("Bạn có chắc muốn trả hàng không?");
-            if (conf === true) {
-                $.ajax({
-                    url: '/Review/ReturnOrder',
-                    type: 'POST',
-                    data: { id: id },
-                    success: function (rs) {
-                        if (rs.success) {
-                            location.reload();
-                            alert("Bạn đã trả đơn hàng thành công!");
+            var TraHang = document.getElementById('btnTraHang');
+            TraHang.addEventListener('click', function () {
+                var id = $(this).data('id');
+                var conf = confirm("Bạn có chắc muốn trả hàng không?");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/Review/ReturnOrder',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                location.reload();
+                                alert("Bạn đã trả đơn hàng thành công!");
+                            }
                         }
-                    }
-                });
-            }
-        });
-    </script>*@
+                    });
+                }
+            });
+        </script>*@
 }

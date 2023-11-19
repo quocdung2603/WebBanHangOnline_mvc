@@ -3696,6 +3696,7 @@
     <Content Include="Areas\Admin\Views\TimePromotion\Add.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3876,6 +3877,8 @@
     <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
     <Content Include="Views\Home\ShowChat.cshtml" />
     <Content Include="Views\Products\PartialView_Combo.cshtml" />
+    <Content Include="Views\Products\Partial_ProductHots.cshtml" />
+    <Content Include="Views\Products\Partial_ProductFeatures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

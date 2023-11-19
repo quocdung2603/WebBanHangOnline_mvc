@@ -317,6 +317,12 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             }
             return Json(new { success = false });
         }
+
+        public ActionResult  Detail(string id)
+        {
+            var items = UserManager.FindByName(id);
+            return View(items);
+        }
     }
 }
 

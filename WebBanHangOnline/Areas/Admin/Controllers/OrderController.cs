@@ -59,7 +59,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         }
 
         /*index cho nhân viên */
-        public ActionResult IndexForEmployee(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
+        public ActionResult IndexForEmployee(int? page, string Cod, string Banking, string Paid, string UnPaid, string ods0, string ods_1)
         {
             if(User.Identity.IsAuthenticated)
             {
@@ -72,28 +72,45 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 {
                     page = 1;
                 }
-                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 0).OrderByDescending(x => x.CreatedDate).ToList();
-                //search
-                if (!string.IsNullOrEmpty(Searchtext))
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 0 || x.OrderStatus == -1).OrderByDescending(x => x.CreatedDate).ToList();
+                List<Order> o = new List<Order>();
+                if (user.IsLeader == false)
                 {
-                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
+                    var tmp = db.DetailOrderStatuses.Where(x => x.IdUConfirm == user.Id).ToList();
+                    foreach (var item in tmp)
+                    {
+                        var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && (x.OrderStatus == 0 || x.OrderStatus == -1));
+                        if (i != null)
+                        {
+                            o.Add(i);
+                        }
+                    }
+                    items = o.OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 //lọc
                 if (!string.IsNullOrEmpty(Cod) && Cod == "true")
                 {
-                    items = items.Where(x => x.TypePayment == 1);
+                    items = o.Where(x => x.TypePayment == 1).OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
                 {
-                    items = items.Where(x => x.TypePayment == 2);
+                    items = o.Where(x => x.TypePayment == 2).OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
                 {
-                    items = items.Where(x => x.Status == "1");
+                    items = o.Where(x => x.Status == "1").OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
                 {
-                    items = items.Where(x => x.Status == "2");
+                    items = o.Where(x => x.Status == "2").OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                else if(!string.IsNullOrEmpty(ods0) && ods0 == "true")
+                {
+                    items = o.Where(x => x.OrderStatus == 0).OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                else if (!string.IsNullOrEmpty(ods_1) && ods_1 == "true")
+                {
+                    items = o.Where(x => x.OrderStatus == -1).OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
                 items = items.ToPagedList(pageIndex, pageSize);
@@ -105,7 +122,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             return View();
         }
         /*index cho nhan viên kho*/
-        public ActionResult IndexForStoreKeeper(int? page, string Searchtext, string ods1, string ods4)
+        public ActionResult IndexForStoreKeeper(int? page, string ods1, string ods4)
         {
             if(User.Identity.IsAuthenticated)
             {
@@ -133,11 +150,6 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     }
                     items = o.OrderByDescending(x => x.CreatedDate).ToList();
                 }
-                //search
-                if (!string.IsNullOrEmpty(Searchtext))
-                {
-                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
-                }
                 //lọc
                 if(!string.IsNullOrEmpty(ods1) && ods1 == "true")
                 {
@@ -158,7 +170,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         }
 
         /*index cho shipper*/
-        public ActionResult IndexForShipper(int? page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
+        public ActionResult IndexForShipper(int? page, string Paid, string UnPaid, string ods2, string ods3)
         {
             if(User.Identity.IsAuthenticated)
             {
@@ -171,11 +183,12 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 {
                     page = 1;
                 }
-                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 2).OrderByDescending(x => x.CreatedDate).ToList();
+                IEnumerable<Order> items = db.Orders.Where(x => x.OrderStatus == 2 || x.OrderStatus == 3).OrderByDescending(x => x.CreatedDate).ToList();
+                List<Order> o = new List<Order>();
                 if (user.IsLeader == false)
                 {
                     var tmp = db.DetailOrderStatuses.Where(x => x.IdUDelivery == user.Id).ToList();
-                    List<Order> o = new List<Order>();
+                    
                     foreach (var item in tmp)
                     {
                         var i = db.Orders.FirstOrDefault(x => x.Id == item.OrderId && x.OrderStatus == 2);
@@ -186,27 +199,22 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     }
                     items = o.OrderByDescending(x => x.CreatedDate).ToList();
                 }
-                //search
-                if (!string.IsNullOrEmpty(Searchtext))
-                {
-                    items = items.Where(x => x.Code.Contains(Searchtext) || x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext));
-                }
                 //lọc
-                if (!string.IsNullOrEmpty(Cod) && Cod == "true")
+                if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
                 {
-                    items = items.Where(x => x.TypePayment == 1);
-                }
-                else if (!string.IsNullOrEmpty(Banking) && Banking == "true")
-                {
-                    items = items.Where(x => x.TypePayment == 2);
-                }
-                else if (!string.IsNullOrEmpty(UnPaid) && UnPaid == "true")
-                {
-                    items = items.Where(x => x.Status == "1");
+                    items = o.Where(x => x.Status == "1").OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 else if (!string.IsNullOrEmpty(Paid) && Paid == "true")
                 {
-                    items = items.Where(x => x.Status == "2");
+                    items = o.Where(x => x.Status == "2").OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                else if(!string.IsNullOrEmpty(ods2) && ods2=="true")
+                {
+                    items = o.Where(x => x.OrderStatus == 2).OrderByDescending(x => x.CreatedDate).ToList();
+                }
+                else if(!string.IsNullOrEmpty(ods3) && ods3=="true")
+                {
+                    items = o.Where(x => x.OrderStatus == 3).OrderByDescending(x => x.CreatedDate).ToList();
                 }
                 var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
                 items = items.ToPagedList(pageIndex, pageSize);
@@ -842,6 +850,11 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                                 dos.IdUDelivery = idUser;
                                 dos.DeliveryDate = DateTime.Now;
                             }
+                            else if(ur=="Employee")
+                            {
+                                dos.IdUConfirm = idUser;
+                                dos.CofirmDate = DateTime.Now;
+                            }    
                         }
                         db.SaveChanges();
                     }
@@ -853,6 +866,10 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                     {
                         return RedirectToAction("IndexForShipper");
                     }
+                    else if(ur == "Employee")
+                    {
+                        return RedirectToAction("IndexForEmployee");
+                    }    
                 }
             }    
             return View();
@@ -872,7 +889,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var user = userManager.FindByName(User.Identity.Name);
-
+                var ur = userManager.GetRoles(user.Id).ElementAt(0);
                 var url = 0;
                 if (!string.IsNullOrEmpty(data))
                 {
@@ -919,6 +936,13 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                                     db.SaveChanges();
                                     item.OrderStatus += 1;
                                 }
+                                else
+                                {
+                                    if (ur == "Admin") return RedirectToAction("Index");
+                                    else if (ur == "Employee") return RedirectToAction("IndexForEmployee");
+                                    else if (ur == "StoreKeeper") return RedirectToAction("IndexForStoreKeeper");
+                                    else return RedirectToAction("IndexForShipper");
+                                }
                                 db.Orders.Attach(item);
                                 db.Entry(item).Property(x => x.OrderStatus).IsModified = true;
                                 db.SaveChanges();
@@ -937,6 +961,56 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 else if(url == 2)
                 {
                     return RedirectToAction("IndexForShipper");
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DestroyedAll(string data)
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+
+                if (!string.IsNullOrEmpty(data))
+                {
+                    var lst = data.Split(',');
+                    ExportProduct ep = new ExportProduct();
+                    ep.Title = "Hủy Sản Phẩm_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    ep.Note = "Hủy sản phẩm lỗi " + data;
+                    ep.CreatedDate = DateTime.Now;
+                    ep.ModifierDate = DateTime.Now;
+                    if (Request.IsAuthenticated)
+                    {
+                        ep.CreatedBy = user.FullName;
+                        ep.ModifierBy = user.FullName;
+                    }
+                    db.ExportProducts.Add(ep);
+                    db.SaveChanges();
+                    foreach (var z in lst)
+                    {
+                        var _id = Convert.ToInt32(z);
+                        var od = db.OrderDetails.Where(x => x.OrderId == _id).ToList();
+                        foreach (var item in od)
+                        {
+                            ExportProductDetail epd = new ExportProductDetail();
+                            epd.ExportProductId = ep.Id;
+                            epd.ProductId = item.ProductId;
+                            epd.Quantity = item.Quantity;
+                            epd.Color = item.ProductColor;
+                            epd.Size = item.ProductSize;
+                            epd.Title = item.Product.Title;
+                            db.ExportProductDetails.Add(epd);
+                            db.SaveChanges();
+                        }
+                        var o = db.Orders.FirstOrDefault(x=>x.Id == _id);
+                        db.Orders.Remove(o);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("IndexForStoreKeeper");
                 }
             }
             return View();

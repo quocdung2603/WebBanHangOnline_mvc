@@ -34,30 +34,24 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
-                    {
-                        <div class="input-group input-group-sm">
-                            @Html.TextBox("Searchtext")
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
-                            </span>
-                        </div>
-                    }
+                    <div class="input-group input-group-sm">
+                        <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
+                    </div>
                 </div>
                 <div class="col-6">
-                        @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
-                        {
-                            <ul style="list-style-type:none; display:flex;">
-                                <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
-                                <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
-                                <li style="padding-left:10px;">
-                                    <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
-                                </li>
-                            </ul>
-                            
-                        }
+                    @using (Html.BeginForm("index", "Order", FormMethod.Get, new { }))
+                    {
+                        <ul style="list-style-type:none; display:flex;">
+                            <li style="padding-left:10px;">@Html.CheckBox("Cod") <span> COD</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("Banking") <span> BANKING</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("Paid")<span> Đã Thanh Toán</span></li>
+                            <li style="padding-left:10px;">@Html.CheckBox("UnPaid")<span> Chưa Thanh Toán</span></li>
+                            <li style="padding-left:10px;">
+                                <button type="submit" class="btn btn-info btn-flat" style="height:30px; display:flex; justify-content:center; align-items:center; border-radius:3px;">Lọc</button>
+                            </li>
+                        </ul>
+
+                    }
                 </div>
             </div>
             <table class="table table-hover table-bordered" style="margin-top:10px;">
@@ -74,7 +68,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     @if (Model != null && Model.Any())
                     {
                         var i = (ViewBag.Page - 1) * ViewBag.PageSize + 1;
@@ -140,7 +134,7 @@
                                     }
                                 </td>
                                 <td style="width:200px;">
-                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success">Xem Chi Tiết</a>
+                                    <a href="/admin/order/view/@item.Id" class="btn btn-sm btn-success"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                     @*<a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>*@
                                 </td>
                             </tr>
@@ -184,7 +178,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="txtOrderId" value="0"/>
+                <input type="hidden" id="txtOrderId" value="0" />
                 <div class="form-group">
                     <label>Trạng Thái</label>
                     <select class="form-control" id="ddTrangThai">
@@ -204,6 +198,17 @@
 <!-- /.modal -->
 
 @section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             $('body').on('click', '.btnCapNhat', function () {
@@ -254,5 +259,5 @@
             });
         });
     </script>
-    
-    }
+
+}

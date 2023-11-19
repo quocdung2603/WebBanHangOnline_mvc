@@ -104,12 +104,7 @@
                         <tbody id="Exams">
                             @foreach (var item in Model.ComboDetails)
                             {
-                                <tr class="text-center" id="Exam_@i">
-                                    <td style="display:none;">
-                                        <input type="hidden" name="ComboDetailNow[@i].Id" value="@ComboDetailNow[i].Id"/>
-                                        <input type="hidden" name="ComboDetailNow[@i].ProductId" value="@ComboDetailNow[i].ProductId" />
-                                        <input type="hidden" name="ComboDetailNow[@i].ComboId" value="@ComboDetailNow[i].ComboId" />
-                                    </td>
+                                <tr class="text-center" id="Exam">
                                     <td>
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
@@ -141,9 +136,6 @@
                                             </div>
                                         </div>
                                     </td>
-                                    @*<td>
-                                            <a href="#" class="btn btn-primary" id="btnAddSize" onclick="ThemKichThuoc(i)" style="float: right;">Thêm</a>
-                                        </td>*@
                                 </tr>
                                 i++;
                             }
@@ -154,7 +146,7 @@
                     </div>
                 </div>
             </form>
-            @*<button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>*@
+            <button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>
         </div>
         <div>
             @Html.ActionLink("Back to List", "Index")
@@ -164,65 +156,7 @@
 </div>
 @section scripts{
     <script>
-        var i = 0;
-        var id = 0;
-        function ThemCauHoi() {
-
-            i += 1; // Tăng giá trị i lên 1
-
-            console.log("i sau khi tăng lên 1: " + i);
-
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            var inputFields = examClone.getElementsByTagName('input');
-
-            // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
-                inputFields[j].value = '';
-            }
-            // Thêm bản sao vào Exams
-            examsForm.appendChild(examClone);
-
-            var newTitleInput = examClone.querySelector('input[name="LProduct[' + i + '].Title"]');
-            newTitleInput.addEventListener("input", function () {
-                var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
-                var selectedObject = Lquestion.find(function (item) {
-                    return item.Title === selectedValue;
-                });
-                var item = this.parentElement.parentElement.parentElement.parentElement;
-                var Einput = item.getElementsByTagName('INPUT');
-                Einput[3].value = selectedObject.Id;
-                Einput[5].value = selectedObject.OriginalPrice;
-                Einput[6].value = selectedObject.Price;
-            });
-        }
-
-        function ThemKichThuoc() {
-            i += 1; // Tăng giá trị i lên 1
-
-            console.log("i sau khi tăng lên 1: " + i);
-
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            var inputFields = examClone.getElementsByTagName('input');
-
-            // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
-            }
-            // Thêm bản sao vào Exams
-            examsForm.appendChild(examClone);
-        }
-    </script>
-
-    <script>
         //phieu nhap
-        function Test() {
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            console.log(examsForm);
-        }
         var Lquestion = @Html.Raw(LP);
 
         const currentTime = document.querySelector("h1"),
@@ -245,12 +179,49 @@
                 var item = this.closest("tr"); // Tìm phần tử <tr> cha gần nhất
                 console.log(selectedObject);
                 var Einput = item.getElementsByTagName('INPUT');
-                Einput[3].value = selectedObject.Id;
-                Einput[5].value = selectedObject.OriginalPrice;
-                Einput[6].value = selectedObject.Price;
+                Einput[0].value = selectedObject.Id;
+                Einput[2].value = selectedObject.OriginalPrice;
+                Einput[3].value = selectedObject.Price;
             });
         }
     </script>
 
+    <script>
+        var j = '@Model.ComboDetails.Count()';
+        j = parseInt(j);
+        j -= 1;
+        var id = 0;
+        function ThemCauHoi() {
+
+            j += 1; // Tăng giá trị i lên 1
+
+            console.log("i sau khi tăng lên 1: " + j);
+
+            var examsForm = document.getElementById('Exams');
+            var examClone = document.getElementById('Exam').cloneNode(true);
+            var inputFields = examClone.getElementsByTagName('input');
+
+            // Cập nhật name của trường input để chứa giá trị mới của i
+            for (var a = 0; a < inputFields.length; a++) {
+                inputFields[a].name = "LProduct[" + j + "]." + inputFields[a].name.split(".")[1];
+                inputFields[a].value = '';
+            }
+            // Thêm bản sao vào Exams
+            examsForm.appendChild(examClone);
+
+            var newTitleInput = examClone.querySelector('input[name="LProduct[' + j + '].Title"]');
+            newTitleInput.addEventListener("input", function () {
+                var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
+                var selectedObject = Lquestion.find(function (item) {
+                    return item.Title === selectedValue;
+                });
+                var item = this.parentElement.parentElement.parentElement.parentElement;
+                var Einput = item.getElementsByTagName('INPUT');
+                Einput[0].value = selectedObject.Id;
+                Einput[2].value = selectedObject.OriginalPrice;
+                Einput[3].value = selectedObject.Price;
+            });
+        }
+    </script>
 }
 

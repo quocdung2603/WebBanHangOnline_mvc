@@ -80,8 +80,8 @@ namespace WebBanHangOnline.Controllers
                     cnt += it.Count();
                 }    
                 
-                TempData["totalAmount"] = s;
-                TempData["TotalCount"] = cnt;
+                Session["totalAmount"] = s;
+                Session["TotalCount"] = cnt;
                 return PartialView(items);
             }
             return PartialView();

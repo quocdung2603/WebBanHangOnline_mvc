@@ -46,15 +46,15 @@
 
     foreach (var item in Model)
     {
-        var ids = "";
+        @*var ids = "";*@
         <div class="swiper-container list-combo swiper-container-initialized swiper-container-horizontal">
             <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); display: flex; flex-direction: row">
                 @{
-                    var ListItem = db.ComboDetails.Where(x => x.ComboId == item).ToList();
+                    var ListItem = db.ComboDetails.Where(x => x.ComboId == item && x.Combo.IsActive == true && x.Combo.Quantity > 0).ToList();
                     List<Product> p = new List<Product>();
                     foreach (var x in ListItem)
                     {
-                        Product tmp = db.Products.FirstOrDefault(i => i.Id == x.ProductId);
+                        Product tmp = db.Products.FirstOrDefault(i => i.Id == x.ProductId && i.Quantity > 0);
                         p.Add(tmp);
                     }
                     var c = db.Combos.FirstOrDefault(x => x.Id == item);
@@ -68,14 +68,14 @@
                         strImage = img.Image;
                     }
                     @*if(ids=="")
-                    {
-                        ids += Pd.Id;
-                    }
-                    else
-                    {
-                        ids += ",";
-                        ids += Pd.Id;
-                    }*@
+                        {
+                            ids += Pd.Id;
+                        }
+                        else
+                        {
+                            ids += ",";
+                            ids += Pd.Id;
+                        }*@
                     <div class="combo-item swiper-slide swiper-slide-active" style="width: 180px; margin-right: 30px; border:1px solid gray;border-radius:10px;">
                         <div class="combo-category">
                             <div class="combo-item-wrapper">
@@ -87,15 +87,16 @@
                                     <h6 style="text-align:center;"><a style="color:black;" class="product_name" href="/chi-tiet/@Pd.Alias-p@(Pd.Id)">@Pd.Title</a></h6>
                                     <p class="text-percent">Giá: @(WebBanHangOnline.Common.Common.FormatNumber(Pd.Price,0))đ</p>
                                     <a href="#" class="btnAddToCart" data-id="@Pd.Id" ;
-                                        style="background-color: #fe4c50; color: #fff; font-size:13px; padding:5px 10px 5px 10px; border-radius:5px;">THÊM VÀO GIỎ HÀNG</a>
+                                       style="background-color: #fe4c50; color: #fff; font-size:13px; padding:5px 10px 5px 10px; border-radius:5px;">THÊM VÀO GIỎ HÀNG</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
-
             </div>
-            <div id="callToAction" class="is-flex" style="display: flex; flex-direction: row; justify-content: space-between; padding: 0 10px 10px; text-align: left; width: 100%;">
+            @if (ListItem.Count > 0)
+            {
+                <div id="callToAction" class="is-flex" style="display: flex; flex-direction: row; justify-content: space-between; padding: 0 10px 10px; text-align: left; width: 100%;">
                     <div class="is-flex temp-price" style=" align-items: flex-start; flex-flow: column; margin-right: 10px;">
                         <div class="is-flex"><strong>Tạm tính:</strong> <span class="total-price">@(WebBanHangOnline.Common.Common.FormatNumber(c.Price,0))đ</span></div>
                         <em>
@@ -108,6 +109,8 @@
                         THÊM VÀO GIỎ HÀNG
                     </button>
                 </div>
+            }
+
             <div class="swiper-button-prev swiper-button-disabled" tabindex="-1" role="button" aria-label="Previous slide"
                  aria-disabled="true"></div>
             <div class="swiper-button-next swiper-button-disabled" tabindex="-1" role="button" aria-label="Next slide"

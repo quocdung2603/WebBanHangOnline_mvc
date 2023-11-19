@@ -62,8 +62,8 @@ namespace WebBanHangOnline.Controllers
             item.UserName = user.UserName;
             item.FullName = user.FullName;
             item.Phone = user.Phone;
-            TempData["a1"] = TempData["totalAmount"];
-            TempData["a2"] = TempData["TotalCount"];
+            /*TempData["a1"] = TempData["totalAmount"];
+            TempData["a2"] = TempData["TotalCount"];*/
             return View(item);
         }
 

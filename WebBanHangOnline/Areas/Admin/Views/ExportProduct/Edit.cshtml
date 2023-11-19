@@ -134,7 +134,7 @@
                                     <td>
                                         <div class="form-group">
                                             <div class="col-md-10" style="background-color: white;">
-                                                <input list="Titles" id="Title" class="form-control" name="LProduct[@i].Title" value="@item.Title">
+                                                <input list="Titles" id="Title_@i" class="form-control" name="LProduct[@i].Title" value="@item.Title">
                                                 <datalist id="Titles">
                                                     <option value="">
                                                 </datalist>
@@ -172,6 +172,7 @@
                     </div>
                 </div>
             </form>
+            <button class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Sản Phẩm</button>
         </div>
         <div>
             @Html.ActionLink("Back to List", "Index")
@@ -183,11 +184,6 @@
 
     <script>
         //phieu nhap
-        function Test() {
-            var examsForm = document.getElementById('Exams');
-            var examClone = document.getElementById('Exam').cloneNode(true);
-            console.log(examsForm);
-        }
         var Lquestion = @Html.Raw(LP);
 
         const currentTime = document.querySelector("h1"),
@@ -195,45 +191,43 @@
             selectMenu = document.querySelectorAll("datalist"),
             setAlarmBtn = document.querySelector("button");
 
-        for (let i = 0; i < Lquestion.length; i++) {
-            let option = `<option value="${Lquestion[i].Title}">`;
-            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
-        }
+        for (let j = 0; j < selectMenu.length; j++) {
+            for (let i = 0; i < Lquestion.length; i++) {
+                let option = `<option value="${Lquestion[i].Title}">`;
+                selectMenu[j].firstElementChild.insertAdjacentHTML("afterend", option);
+            }
 
-        document.getElementById("Title").addEventListener("input", function () {
+            document.getElementById("Title_"+j).addEventListener("input", function () {
 
-            var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
-            var selectedObject = Lquestion.find(function (item) {
-                return item.Title === selectedValue;
+                var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
+                var selectedObject = Lquestion.find(function (item) {
+                    return item.Title === selectedValue;
+                });
+                var item = this.parentElement.parentElement.parentElement.parentElement;
+                var Einput = item.getElementsByTagName('INPUT');
+                Einput[0].value = selectedObject.Id;
             });
-            var item = this.parentElement.parentElement.parentElement.parentElement;
-            var Einput = item.getElementsByTagName('INPUT');
-            Einput[0].value = selectedObject.Id;
-
-        });
+        }
     </script>
     <script>
-        var i = 0;
+        var j = '@Model.ExportProductDetails.Count()';
+        j = parseInt(j);
+        j -= 1;
         var id = 0;
         function ThemCauHoi() {
-
-            i += 1; // Tăng giá trị i lên 1
-
-            console.log("i sau khi tăng lên 1: " + i);
-
+            j += 1; // Tăng giá trị i lên 1
+            console.log("i sau khi tăng lên 1: " + j);
             var examsForm = document.getElementById('Exams');
             var examClone = document.getElementById('Exam').cloneNode(true);
             var inputFields = examClone.getElementsByTagName('input');
-
             // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
-                inputFields[j].value = '';
+            for (var a = 0; a < inputFields.length; a++) {
+                inputFields[a].name = "LProduct[" + j + "]." + inputFields[a].name.split(".")[1];
+                inputFields[a].value = '';
             }
             // Thêm bản sao vào Exams
             examsForm.appendChild(examClone);
-
-            var newTitleInput = examClone.querySelector('input[name="LProduct[' + i + '].Title"]');
+            var newTitleInput = examClone.querySelector('input[name="LProduct[' + j + '].Title"]');
             newTitleInput.addEventListener("input", function () {
                 var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
                 var selectedObject = Lquestion.find(function (item) {
@@ -242,12 +236,11 @@
                 var item = this.parentElement.parentElement.parentElement.parentElement;
                 var Einput = item.getElementsByTagName('INPUT');
                 Einput[0].value = selectedObject.Id;
-
             });
         }
 
-        function ThemKichThuoc() {
-            i += 1; // Tăng giá trị i lên 1
+        function ThemKichThuoc(i) {
+            i += 1;
 
             console.log("i sau khi tăng lên 1: " + i);
 
@@ -256,8 +249,8 @@
             var inputFields = examClone.getElementsByTagName('input');
 
             // Cập nhật name của trường input để chứa giá trị mới của i
-            for (var j = 0; j < inputFields.length; j++) {
-                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
+            for (var a = 0; a < inputFields.length; a++) {
+                inputFields[a].name = "LProduct[" + i + "]." + inputFields[a].name.split(".")[1];
             }
             // Thêm bản sao vào Exams
             examsForm.appendChild(examClone);

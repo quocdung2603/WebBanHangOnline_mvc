@@ -86,7 +86,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(FormCollection f, List<Product> LProduct , List<ComboDetail> ComboDetailNow)
+        public ActionResult Edit(FormCollection f, List<Product> LProduct)
         {
             int cid = Convert.ToInt32(f["Id"]);
             var title = f["TenCombo"];
@@ -117,20 +117,17 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             }
             for(var i =0; i< LProduct.Count;i++)
             {
-                var cdId = ComboDetailNow[i].Id;
-                var cdProductId = ComboDetailNow[i].ProductId;
-                var cdComboId = ComboDetailNow[i].ComboId;
-                var cd = db.ComboDetails.FirstOrDefault(x=>x.Id == cdId && x.ProductId == cdProductId && x.ComboId == cdComboId);
-                if(cd != null)
+                var productId = LProduct[i].Id;
+                var cd = db.ComboDetails.FirstOrDefault(x=>x.ProductId == productId && x.ComboId == c.Id);
+                if(cd == null)
                 {
-                    var lpProductId = LProduct[i].Id;
+                    cd = new ComboDetail();
                     cd.ComboId = c.Id;
-                    cd.ProductId = lpProductId;
+                    cd.ProductId = productId;
+                    db.ComboDetails.Add(cd);
                     db.SaveChanges();
                 }    
-            }    
-            // sửa lại Combo => sửa lại comboDetail => Lưu
-            // Sửa lại mấy thằng sửa của ImportProduct , ExportProduct
+            }
             return RedirectToAction("Index");
         }
 

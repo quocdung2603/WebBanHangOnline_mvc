@@ -1,4 +1,7 @@
-﻿ <!-- Sidebar -->
+﻿@using WebBanHangOnline.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+<!-- Sidebar -->
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -8,14 +11,16 @@
         <div class="info">
             @if (Request.IsAuthenticated)
             {
-                string name = User.Identity.Name;
-                <a href="#" class="d-block">@name</a>
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name);
+                <a href="#" class="d-block">@user.FullName</a>
             }
         </div>
     </div>
 
     <!-- SidebarSearch Form -->
-    @* <div class="form-inline">
+     <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
@@ -24,7 +29,7 @@
                     </button>
                 </div>
             </div>
-        </div>*@
+        </div>
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -59,7 +64,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-users" aria-hidden="true"></i>
                         <p>
                             Quyền & Tài Khoản
                             <i class="right fas fa-angle-left"></i>
@@ -83,7 +88,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                         <p>
                             Tin tức & Bài viết
                             <i class="right fas fa-angle-left"></i>
@@ -107,7 +112,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-archive" aria-hidden="true"></i>
                         <p>
                             Sản Phẩm
                             <i class="right fas fa-angle-left"></i>
@@ -131,7 +136,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                         <p>
                             Khuyến Mãi
                             <i class="right fas fa-angle-left"></i>
@@ -161,7 +166,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-list-alt" aria-hidden="true"></i>
                         <p>
                             Nhập / Xuất
                             <i class="right fas fa-angle-left"></i>
@@ -185,7 +190,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
                         <p>
                             Thống Kê Kinh Doanh
                             <i class="right fas fa-angle-left"></i>
@@ -209,7 +214,7 @@
 
                 <li class="nav-item">
                     <a href="/admin/settingsystem" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-cog" aria-hidden="true"></i>
                         <p>Cấu Hình Hệ Thống</p>
                     </a>
                 </li>
@@ -219,7 +224,7 @@
             {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                         <p>
                             Tin tức & Bài viết
                             <i class="right fas fa-angle-left"></i>
@@ -243,7 +248,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-archive" aria-hidden="true"></i>
                         <p>
                             Sản Phẩm
                             <i class="right fas fa-angle-left"></i>
@@ -273,7 +278,7 @@
             {
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-archive" aria-hidden="true"></i>
                         <p>
                             Sản Phẩm
                             <i class="right fas fa-angle-left"></i>
@@ -297,7 +302,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fa fa-list-alt" aria-hidden="true"></i>
                         <p>
                             Nhập / Xuất
                             <i class="right fas fa-angle-left"></i>
@@ -324,7 +329,6 @@
             {
                 <li class="nav-item">
                     <a href="/admin/order/IndexForShipper" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
                         <p>Đơn Đặt Hàng</p>
                     </a>
                 </li>
@@ -332,7 +336,7 @@
 
             <li class="nav-item">
                 <a href="javascript:document.getElementById('logOffForm').submit()" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <p>Đăng Xuất</p>
                 </a>
             </li>
