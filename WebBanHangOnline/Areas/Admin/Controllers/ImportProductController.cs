@@ -86,10 +86,12 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                         tmp.SizeName = item.Size;
                         tmp.Quantity = item.Quantity;
                         db.ProductSizes.Add(tmp);
+                        db.SaveChanges();
                     }
                     else
                     {
                         tmp.Quantity += item.Quantity;
+                        db.SaveChanges();
                     }    
                 }
                 else

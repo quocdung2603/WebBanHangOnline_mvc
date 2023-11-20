@@ -52,16 +52,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    @using (Html.BeginForm("index", "News", FormMethod.Get, new { }))
-                    {
-                        <div class="input-group input-group-sm">
-                            @Html.TextBox("Searchtext"@*, new {@class="form-control"}*@)
-                            @*<input type="text" name="searchtext" class="form-control">*@
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
-                            </span>
-                        </div>
-                    }
+                    <div class="input-group input-group-sm">
+                        <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
+                    </div>
                 </div>
             </div>
             <table class="table table-hover table-bordered" style="margin-top:10px;">
@@ -77,22 +70,22 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     @if (Model != null && Model.Any())
                     {
-                        var i = (ViewBag.Page-1) * ViewBag.PageSize + 1;
+                        var i = (ViewBag.Page - 1) * ViewBag.PageSize + 1;
                         foreach (var item in Model)
                         {
                             var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             <tr id="trow_@item.Id" class="text-center">
-                                <td><input type="checkbox" id="cbkItem" value="@item.Id"/></td>
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
                                 <td>@i</td>
-                                <td><img src="@item.Image" width="50"/></td>
+                                <td><img src="@item.Image" width="50" /></td>
                                 <td>@item.Title</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td class="text-center">
                                     <a href='#' data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
-                                        
+
                                 </td>
                                 <td>
                                     <a href="/admin/news/edit/@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -100,14 +93,14 @@
                                 </td>
                             </tr>
                             i++;
-                            }
                         }
-                        else
-                        {
-                            <tr>
-                                <td colspan="4">Không có bản ghi nào</td>
-                            </tr>
-                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">Không có bản ghi nào</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
             <div class="row">
@@ -117,7 +110,7 @@
                 </div>
                 <div class="col-5"></div>
             </div>
-            
+
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
@@ -134,9 +127,19 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
             $('body').on('click', '#BtnDeleteAll', function (e) {
                 e.preventDefault();
-                var str ="";
+                var str = "";
                 var checkbox = $(this).parents('.card').find('tr td input:checkbox');
                 var i = 0;
                 checkbox.each(function () {

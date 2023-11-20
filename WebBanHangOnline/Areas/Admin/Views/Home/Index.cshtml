@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Tin Tức</h1>
+                <h1>Hộp Thoại</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -46,54 +46,87 @@
 
     <!-- /.card -->
     <link rel="stylesheet" href="~/css/Chat.css" />
-    <div class="Container-chat">
-        <div class="ListRoom">
-            @Html.Action("ListRoom", "Chat")
-        </div>
-        <div class="Body-chat">
-            <div class="body-message">
-                @if (Model != null)
-                {
-                    foreach (var item in Model)
-                    {
-                        if (item.UserId == ViewBag.UserId)
-                        {
-                            <div class="message" style="text-align: right; margin-bottom: 10px; margin-right:20px; margin-left:800px;">
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">@item.TimesChat</p>
-                                        <strong class="txtMessage">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</strong>
-                                    </div>
-                                    <div class="row" style="background-color: #f0f0f0; border-radius: 10px; padding: 10px;">
-                                        <p class="txtMessage">@item.Content</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="message" style="text-align: left; margin-bottom: 10px; margin-right:1000px; margin-left:20px;">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <strong class="txtMessage">@db.Users.FirstOrDefault(x => x.Id == item.UserId).FullName</strong>
-                                        <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">@item.TimesChat</p>
-                                    </div>
-                                    <div class="row" style="background-color: #fde0db; border-radius: 10px; padding: 10px;">
-                                        <p class="txtMessage">@item.Content</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                }
+    <section style="background-color: #f4f6f9;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" id="chat3" style="border-radius: 15px; max-height: 1000px; overflow: auto">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                                    <div class="">
+                                        <div class="input-group rounded mb-3">
+                                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                                   aria-describedby="search-addon" />
+                                            <span class="input-group-text border-0" id="search-addon">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                        </div>
 
+                                        <div data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+                                            @Html.Action("ListRoom","Chat")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-7 col-xl-8">
+                                    <div class="pt-3 pe-3" data-mdb-perfect-scrollbar="true"
+                                         style="position: relative; height: 400px; overflow: auto" id="body-message">
+
+                                        @if (Model != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                if (item.UserId != ViewBag.UserId)
+                                                {
+                                                    <div class="d-flex flex-row justify-content-start">
+                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                                             alt="avatar 1" style="width: 45px; height: 100%;">
+                                                        <div>
+                                                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7; border-radius:10px;">
+                                                                @item.Content
+                                                            </p>
+                                                            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">@item.TimesChat</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="d-flex flex-row justify-content-end">
+                                                        <div>
+                                                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary" style="border-radius:10px;">
+                                                                @item.Content
+                                                            </p>
+                                                            <p class="small me-3 mb-3 rounded-3 text-muted">@item.TimesChat</p>
+                                                        </div>
+                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                                             alt="avatar 1" style="width: 45px; height: 100%;">
+                                                    </div>
+                                                }
+
+                                            }
+                                        }
+
+                                    </div>
+
+                                    <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                             alt="avatar 3" style="width: 40px; height: 100%;">
+                                        <input type="text" class="form-control form-control-lg" id="txtMessage" placeholder="Type message">
+                                        <button  style="background-color: #007bff; border-color: #007bff; border-radius:50%;" class="ms-3" id="btnSend" ><i class="fas fa-paper-plane" style="padding:15px 10px;"></i></button>
+                                    </div>
+                                    <hr />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="input-chat">
-                <input type="text" id="txtMessage">
-                <button id="btnSend">Send</button>
-            </div>
+
         </div>
-    </div>
+    </section>
 </section>
 <!-- /.content -->
 
@@ -117,7 +150,6 @@
                     $('#txtMessage').val('').focus('');
                 });
             });
-
         })
 
         function loadClient(chat) {
@@ -125,19 +157,32 @@
             chat.client.message = function (name, msg,id,UserId) {
                 var currentDate = new Date();  // Tạo đối tượng Date
                 var formattedDate = currentDate.toLocaleDateString();
-                var ms = `<div class="message" style="text-align: right; margin-bottom: 10px; margin-right:20px; margin-left:800px;">
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <p class="txtMessage" style="font-size: 12px; color: gray; font-style: italic;">` + formattedDate + `</p>
-                                    <strong class="txtMessage">` + name + `</strong>
-                                </div>
-                                <div class="row" style="background-color: #f0f0f0; border-radius: 10px; padding: 10px;">
-                                    <p class="txtMessage">` + msg + `</p>
-                                </div>
-                            </div>
-                        </div>`;
-                console.log(ms);
-                $(".body-message").append(ms);
+                if ('@ViewBag.UserId' == UserId) {
+                    var ms = ` <div class="d-flex flex-row justify-content-start">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">
+                                            `+ msg + `
+                                        </p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted float-end">`+ formattedDate + `</p>
+                                    </div>
+                                </div>`;
+                    console.log(ms);
+                    $("#body-message").append(ms);
+                }
+                else {
+                    var ms = ` <div class="d-flex flex-row justify-content-end">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-primary" style="border-radius:10px;">
+                                            `+ msg + `
+                                        </p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted float-end">`+ formattedDate + `</p>
+                                    </div>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>`;
+                    console.log(ms);
+                    $("#body-message").append(ms);
+                }
             };
         }
     </script>

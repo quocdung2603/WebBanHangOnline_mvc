@@ -29,13 +29,12 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Kích Cỡ Sản Phẩm</h3>
-            <div class="card-tools">
+            @*<div class="card-tools">
                 <button type="button" class="btn btn-danger" data-card-widget="collapse" title="Collapse">
                     Xóa Hết
                 </button>
                 <a href="#" class="btn btn-primary addsize">Thêm Mới</a>
-            </div>
+            </div>*@
         </div>
         <div class="card-body">
             <table class="table table-bordered table-hover">
@@ -45,7 +44,7 @@
                         <th>Color</th>
                         <th>Size</th>
                         <th>Số Lượng</th>
-                        <th>Thao Tác</th>
+                        @*<th></th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +59,10 @@
                                 <td>@item.ColorName</td>
                                 <td>@item.SizeName</td>
                                 <td>@item.Quantity</td>
-                                <td>
+                                @*<td>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-warning btnEdit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
+                                </td>*@
                             </tr>
                             i++;
                             s += item.Quantity;

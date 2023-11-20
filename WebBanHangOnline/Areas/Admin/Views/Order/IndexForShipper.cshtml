@@ -292,11 +292,14 @@
                     }
                 });
                 if (str.length > 0) {
-                    // Gán giá trị chuỗi str vào input ẩn
-                    $('#data2').val(str);
+                    var conf = confirm("Bạn có chắc muốn thực hiện hành động này");
+                    if (conf === true) {
+                        // Gán giá trị chuỗi str vào input ẩn
+                        $('#data2').val(str);
 
-                    // Submit form để gửi dữ liệu đến action
-                    $('#btnAcceptedAll').closest('form').submit();
+                        // Submit form để gửi dữ liệu đến action
+                        $('#btnAcceptedAll').closest('form').submit();
+                    }
                 }
             });
         });

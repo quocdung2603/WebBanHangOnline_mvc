@@ -31,7 +31,8 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 foreach (var item in tmp)
                 {
                     hs.Add(item.RoomId);
-                }    
+                }
+                ViewBag.NowId = user.Id;
             }
             
             return PartialView(hs);
