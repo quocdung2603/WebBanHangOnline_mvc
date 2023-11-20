@@ -8,8 +8,8 @@
     <div class="card">
         <div class="card-header p-2">
             <ul class="nav nav-pills text-center">
-                <li class="nav-item" style="width:385px;"><a class="nav-link active" href="#activity" data-toggle="tab">Mã Giảm Giá</a></li>
-                <li class="nav-item" style="width:384px;"><a class="nav-link" href="#ttdh" data-toggle="tab">Mã Vận Chuyển</a></li>
+                <li class="nav-item" style="width:380px;"><a class="nav-link active" href="#activity" data-toggle="tab">Mã Giảm Giá</a></li>
+                <li class="nav-item" style="width:380px;"><a class="nav-link" href="#ttdh" data-toggle="tab">Mã Vận Chuyển</a></li>
             </ul>
         </div><!-- /.card-header -->
         <div class="card-body">
@@ -37,11 +37,23 @@
                     data: { id: id },
                     success: function (rs) {
                         if (rs.success) {
-                            location.reload();
+                            checkVC();
+                            //location.reload();
                         }
                     }
                 });
             });
         });
+        function checkVC() {
+            var btn = document.getElementById("ApDung");
+            if (btn.innerText == "DÙNG VOUCHER")
+            {
+                btn.innerText = "ĐÃ DÙNG";
+            }
+            else
+            {
+                btn.innerText = "DÙNG VOUCHER";
+            }
+        }
     </script>
 }

@@ -134,7 +134,7 @@
                                 <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
                             }
                         }
-                        <input type="text" name="SizeName" hidden id="value_size_product" />
+                        
                     </div>
 
                     @*Màu Sắc*@
@@ -142,10 +142,16 @@
                         <h5>Màu Sắc:  </h5>
                         @foreach (var item in cl)
                         {
-
                             <a href="#" class="btn btn-sm color_value" data-color="@item" style="border:1px solid red; margin-left:5px;">@item</a>
                         }
-                        <input type="text" name="ColorName" hidden id="value_color_product" />
+                        
+                    </div>
+
+                    <div class="row" style="margin-top:30px;">
+                        <input type="text" id="label_666" readonly style="border:none; width:80px;" />
+                        <input type="text" name="SizeName" id="value_size_product" readonly style="border:none; width:20px;" />
+                        <input type="text" id="label_777" readonly style="border:none; width:10px;"/>
+                        <input type="text" name="ColorName" readonly id="value_color_product" style="border:none; width:40px;" />
                     </div>
 
                     @if (Model.PriceSale > 0)
@@ -249,13 +255,16 @@
                 e.preventDefault();
                 var sz = $(this).data("size");
                 $('#value_size_product').val(sz);
+                $('#label_666').val("Đã Chọn");
+                $('#label_777').val("-");
             });
 
             $('body').on('click', '.color_value', function (e) {
                 e.preventDefault();
                 var cl = $(this).data('color');
                 $('#value_color_product').val(cl);
-
+                $('#label_666').val("Đã Chọn");
+                $('#label_777').val("-");
             });
             $('.btnAddComboToCart').on('click', function () {
                 var id = $(this).data('id');
