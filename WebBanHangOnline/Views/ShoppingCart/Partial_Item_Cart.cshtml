@@ -21,6 +21,7 @@
         {
             TongGioHang += item.TotalPrice;
             Session["TongHoaDon"] = TongGioHang;
+            Session["Ship"] = TienShip;
             <tr class="text-center" id="trow_@item.ProductId">
                 <td>@(i+1)</td>
                 <td><img src="@item.ProductImg" width="60" /></td>

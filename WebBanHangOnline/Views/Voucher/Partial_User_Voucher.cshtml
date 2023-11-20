@@ -1,20 +1,34 @@
 ﻿@model IEnumerable<WebBanHangOnline.Models.EF.Voucher>
+@using WebBanHangOnline.Models.EF
+@using WebBanHangOnline.Models
 
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+}
 @if (Model != null)
 {
     foreach (var item in Model)
     {
+        var iu = db.UserVouchers.FirstOrDefault(x => x.VoucherId == item.Id);
+
         if (item.Type == 1)
         {
+
             <div class="row" style="display: flex; justify-content: center; align-items: center; padding: 10px 0 10px 0; margin: 20px 0 20px 0; border: 1px solid #fde0db; background-color: #fde0db; border-radius:10px;">
                 <div class="col-md-8" style="padding: 10px 10px 10px 45px; color: #ff6347;">
                     <div style="font-size:20px; font-weight:bold; margin-bottom:10px;">@item.Title</div>
                     <div style="font-size:15px;">Giảm tối đa @WebBanHangOnline.Common.Common.FormatNumber(item.Value) vnđ</div>
                     <div style="font-size:15px;">Hạn sử dụng: Từ ngày @string.Format("{0:dd-MM-yyyy}", item.StartDate) đến @string.Format("{0:dd-MM-yyyy}", item.EndDate)</div>
-                    <div style="font-size:15px;">Số lượng còn lại: @item.Quantity</div>
                 </div>
                 <div class="col-md-4" style="text-align:center; padding:10px 0 10px 0;">
-                    <a href="#" class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #ff6347;color: white; ">DÙNG VOUCHER</a>
+                    @if (iu.IsUse == true)
+                    {
+                        <button class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #ff6347; color: white;" id="ApDung">ĐÃ DÙNG</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #ff6347; color: white;" id="ApDung">DÙNG VOUCHER</button>
+                    }
                 </div>
             </div>
         }
@@ -25,11 +39,17 @@
                     <div style="font-size:20px; font-weight: bold; margin-bottom: 10px;">@item.Title</div>
                     <div style="font-size:15px;">Giảm tối đa @WebBanHangOnline.Common.Common.FormatNumber(item.Value) đ</div>
                     <div style="font-size:15px;">Hạn sử dụng: Từ ngày @string.Format("{0:dd-MM-yyyy}", item.StartDate) đến @string.Format("{0:dd-MM-yyyy}", item.EndDate)</div>
-                    <div style="font-size:15px;">Số lượng còn lại: @item.Quantity</div>
                 </div>
                 <div class="col-md-4" style="text-align:center; padding:10px 0 10px 0;">
-                   
-                    <button class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #00bfa7; color: white;" id="ApDung">DÙNG VOUCHER</button>
+
+                    @if (iu.IsUse == true)
+                    {
+                        <button class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #00bfa7; color: white;" id="ApDung">ĐÃ DÙNG</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btnUV" data-id="@item.Id" style="background-color: #00bfa7; color: white;" id="ApDung">DÙNG VOUCHER</button>
+                    }
                 </div>
             </div>
         }

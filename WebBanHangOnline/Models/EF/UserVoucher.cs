@@ -16,6 +16,7 @@ namespace WebBanHangOnline.Models.EF
         public int VoucherId { get; set; }  
         public string UserId { get; set; }
         public int Type { get; set; }
+        public bool IsUse { get; set; }
         public virtual Voucher Voucher { get; set; }    
     }
 }

@@ -362,6 +362,10 @@
     <Compile Include="Migrations\202311160905493_Update_TimePromotion.Designer.cs">
       <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.cs" />
+    <Compile Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.Designer.cs">
+      <DependentUpon>202311201644105_UpdateUserVoucer_AddIsUse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3995,6 +3999,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311160905493_Update_TimePromotion.resx">
       <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.resx">
+      <DependentUpon>202311201644105_UpdateUserVoucer_AddIsUse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

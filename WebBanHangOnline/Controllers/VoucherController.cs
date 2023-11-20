@@ -69,7 +69,7 @@ namespace WebBanHangOnline.Controllers
                 var user = userManager.FindByName(User.Identity.Name); //tim user 
 
                 var uv = db.UserVouchers.Where(x => x.UserId == user.Id && x.Type == type).ToList();
-                if(uv.Count > 0)
+                if(uv.Count() > 0)
                 {
                     List<Voucher> lv = new List<Voucher>();
                     foreach (var item in uv)
@@ -91,27 +91,56 @@ namespace WebBanHangOnline.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var user = userManager.FindByName(User.Identity.Name); //tim user 
+
                 var v = db.Vouchers.Find(id);
                 if(v!=null)
                 {
-                    if(v.Type == 1)
+                    var uv = db.UserVouchers.Where(x=>x.UserId == user.Id && x.Type == v.Type).ToList();
+                    foreach(var item in uv)
                     {
-                        decimal TongGioHang = (decimal)Session["TongHoaDon"];
-                        decimal tmp = TongGioHang * v.PercentValue / 100;
-                        if(tmp > v.Value)
+                        if (item.VoucherId == v.Id)
                         {
-                            tmp = v.Value;
+                            item.IsUse = !item.IsUse;
+                            decimal tonggiohang = (decimal)Session["TongHoaDon"];
+                            decimal tienship = (decimal)Session["Ship"];
+                            if (item.IsUse == false)
+                            {
+                                tonggiohang += Math.Min(tonggiohang * item.Voucher.PercentValue / 100, item.Voucher.Value);
+                                tienship = 30000;
+                                Session["TongGioHang"] = tonggiohang;
+                                Session["TienShip"] = tienship;
+                            }
+                            else
+                            {
+                                if (v.Type == 1)
+                                {
+                                    decimal TongGioHang = (decimal)Session["TongHoaDon"];
+                                    decimal tmp = TongGioHang * v.PercentValue / 100;
+                                    if (tmp > v.Value)
+                                    {
+                                        tmp = v.Value;
+                                    }
+                                    TongGioHang -= tmp;
+                                    Session["TongGioHang"] = TongGioHang;
+                                }
+                                else
+                                {
+                                    decimal TienShip = 30000 - v.Value;
+                                    Session["TienShip"] = TienShip;
+                                    
+                                }
+                            }
                         }
-                        TongGioHang -= tmp;
-                        Session["TongGioHang"] = TongGioHang;
-                        return Json(new { success = true });
+                        else
+                        {
+                            item.IsUse = false;
+                        }
                     }
-                    else
-                    {
-                        decimal TienShip = 30000 - v.Value;
-                        Session["TienShip"] = TienShip;
-                        return Json(new { success = true });
-                    }
+                    db.SaveChanges();
+                    return Json(new { success = true });
                 }
                 else
                 {
