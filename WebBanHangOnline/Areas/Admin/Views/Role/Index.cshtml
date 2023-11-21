@@ -17,7 +17,21 @@
         </li>
     </ul>
 }
-
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>QUẢN LÝ PHÂN QUYỀN</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 <!-- Main content -->
 <section class="content">
 
@@ -27,23 +41,30 @@
             <h3 class="card-title">@ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/role/create" class="btn btn-success">Thêm Mới</a>
+                <a href="/admin/role/create" class="btn btn-primary">Thêm Mới</a>
+                <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
                     <div class="input-group input-group-sm">
+                        <span style=" border: 1px solid black; border-color: grey;background-color: gray; border-radius:5px;">
+                            <i class="fa fa-search" aria-hidden="true" style="padding: 10px;"></i>
+                        </span>
                         <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
+
                     </div>
                 </div>
             </div>
+            <br />
             <table class="table table-hover table-bordered">
                 <thead style="background-color:aquamarine;">
                     <tr class="text-center">
+                        <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
                         <th>Tên Quyền</th>
-                        <th>Hành Động</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="myTable">
@@ -53,6 +74,7 @@
                         foreach (var item in Model)
                         {
                             <tr id="trow_@item.Id" class="text-center">
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
                                 <td>@i</td>
                                 <td>@item.Name</td>
                                 <td>
@@ -107,6 +129,19 @@
                         }
                     });
                 }
+            });
+            $('body').on('change', '#SelectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+                    }
+                });
             });
         });
     </script>

@@ -13,6 +13,14 @@
         }
 
     }
+    HashSet<string> sz = new HashSet<string>();
+    foreach (var item in Model.ProductSizes)
+    {
+        if (item.Quantity > 0 && item.SizeName != null)
+        {
+            sz.Add(item.SizeName);
+        }
+    }
 }
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_responsive.css">
@@ -127,12 +135,9 @@
                     @*Kích Cỡ*@
                     <div class="row" style="margin-top:30px;align-items:center;">
                         <h5>Kích Cỡ:  </h5>
-                        @foreach (var item in Model.ProductSizes)
+                        @foreach (var item in sz)
                         {
-                            if (item.Quantity > 0 && item.SizeName != null)
-                            {
-                                <a href="#" class="btn btn-sm size_value" data-size="@item.SizeName" style="border:1px solid red; margin-left:5px;">@item.SizeName</a>
-                            }
+                            <a href="#" class="btn btn-sm size_value" data-size="@item" style="border:1px solid red; margin-left:5px;">@item</a>
                         }
                         
                     </div>
@@ -151,7 +156,7 @@
                         <input type="text" id="label_666" readonly style="border:none; width:80px;" />
                         <input type="text" name="SizeName" id="value_size_product" readonly style="border:none; width:20px;" />
                         <input type="text" id="label_777" readonly style="border:none; width:10px;"/>
-                        <input type="text" name="ColorName" readonly id="value_color_product" style="border:none; width:40px;" />
+                        <input type="text" name="ColorName" readonly id="value_color_product" style="border:none; width:80px;" />
                     </div>
 
                     @if (Model.PriceSale > 0)

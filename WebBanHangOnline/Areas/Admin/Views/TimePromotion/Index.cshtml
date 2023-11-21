@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Khuyến Mãi Theo Thời Gian</h1>
+                <h1>QUẢN LÝ KHUYẾN MÃI THEO THỜI GIAN</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -53,6 +53,9 @@
             <div class="row">
                 <div class="col-6">
                     <div class="input-group input-group-sm">
+                        <span style=" border: 1px solid black; border-color: grey;background-color: gray; border-radius:5px;">
+                            <i class="fa fa-search" aria-hidden="true" style="padding: 10px;"></i>
+                        </span>
                         <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
                     </div>
                 </div>
@@ -89,9 +92,9 @@
                                     <a href='#' data-id="@item.Id" class="btnBan">@Html.Raw(strIsBan)</a>
                                 </td>
                                 <td>
-                                    <a href="/admin/timepromotion/detail/@item.Id" class="btn btn-sm btn-success">Xem</a>
-                                    <a href="/admin/timepromotion/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                    <a href="/admin/timepromotion/detail/@item.Id" class="btn btn-sm btn-success"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="/admin/timepromotion/edit/@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             i++;

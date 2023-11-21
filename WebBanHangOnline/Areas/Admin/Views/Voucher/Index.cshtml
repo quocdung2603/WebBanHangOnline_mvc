@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebBanHangOnline.Models.EF.Voucher>
 @{
-    ViewBag.Title = "Danh Sách Mã Khuyến Mãi";
+    ViewBag.Title = "Danh Sách Mã Voucher";
 }
 @section naviheader {
     <!-- Left navbar links -->
@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản Lý Voucher</h1>
+                <h1>QUẢN LÝ VOUCHER</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -41,13 +41,17 @@
             <h3 class="card-title">@ViewBag.Title</h3>
 
             <div class="card-tools">
-                <a href="/admin/voucher/add" class="btn btn-success">Thêm Mới</a>
+                <a href="/admin/voucher/add" class="btn btn-primary">Thêm Mới</a>
+                <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa Nhiều</a>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
                     <div class="input-group input-group-sm">
+                        <span style=" border: 1px solid black; border-color: grey;background-color: gray; border-radius:5px;">
+                            <i class="fa fa-search" aria-hidden="true" style="padding: 10px;"></i>
+                        </span>
                         <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px;" />
                     </div>
                 </div>
@@ -56,6 +60,7 @@
             <table class="table table-hover table-bordered">
                 <thead style="background-color:aquamarine;">
                     <tr class="text-center">
+                        <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
                         <th>Tên Voucher</th>
                         <th>Loại</th>
@@ -70,6 +75,7 @@
                         foreach (var item in Model)
                         {
                             <tr id="trow_@item.Id" class="text-center">
+                                <td><input type="checkbox" id="cbkItem" value="@item.Id" /></td>
                                 <td>@i</td>
                                 <td>@item.Title</td>
                                 <td>
@@ -84,9 +90,9 @@
                                 </td>
                                 <td>@item.Quantity</td>
                                 <td>
-                                    <a href="/admin/voucher/detail/@item.Id" class="btn btn-sm btn-success">Xem</a>
-                                    <a href="/admin/voucher/edit/@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                    <a href="/admin/voucher/detail/@item.Id" class="btn btn-sm btn-success"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="/admin/voucher/edit/@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             i++;
