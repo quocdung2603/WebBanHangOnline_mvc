@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanHangOnline.Models;
-
+using WebBanHangOnline.Models.EF;
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
     public class StatisticalController : Controller
@@ -57,7 +57,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             });
             return Json(new { Data= result }, JsonRequestBehavior.AllowGet);
         }
-
+        
         [HttpGet]
         public ActionResult GetStatistical_Month(string fromMonth, string toMonth)
         {
@@ -88,19 +88,19 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 query = query.Where(x => x.CreateDate.Month <= endMonth && x.CreateDate.Year <= endYear);
             }
 
-            var result = query.GroupBy(x=> new {x.CreateDate.Year, x.CreateDate.Month }).Select(x => new {
-                Year = x.Key.Year,
-                Month = x.Key.Month,
+            var result = query.GroupBy(x => DbFunctions.TruncateTime(x.CreateDate)).Select(x => new {
+                Date = x.Key.Value,
                 TotalBuy = x.Sum(y => y.Quantity * y.OriginalPrice),
                 TotalSell = x.Sum(y => y.Quantity * y.Price),
             }).Select(x => new
             {
-                Date = new DateTime(x.Year, x.Month,1), // Assuming you want the first day of the month
+                Date = x.Date, // Assuming you want the first day of the month
                 DoanhThu = x.TotalSell,
                 LoiNhuan = x.TotalSell - x.TotalBuy,
             });
             return Json(new { Data = result }, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpGet]
         public ActionResult GetStatistical_Categories ()

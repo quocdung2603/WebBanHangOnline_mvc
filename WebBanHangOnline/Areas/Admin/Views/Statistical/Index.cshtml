@@ -197,25 +197,36 @@
     </script>
 
     <script>
+        var arrDoanhThu = [];
+        var arrLoiNhuan = [];
+        var arrDate = [];
         $(function () {
             /* ChartJS
              * -------
              * Here we will create a few charts using ChartJS
              */
-            var arrDoanhThu = [];
-            var arrLoiNhuan = [];
-            var arrDate = [];
             $.ajax({
-                url: '/Statistical/GetStatistical_Date',
+                url: '/Statistical/GetStatistical_Month',
                 type: 'GET',
                 data: { fromMonth: '', toMonth: '' },
                 success: function (rs) {
 
                     $.each(rs.Data, function (i, item) {
                         var strDate = moment(item.Date).format('MM/yyyy');
-                        arrDate.push(strDate);
-                        arrDoanhThu.push(item.DoanhThu);
-                        arrLoiNhuan.push(item.LoiNhuan);
+
+                        // Kiểm tra xem strDate đã tồn tại trong arrDate hay chưa
+                        var index = arrDate.indexOf(strDate);
+
+                        if (index !== -1) {
+                            // Nếu strDate đã tồn tại, cộng giá trị vào phần tử tương ứng
+                            arrDoanhThu[index] += item.DoanhThu;
+                            arrLoiNhuan[index] += item.LoiNhuan;
+                        } else {
+                            // Nếu strDate chưa tồn tại, thêm mới giá trị vào mảng
+                            arrDate.push(strDate);
+                            arrDoanhThu.push(item.DoanhThu);
+                            arrLoiNhuan.push(item.LoiNhuan);
+                        }
                     });
                     var areaChartData = {
                         labels: arrDate,
@@ -273,17 +284,32 @@
 
         function load_data1(data) {
             var strHtml = "";
-            $.each(data, function (i, item) {
-                var strDate = moment(item.Date).format('MM/yyyy');
+            $.each(arrDate, function (i, strDate) {
+                // Tạo HTML cho bảng
                 strHtml += "<tr>";
                 strHtml += "<td>" + (i + 1) + "</td>";
                 strHtml += "<td>" + strDate + "</td>";
-                strHtml += "<td>" + item.DoanhThu + "</td>";
-                strHtml += "<td>" + item.LoiNhuan + "</td>";
+
+                // Kiểm tra xem strDate đã tồn tại trong arrDate hay chưa
+                var index = arrDate.indexOf(strDate);
+
+                if (index !== -1) {
+                    // Nếu strDate đã tồn tại, sử dụng index để truy cập giá trị tương ứng
+                    strHtml += "<td>" + arrDoanhThu[index] + "</td>";
+                    strHtml += "<td>" + arrLoiNhuan[index] + "</td>";
+                } else {
+                    // Nếu strDate không tồn tại, hiển thị giá trị mặc định
+                    strHtml += "<td>0</td>";
+                    strHtml += "<td>0</td>";
+                }
+
                 strHtml += "</tr>";
             });
+
             $('#load_data1').html(strHtml);
         }
+
+
     </script>
 }
 
