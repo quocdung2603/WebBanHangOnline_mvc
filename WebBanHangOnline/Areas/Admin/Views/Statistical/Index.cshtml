@@ -39,6 +39,28 @@
         </div>
         <div class="card-body">
             <div class="row">
+                @using (Html.BeginForm("GetStatistical_Date", "Statistical", FormMethod.Get))
+                {
+                    <div class="row" style="margin-left:10px;">
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="exampleInputPassword1">Từ Ngày</label>
+                                <input type="date" name="fromDate" class="form-control fD" style="margin-right:30px;">
+                            </div>
+                        </div>
+                        @*Thời gian kết thúc*@
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="exampleInputPassword1">Đến Ngày</label>
+                                <input type="date" name="toDate" class="form-control tD">
+
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lọc</button>
+                }
+            </div>
+            <div class="row">
                 <div class="col-md-8">
                     <div class="chart">
                         <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -77,6 +99,28 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="row">
+                @using (Html.BeginForm("GetStatistical_Month", "Statistical", FormMethod.Get))
+                {
+                    <div class="row" style="margin-left:10px;">
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="exampleInputPassword1">Từ Tháng</label>
+                                <input type="date" name="fromMonth" class="form-control fD" style="margin-right:30px;">
+                            </div>
+                        </div>
+                        @*Thời gian kết thúc*@
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="exampleInputPassword1">Đến Tháng</label>
+                                <input type="date" name="toMonth" class="form-control tD">
+
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lọc</button>
+                }
+            </div>
             <div class="row">
                 <div class="col-md-8">
                     <div class="chart">

@@ -37,12 +37,12 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                         };
             if(!string.IsNullOrEmpty(fromDate))
             {
-                DateTime start = DateTime.ParseExact(fromDate,"dd/MM/yyyy",null);
+                DateTime start = DateTime.ParseExact(fromDate,"yyyy-MM-dd",null);
                 query = query.Where(x => x.CreateDate >= start);
             }
             if (!string.IsNullOrEmpty(toDate))
             {
-                DateTime end = DateTime.ParseExact(fromDate, "dd/MM/yyyy", null);
+                DateTime end = DateTime.ParseExact(fromDate, "yyyy-MM-dd", null);
                 query = query.Where(x => x.CreateDate < end);
             }
 
