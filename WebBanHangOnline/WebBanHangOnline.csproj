@@ -47,7 +47,7 @@
   <ItemGroup>
     <Reference Include="CKFinder, Version=2.4.0.2631, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ckfinder\bin\Release\CKFinder.dll</HintPath>
+      <HintPath>..\..\ckfinder\bin\Debug\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.1.4\lib\net461\Dapper.dll</HintPath>
@@ -234,137 +234,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Migrations\202310240741584_DataNew.cs" />
-    <Compile Include="Migrations\202310240741584_DataNew.Designer.cs">
-      <DependentUpon>202310240741584_DataNew.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310241405236_AddColorName.cs" />
-    <Compile Include="Migrations\202310241405236_AddColorName.Designer.cs">
-      <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310241533489_CreateImportProduct.cs" />
-    <Compile Include="Migrations\202310241533489_CreateImportProduct.Designer.cs">
-      <DependentUpon>202310241533489_CreateImportProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310250526472_UpdateImportP.cs" />
-    <Compile Include="Migrations\202310250526472_UpdateImportP.Designer.cs">
-      <DependentUpon>202310250526472_UpdateImportP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310250857283_AddImportProductDetail.cs" />
-    <Compile Include="Migrations\202310250857283_AddImportProductDetail.Designer.cs">
-      <DependentUpon>202310250857283_AddImportProductDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310251409442_AddTitle.cs" />
-    <Compile Include="Migrations\202310251409442_AddTitle.Designer.cs">
-      <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310300557110_UpdateIsActiveAccount.cs" />
-    <Compile Include="Migrations\202310300557110_UpdateIsActiveAccount.Designer.cs">
-      <DependentUpon>202310300557110_UpdateIsActiveAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310310809492_UpdateOrder_OrderStatus.cs" />
-    <Compile Include="Migrations\202310310809492_UpdateOrder_OrderStatus.Designer.cs">
-      <DependentUpon>202310310809492_UpdateOrder_OrderStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310311350362_AddIdE.cs" />
-    <Compile Include="Migrations\202310311350362_AddIdE.Designer.cs">
-      <DependentUpon>202310311350362_AddIdE.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311011326014_ChangeOrder111.cs" />
-    <Compile Include="Migrations\202311011326014_ChangeOrder111.Designer.cs">
-      <DependentUpon>202311011326014_ChangeOrder111.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311011336311_AddDetailOrderStatus.cs" />
-    <Compile Include="Migrations\202311011336311_AddDetailOrderStatus.Designer.cs">
-      <DependentUpon>202311011336311_AddDetailOrderStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311020704229_AddCancelReason.cs" />
-    <Compile Include="Migrations\202311020704229_AddCancelReason.Designer.cs">
-      <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311030603365_AddVoucher.cs" />
-    <Compile Include="Migrations\202311030603365_AddVoucher.Designer.cs">
-      <DependentUpon>202311030603365_AddVoucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311030636149_ChangeVoucher.cs" />
-    <Compile Include="Migrations\202311030636149_ChangeVoucher.Designer.cs">
-      <DependentUpon>202311030636149_ChangeVoucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311030925082_ChangeKDLVoucher.cs" />
-    <Compile Include="Migrations\202311030925082_ChangeKDLVoucher.Designer.cs">
-      <DependentUpon>202311030925082_ChangeKDLVoucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.cs" />
-    <Compile Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.Designer.cs">
-      <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311050919125_AddUserVoucher.cs" />
-    <Compile Include="Migrations\202311050919125_AddUserVoucher.Designer.cs">
-      <DependentUpon>202311050919125_AddUserVoucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311050925272_ChangeUserVoucher.cs" />
-    <Compile Include="Migrations\202311050925272_ChangeUserVoucher.Designer.cs">
-      <DependentUpon>202311050925272_ChangeUserVoucher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311051126244_AddTypeUV.cs" />
-    <Compile Include="Migrations\202311051126244_AddTypeUV.Designer.cs">
-      <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311070201300_addExportProduct.cs" />
-    <Compile Include="Migrations\202311070201300_addExportProduct.Designer.cs">
-      <DependentUpon>202311070201300_addExportProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311070729386_AddTitleExportProductDetail.cs" />
-    <Compile Include="Migrations\202311070729386_AddTitleExportProductDetail.Designer.cs">
-      <DependentUpon>202311070729386_AddTitleExportProductDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311100754095_AddisLeader.cs" />
-    <Compile Include="Migrations\202311100754095_AddisLeader.Designer.cs">
-      <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311111444152_AddRoomChatMessage.cs" />
-    <Compile Include="Migrations\202311111444152_AddRoomChatMessage.Designer.cs">
-      <DependentUpon>202311111444152_AddRoomChatMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311111456425_UpdateMessage.cs" />
-    <Compile Include="Migrations\202311111456425_UpdateMessage.Designer.cs">
-      <DependentUpon>202311111456425_UpdateMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311140715558_UpdateOrderDetail_Add2Column.cs" />
-    <Compile Include="Migrations\202311140715558_UpdateOrderDetail_Add2Column.Designer.cs">
-      <DependentUpon>202311140715558_UpdateOrderDetail_Add2Column.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311141305512_AddCombo_ComboDetail.cs" />
-    <Compile Include="Migrations\202311141305512_AddCombo_ComboDetail.Designer.cs">
-      <DependentUpon>202311141305512_AddCombo_ComboDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311141311423_UpdateCombo.cs" />
-    <Compile Include="Migrations\202311141311423_UpdateCombo.Designer.cs">
-      <DependentUpon>202311141311423_UpdateCombo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.cs" />
-    <Compile Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.Designer.cs">
-      <DependentUpon>202311141323159_UpdateCombo_Add_IsActive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311141347436_Add_Quantity_Combo.cs" />
-    <Compile Include="Migrations\202311141347436_Add_Quantity_Combo.Designer.cs">
-      <DependentUpon>202311141347436_Add_Quantity_Combo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311141358123_Add_PercentDec_Combo.cs" />
-    <Compile Include="Migrations\202311141358123_Add_PercentDec_Combo.Designer.cs">
-      <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311160853031_Add_TimePromotion.cs" />
-    <Compile Include="Migrations\202311160853031_Add_TimePromotion.Designer.cs">
-      <DependentUpon>202311160853031_Add_TimePromotion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311160905493_Update_TimePromotion.cs" />
-    <Compile Include="Migrations\202311160905493_Update_TimePromotion.Designer.cs">
-      <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.cs" />
-    <Compile Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.Designer.cs">
-      <DependentUpon>202311201644105_UpdateUserVoucer_AddIsUse.cs</DependentUpon>
+    <Compile Include="Migrations\202311231457431_ABC.cs" />
+    <Compile Include="Migrations\202311231457431_ABC.Designer.cs">
+      <DependentUpon>202311231457431_ABC.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -3580,7 +3452,6 @@
     <Content Include="Content\ckeditor\README.md" />
     <Content Include="Content\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Content\ckeditor\skins\moono\readme.md" />
-    <Content Include="Content\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="Areas\Admin\Views\News\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Posts\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Posts\Add.cshtml" />
@@ -3701,6 +3572,7 @@
     <Content Include="Areas\Admin\Views\TimePromotion\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TimePromotion\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Detail.cshtml" />
+    <Content Include="Content\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3904,104 +3776,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202310240741584_DataNew.resx">
-      <DependentUpon>202310240741584_DataNew.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310241405236_AddColorName.resx">
-      <DependentUpon>202310241405236_AddColorName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310241533489_CreateImportProduct.resx">
-      <DependentUpon>202310241533489_CreateImportProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310250526472_UpdateImportP.resx">
-      <DependentUpon>202310250526472_UpdateImportP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310250857283_AddImportProductDetail.resx">
-      <DependentUpon>202310250857283_AddImportProductDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310251409442_AddTitle.resx">
-      <DependentUpon>202310251409442_AddTitle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310300557110_UpdateIsActiveAccount.resx">
-      <DependentUpon>202310300557110_UpdateIsActiveAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310310809492_UpdateOrder_OrderStatus.resx">
-      <DependentUpon>202310310809492_UpdateOrder_OrderStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310311350362_AddIdE.resx">
-      <DependentUpon>202310311350362_AddIdE.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311011326014_ChangeOrder111.resx">
-      <DependentUpon>202311011326014_ChangeOrder111.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311011336311_AddDetailOrderStatus.resx">
-      <DependentUpon>202311011336311_AddDetailOrderStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311020704229_AddCancelReason.resx">
-      <DependentUpon>202311020704229_AddCancelReason.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311030603365_AddVoucher.resx">
-      <DependentUpon>202311030603365_AddVoucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311030636149_ChangeVoucher.resx">
-      <DependentUpon>202311030636149_ChangeVoucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311030925082_ChangeKDLVoucher.resx">
-      <DependentUpon>202311030925082_ChangeKDLVoucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311040052394_ChangeStart_End_Date_Voucher.resx">
-      <DependentUpon>202311040052394_ChangeStart_End_Date_Voucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311050919125_AddUserVoucher.resx">
-      <DependentUpon>202311050919125_AddUserVoucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311050925272_ChangeUserVoucher.resx">
-      <DependentUpon>202311050925272_ChangeUserVoucher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311051126244_AddTypeUV.resx">
-      <DependentUpon>202311051126244_AddTypeUV.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311070201300_addExportProduct.resx">
-      <DependentUpon>202311070201300_addExportProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311070729386_AddTitleExportProductDetail.resx">
-      <DependentUpon>202311070729386_AddTitleExportProductDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311100754095_AddisLeader.resx">
-      <DependentUpon>202311100754095_AddisLeader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311111444152_AddRoomChatMessage.resx">
-      <DependentUpon>202311111444152_AddRoomChatMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311111456425_UpdateMessage.resx">
-      <DependentUpon>202311111456425_UpdateMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311140715558_UpdateOrderDetail_Add2Column.resx">
-      <DependentUpon>202311140715558_UpdateOrderDetail_Add2Column.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311141305512_AddCombo_ComboDetail.resx">
-      <DependentUpon>202311141305512_AddCombo_ComboDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311141311423_UpdateCombo.resx">
-      <DependentUpon>202311141311423_UpdateCombo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311141323159_UpdateCombo_Add_IsActive.resx">
-      <DependentUpon>202311141323159_UpdateCombo_Add_IsActive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311141347436_Add_Quantity_Combo.resx">
-      <DependentUpon>202311141347436_Add_Quantity_Combo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311141358123_Add_PercentDec_Combo.resx">
-      <DependentUpon>202311141358123_Add_PercentDec_Combo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311160853031_Add_TimePromotion.resx">
-      <DependentUpon>202311160853031_Add_TimePromotion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311160905493_Update_TimePromotion.resx">
-      <DependentUpon>202311160905493_Update_TimePromotion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311201644105_UpdateUserVoucer_AddIsUse.resx">
-      <DependentUpon>202311201644105_UpdateUserVoucer_AddIsUse.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202311231457431_ABC.resx">
+      <DependentUpon>202311231457431_ABC.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

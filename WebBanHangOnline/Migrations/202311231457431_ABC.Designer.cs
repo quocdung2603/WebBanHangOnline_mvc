@@ -7,13 +7,13 @@ namespace WebBanHangOnline.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangeKDLVoucher : IMigrationMetadata
+    public sealed partial class ABC : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeKDLVoucher));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ABC));
         
         string IMigrationMetadata.Id
         {
-            get { return "202311030925082_ChangeKDLVoucher"; }
+            get { return "202311231457431_ABC"; }
         }
         
         string IMigrationMetadata.Source
