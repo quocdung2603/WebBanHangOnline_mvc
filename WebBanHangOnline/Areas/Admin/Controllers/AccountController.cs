@@ -54,7 +54,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         // GET: Admin/Account
         public ActionResult Index()
         {
-            var items = db.Users.ToList();
+            List<ApplicationUser> items = db.Users.ToList();
             return View(items);
         }
 

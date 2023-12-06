@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebBanHangOnline.Models.EF.Voucher>
+﻿@model PagedList.PagedList<WebBanHangOnline.Models.EF.Voucher>
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Danh Sách Mã Voucher";
 }
@@ -62,9 +64,9 @@
                     <tr class="text-center">
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
-                        <th>Tên Voucher</th>
-                        <th>Loại</th>
-                        <th>Số Lượng</th>
+                        <th>@Html.ActionLink("Tên Voucher","Index", new { SO = ViewBag.TenVoucher })</th>
+                        <th>@Html.ActionLink("Loại Voucher", "Index", new { SO = ViewBag.Loai })</th>
+                        <th>@Html.ActionLink("Số Lượng", "Index", new { SO = ViewBag.SoLuong })</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -108,6 +110,13 @@
 
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-3">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+                <div class="col-5"></div>
+            </div>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

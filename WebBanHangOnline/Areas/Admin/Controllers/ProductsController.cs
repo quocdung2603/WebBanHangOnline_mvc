@@ -14,14 +14,48 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/Products
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string SO)
         {
             IEnumerable<Product> items = db.Products.OrderByDescending(x => x.Id);
+            ViewBag.TenSanPham = SO == "TenSanPham" ? "TenSanPhamd" : "TenSanPham";
+            ViewBag.ProductCategoryId = SO == "DanhMuc" ? "DanhMucd" : "DanhMuc";
+            ViewBag.Quantity = SO == "Quantity" ? "Quantityd" : "Quantity";
+            ViewBag.Price = SO == "Price" ? "Priced" : "Price";
+            ViewBag.CreatedDate = SO == "CreatedDate" ? "CreatedDated" : "CreatedDate";
+            ViewBag.Home = SO == "Home" ? "Homed" : "Home";
+            ViewBag.Hot = SO == "Hot" ? "Hotd" : "Hot";
+            ViewBag.Feature = SO == "Feature" ? "Featured" : "Feature";
+            ViewBag.Sale = SO == "Sale" ? "Saled" : "Sale";
+            ViewBag.Active = SO == "Active" ? "Actived" : "Active";
             var pageSize = 10;
             if (page==null)
             {
                 page = 1;
             }
+            switch(SO)
+            {
+                case "TenSanPham": items = items.OrderBy(x => x.Title); break;
+                case "TenSanPhamd": items = items.OrderByDescending(x => x.Title); break;
+                case "DanhMuc": items = items.OrderBy(x => x.ProductCategoryId); break;
+                case "DanhMucd": items = items.OrderByDescending(x => x.ProductCategoryId); break;
+                case "Quantity": items = items.OrderBy(x => x.Quantity); break;
+                case "Quantityd": items = items.OrderByDescending(x => x.Quantity);break;
+                case "CreatedDate": items = items.OrderBy(x => x.CreatedDate);break;
+                case "CreatedDated": items = items.OrderByDescending(x => x.CreatedDate); break;
+                case "Home": items = items.OrderBy(x => x.IsHome);break;
+                case "Homed": items = items.OrderByDescending(x => x.IsHome); break;
+                case "Hot": items = items.OrderBy(x => x.IsHot); break;
+                case "Hotd": items = items.OrderByDescending(x => x.IsHot); break;
+                case "Feature": items = items.OrderBy(x => x.IsFeature); break;
+                case "Featured": items = items.OrderByDescending(x => x.IsFeature); break;
+                case "Sale": items = items.OrderBy(x => x.IsSale); break;
+                case "Saled": items = items.OrderByDescending(x => x.IsSale); break;
+                case "Active": items = items.OrderBy(x => x.IsActive); break;
+                case "Actived": items = items.OrderByDescending(x => x.IsActive); break;
+                case "Price": items = items.OrderBy(x => x.Price); break;
+                case "Priced": items = items.OrderByDescending(x => x.Price); break;
+                default: break;
+            }    
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;

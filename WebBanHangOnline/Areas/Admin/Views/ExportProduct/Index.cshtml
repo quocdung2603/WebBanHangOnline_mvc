@@ -62,10 +62,10 @@
                 <thead style="background-color:aquamarine">
                     <tr class="text-center">
                         <th>STT</th>
-                        <th>Tên Phiếu</th>
-                        <th>Người Tạo</th>
-                        <th>Ngày Tạo</th>
-                        <th>Hành Động</th>
+                        <th>@Html.ActionLink("Tên Phiếu","Index", new { SO = ViewBag.TenPhieu})</th>
+                        <th>@Html.ActionLink("Người Tạo", "Index", new { SO = ViewBag.NguoiTao })</th>
+                        <th>@Html.ActionLink("Ngày Tạo", "Index", new { SO = ViewBag.NgayTao })</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="myTable">

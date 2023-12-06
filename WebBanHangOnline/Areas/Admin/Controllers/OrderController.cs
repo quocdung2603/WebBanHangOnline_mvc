@@ -21,7 +21,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/Order
         /*index cho admin , chi dc thêm sửa xóa, k dc thao tác tình trạng đơn hàng*/
-        public ActionResult Index(int ?page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid)
+        public ActionResult Index(int ?page, string Searchtext, string Cod, string Banking, string Paid, string UnPaid, string SO)
         {
             var pageSize = 10;
             if(page == null)
@@ -50,6 +50,29 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
             else if(!string.IsNullOrEmpty(Paid) && Paid == "true")
             {
                 items = items.Where(x => x.Status == "2");
+            }    
+            // sort
+            ViewBag.Code = SO == "Code" ? "Coded" : "Code";
+            ViewBag.Total = SO == "Total" ? "Totald" : "Total";
+            ViewBag.PT = SO == "PT" ? "PTd" : "PT";
+            ViewBag.TT = SO == "TT" ? "TTd" : "TT";
+            ViewBag.CreatedDate = SO == "CreatedDate" ? "CreatedDated" : "CreatedDate";
+            ViewBag.TinhTrang = SO == "TinhTrang" ? "TinhTrangd" : "TinhTrang";
+            switch(SO)
+            {
+                case "Code": items = items.OrderBy(x => x.Code);break;
+                case "Coded": items = items.OrderByDescending(x => x.Code); break;
+                case "Total": items = items.OrderBy(x => x.TotalAmount); break;
+                case "Totald": items = items.OrderByDescending(x => x.TotalAmount); break;
+                case "PT": items = items.OrderBy(x => x.TypePayment); break;
+                case "PTd": items = items.OrderByDescending(x => x.TypePayment); break;
+                case "TT": items = items.OrderBy(x => x.Status); break;
+                case "TTd": items = items.OrderByDescending(x => x.Status); break;
+                case "CreatedDate": items = items.OrderBy(x => x.CreatedDate); break;
+                case "CreatedDated": items = items.OrderByDescending(x => x.CreatedDate); break;
+                case "TinhTrang": items = items.OrderBy(x => x.OrderStatus); break;
+                case "TinhTrangd": items = items.OrderByDescending(x => x.OrderStatus); break;
+                default:break;
             }    
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);

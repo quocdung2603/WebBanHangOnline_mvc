@@ -76,12 +76,12 @@
                     <tr class="text-center">
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
-                        <th>Mã Đơn Hàng</th>
-                        <th>Tổng Tiền</th>
-                        <th>Phương thức TT</th>
-                        <th>Trạng Thái TT</th>
-                        <th>Ngày Tạo</th>
-                        <th>Tình trạng</th>
+                        <th>@Html.ActionLink("Mã Đơn Hàng", "Index", new { SO = ViewBag.Code })</th>
+                        <th>@Html.ActionLink("Tổng Tiền", "Index", new { SO = ViewBag.Total })</th>
+                        <th>@Html.ActionLink("Phương Thức Thanh Toán", "Index", new { SO = ViewBag.PT })</th>
+                        <th>@Html.ActionLink("Trạng Thái Thanh Toán", "Index", new { SO = ViewBag.TT })</th>
+                        <th>@Html.ActionLink("Ngày Tạo", "Index", new { SO = ViewBag.CreatedDate })</th>
+                        <th>Tình Trạng Đơn Hàng</th>
                         <th></th>
                     </tr>
                 </thead>

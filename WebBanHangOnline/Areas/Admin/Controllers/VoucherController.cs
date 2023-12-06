@@ -5,16 +5,39 @@ using System.Web;
 using System.Web.Mvc;
 using WebBanHangOnline.Models;
 using WebBanHangOnline.Models.EF;
-
+using PagedList;
+using PagedList.Mvc;
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
     public class VoucherController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/Voucher
-        public ActionResult Index()
+        public ActionResult Index(string SO,int ? page)
         {
-            var items = db.Vouchers;
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<Voucher> items = db.Vouchers.ToList();
+            ViewBag.TenVoucher = SO == "TenCombo" ? "TenCombod" : "TenCombo";
+            ViewBag.Loai = SO == "NgayTao" ? "NgayTaod" : "NgayTao";
+            ViewBag.SoLuong = SO == "NguoiTao" ? "NguoiTaod" : "NguoiTao";
+            switch (SO)
+            {
+                case "TenCombo": items = items.OrderBy(x => x.Title); break;
+                case "TenCombod": items = items.OrderByDescending(x => x.Title); break;
+                case "NgayTao": items = items.OrderBy(x => x.Type); break;
+                case "NgayTaod": items = items.OrderByDescending(x => x.Type); break;
+                case "NguoiTao": items = items.OrderBy(x => x.Quantity); break;
+                case "NguoiTaod": items = items.OrderByDescending(x => x.Quantity); break;
+                default: break;
+            }
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
         }
 

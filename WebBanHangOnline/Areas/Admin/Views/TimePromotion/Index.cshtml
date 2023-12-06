@@ -65,10 +65,10 @@
                     <tr class="text-center">
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
-                        <th>Tiêu Đề</th>
-                        <th>Ngày Tạo</th>
-                        <th>Tình Trạng</th>
-                        <th>Khóa</th>
+                        <th>@Html.ActionLink("Tên Khuyến Mãi", "Index", new { SO = ViewBag.TenTieuDe })</th>
+                        <th>@Html.ActionLink("Ngày Tạo", "Index", new { SO = ViewBag.NgayTao })</th>
+                        <th>@Html.ActionLink("Tình Trạng", "Index", new { SO = ViewBag.TinhTrang })</th>
+                        <th>@Html.ActionLink("Khóa", "Index", new { SO = ViewBag.Khoa })</th>
                         <th></th>
                     </tr>
                 </thead>

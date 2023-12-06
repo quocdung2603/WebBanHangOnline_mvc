@@ -66,9 +66,9 @@
                     <tr class="text-center">
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
-                        <th>Tên Combo</th>
+                        <th>@Html.ActionLink("Tên Combo","Index", new { SO = ViewBag.TenCombo })</th>
                         <th>Người Tạo</th>
-                        <th>Ngày Tạo</th>
+                        <th>@Html.ActionLink("Ngày Tạo","Index", new { SO = ViewBag.NgayTao })</th>
                         <th>Hoạt Động</th>
                         <th></th>
                     </tr>

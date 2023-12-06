@@ -15,13 +15,29 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/TimePromotion
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string SO)
         {
-            IEnumerable<TimePromotion> items = db.TimePromotions.OrderByDescending(x => x.CreatedDate);
+            IEnumerable<TimePromotion> items = db.TimePromotions.ToList();
             var pageSize = 10;
             if (page == null)
             {
                 page = 1;
+            }
+            ViewBag.TenTieuDe = SO == "TenCombo" ? "TenCombod" : "TenCombo";
+            ViewBag.NgayTao = SO == "NgayTao" ? "NgayTaod" : "NgayTao";
+            ViewBag.TinhTrang = SO == "NguoiTao" ? "NguoiTaod" : "NguoiTao";
+            ViewBag.Khoa = SO == "Khoa" ? "Khoad" : "Khoa";
+            switch (SO)
+            {
+                case "TenCombo": items = items.OrderBy(x => x.Title); break;
+                case "TenCombod": items = items.OrderByDescending(x => x.Title); break;
+                case "NgayTao": items = items.OrderBy(x => x.CreatedDate); break;
+                case "NgayTaod": items = items.OrderByDescending(x => x.CreatedDate); break;
+                case "NguoiTao": items = items.OrderBy(x => x.IsActive); break;
+                case "NguoiTaod": items = items.OrderByDescending(x => x.IsActive); break;
+                case "Khoa": items = items.OrderBy(x => x.IsBan);break;
+                case "Khoad": items = items.OrderByDescending(x => x.IsBan); break;
+                default: break;
             }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);

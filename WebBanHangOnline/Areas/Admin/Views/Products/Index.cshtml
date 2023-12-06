@@ -53,7 +53,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" style="margin-bottom:10px;">
                         <span style=" border: 1px solid black; border-color: grey;background-color: gray; border-radius:5px;">
                             <i class="fa fa-search" aria-hidden="true" style="padding: 10px;"></i>
                         </span>
@@ -67,18 +67,18 @@
                         <th><input type="checkbox" id="SelectAll" /></th>
                         <th>STT</th>
                         <th>Hình ảnh</th>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Danh Mục</th>
+                        <th>@Html.ActionLink("Tên Sản Phẩm", "Index", new { SO = ViewBag.TenSanPham })</th>
+                        <th>@Html.ActionLink("Danh Mục", "Index", new {SO = ViewBag.ProductCategoryId })</th>
                         <th>Size</th>
-                        <th>Số Lượng</th>
-                        <th>Giá</th>
-                        <th>Ngày Tạo</th>
-                        <th>Home</th>
-                        <th>Hot</th>
-                        <th>Feature</th>
-                        <th>Sale</th>
-                        <th>Hiển Thị</th>
-                        <th>Hành động</th>
+                        <th>@Html.ActionLink("Số Lượng","Index", new {SO = ViewBag.Quantity })</th>
+                        <th>@Html.ActionLink("Giá Bán", "Index", new { SO = ViewBag.Price })</th>
+                        <th>@Html.ActionLink("Ngày Tạo", "Index", new { SO = ViewBag.CreatedDate })</th>
+                        <th>@Html.ActionLink("Home", "Index", new { SO = ViewBag.Home })</th>
+                        <th>@Html.ActionLink("Hot", "Index", new { SO = ViewBag.Hot })</th>
+                        <th>@Html.ActionLink("Feature", "Index", new { SO = ViewBag.Feature })</th>
+                        <th>@Html.ActionLink("Sale", "Index", new { SO = ViewBag.Sale })</th>
+                        <th>@Html.ActionLink("Hiển thị", "Index", new { SO = ViewBag.Active })</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="myTable">

@@ -14,7 +14,7 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/ImportProduct
-        public ActionResult Index(int? page, string Searchtext)
+        public ActionResult Index(int? page, string SO)
         {
             var pageSize = 10;
             if(page == null)
@@ -22,9 +22,18 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
                 page = 1;
             }
             IEnumerable<ImportProduct> items = db.ImportProducts.OrderByDescending(x=> x.CreatedDate);
-            if (!string.IsNullOrEmpty(Searchtext))
+            ViewBag.TenPhieu = SO == "TenCombo" ? "TenCombod" : "TenCombo";
+            ViewBag.NgayTao = SO == "NgayTao" ? "NgayTaod" : "NgayTao";
+            ViewBag.NguoiTao = SO == "NguoiTao" ? "NguoiTaod" : "NguoiTao";
+            switch (SO)
             {
-                items = items.Where(x => x.Title.Contains(Searchtext));
+                case "TenCombo": items = items.OrderBy(x => x.Title); break;
+                case "TenCombod": items = items.OrderByDescending(x => x.Title); break;
+                case "NgayTao": items = items.OrderBy(x => x.CreatedDate); break;
+                case "NgayTaod": items = items.OrderByDescending(x => x.CreatedDate); break;
+                case "NguoiTao": items = items.OrderBy(x => x.CreatedBy); break;
+                case "NguoiTaod": items = items.OrderByDescending(x => x.CreatedBy); break;
+                default: break;
             }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
