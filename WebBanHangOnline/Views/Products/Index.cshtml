@@ -6,6 +6,31 @@
 }
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<style>
+    .detailButton {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .product_image:hover .detailButton {
+        display: block;
+    }
+
+    .product_image {
+        position: relative;
+        overflow: hidden;
+        margin: 10px;
+        /* Add other styles as needed */
+    }
+</style>
 <div class="container product_section_container">
     <div class="row">
         <div class="col product_section clearfix">
@@ -56,34 +81,30 @@
                     <div id="slider-range"></div>
                     <div class="filter_button" style="color:white; font-weight:bold;">Lọc</div>
 
-                    <hr />
                     @* @Html.Action("Refresh", "Home")*@
                 </div>
 
-
-
                 <!-- Color -->
-                @*<div class="sidebar_section">
+                <div class="sidebar_section">
                         <div class="sidebar_title">
-                            <h5>Color</h5>
+                            <h5>Lọc Theo Màu Sắc</h5>
                         </div>
                         <ul class="checkboxes">
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Black</span></li>
-                            <li class="active"><i class="fa fa-square" aria-hidden="true"></i><span>Pink</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>White</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Blue</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Orange</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>White</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Blue</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Orange</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>White</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Blue</span></li>
-                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Orange</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Đen</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Đỏ</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Trắng</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Xanh Dương</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Cam</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Hồng</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Xanh Lá</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Tím</span></li>
+                            <li><i class="fa fa-square-o" aria-hidden="true"></i><span>Be</span></li>
                         </ul>
                         <div class="show_more">
                             <span><span>+</span>Show More</span>
                         </div>
-                    </div>*@
+                        <button type="submit" style="width: 100%; height: 30px; background: #1e1e27; text-align: center; margin-top: 25px; cursor: pointer; color:white; font-weight:bold">Lọc</button>
+                    </div>
             </div>
 
             <!-- Main Content -->
@@ -150,11 +171,15 @@
                                         {
                                             strImage = img.Image;
                                         }
-                                        <div class="product-item men" id="myDiv">
+                                        <div class="product-item men" id="myDiv" style="display:flex; justify-content:center;">
                                             <div class="product discount product_filter">
-                                                <div class="product_image">
-                                                    <img src="@strImage" alt="@item.Alias" style="width:221px; height:221px; display:flex; justify-content:center; align-items:center">
+                                                <div class="product_image" onmouseover="showButton(this)" onmouseout="hideButton(this)">
+                                                    <img src="@strImage" alt="@item.Alias" style="width: 200px; height: 200px; display: flex; justify-content: center; align-items: center">
+                                                    <div class="detailButton" style="width:200px;">
+                                                        <a href="/chi-tiet/@item.Alias-p@(item.Id)" style="color:white;">Xem Chi Tiết</a>
+                                                    </div>
                                                 </div>
+
                                                 <div class="favorite favorite_left"></div>
                                                 @if (item.IsHot == true && item.IsSale != true && item.IsFeature != true)
                                                 {
@@ -170,7 +195,7 @@
                                                 }
                                                 else if (item.IsHot != true && item.IsSale != true && item.IsFeature == true)
                                                 {
-                                                     @*product_bubble_feature*@
+                                                    @*product_bubble_feature*@
                                                     <div class="product_bubble d-flex flex-column align-items-center" style="color: #0066ff; background-color: #0066ff; right: 15px; ">
                                                         <span>Feature</span>
                                                     </div>
@@ -235,5 +260,17 @@
 
 @section scripts{
     <script src="~/Content/assets/js/categories_custom.js"></script>
+    <script>
+        function showButton(element) {
+            element.querySelector('.detailButton').style.display = 'block';
+        }
 
+        function hideButton(element) {
+            element.querySelector('.detailButton').style.display = 'none';
+        }
+
+        function redirectToDetailPage() {
+            window.location.href = "";
+        }
+    </script>
 }
